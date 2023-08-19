@@ -1,6 +1,7 @@
 ###################
 # compiled source #
 ###################
+.vs/
 *.com
 *.class
 *.dll
@@ -19,6 +20,7 @@
 ####################
 UpgradeLog.XML
 _UpgradeReport_Files/
+*appsettings.json
 ###############
 # Directories #
 ###############
