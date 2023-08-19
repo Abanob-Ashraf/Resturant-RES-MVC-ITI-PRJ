@@ -20,7 +20,7 @@
 ####################
 UpgradeLog.XML
 _UpgradeReport_Files/
-*appsettings.json
+*.json
 ###############
 # Directories #
 ###############
