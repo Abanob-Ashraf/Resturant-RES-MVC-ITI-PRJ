@@ -11,11 +11,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 
         [Required(ErrorMessage = "Enter Table Number")]
         public string TableNumber { get; set; }
-
-
         public int ChairsNumbers { get; set; }
 
+        [InverseProperty("Tables")]
+        public ICollection<ReservationTablesRel> ReservationTablesRels { get; set; }
 
-        public bool isReservered { get; set; }
     }
 }
