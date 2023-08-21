@@ -29,5 +29,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 
         [InverseProperty("Manager")]
         public ICollection<CustomersAddersses> CustomersAddersses { get; set; }
+
+
+        [InverseProperty("Customers")]
+        public ICollection<Testimonials> Testimonials { get; set; }
     }
 }
