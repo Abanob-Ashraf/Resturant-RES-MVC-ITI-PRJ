@@ -18,7 +18,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models
         [ForeignKey("Ingredtients")]
         public  int  IngerdientId { get; set; }
 
-        public  Dishes? Dishes { get; set; }
+        public  Dish? Dishes { get; set; }
         
         public   Ingerdients? Ingredtients { get; set; }
     }
