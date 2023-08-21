@@ -6,9 +6,9 @@ using Microsoft.CodeAnalysis.Options;
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
 {
     [Table("Employee")]
-    //[Index("EmpEmail", IsUnique = true)]
-    //[Index("EmpPhone", IsUnique = true)]
-    //[Index("EmpNationalId", IsUnique = true)]
+    [Index("EmpEmail", IsUnique = true)]
+    [Index("EmpPhone", IsUnique = true)]
+    [Index("EmpNationalId", IsUnique = true)]
     public class Employee
     {
         //FranchiseId int
