@@ -11,8 +11,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
     [Index("EmpNationalId", IsUnique = true)]
     public class Employee
     {
-        //FranchiseId int
-
         [Key]
         public int EmpID { get; set; }
 
