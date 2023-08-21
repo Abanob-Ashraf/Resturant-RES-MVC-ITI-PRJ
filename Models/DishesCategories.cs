@@ -8,10 +8,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models
     public class DishesCategories
     {
         [Key]
-      public  int DishesCategoriesId { get; set; }
+        public int DishesCategoriesId { get; set; }
 
         [Required]
-     public   string DishCategoryName { get; set; }
+        public string DishCategoryName { get; set; }
 
         public ICollection<Dishes>? Dishes { get; set; }
     }
