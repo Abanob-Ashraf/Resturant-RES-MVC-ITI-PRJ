@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 {
     [Table("Customers")]
-    public class Customers
+    public class Customer
     {
         [Key]
         public int CustID { get; set; }
@@ -28,7 +28,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         public string CustPhone { get; set; }
 
         [InverseProperty("Customers")]
-        public ICollection<CustomersAddersses>? CustomersAddersses { get; set; }
+        public ICollection<CustomerAddersses>? CustomersAddersses { get; set; }
 
 
         [InverseProperty("Customers")]
