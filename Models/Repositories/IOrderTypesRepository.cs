@@ -8,12 +8,12 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories
     {
         public List<OrderTypes> GetAllOrderTypes();
 
-        public OrderTypes GetOrderTypesById(int id);
+        public OrderTypes GetOrderTypeById(int id);
 
-        public void InsertOrderTypes(OrderTypes orderTypes);
+        public void InsertOrderType(OrderTypes orderTypes);
 
-        public void UpdateOrderTypes(int id, OrderTypes orderTypes);
+        public void UpdateOrderType(int id, OrderTypes orderTypes);
 
-        public void DeleteOrderTypes(int id);
+        public void DeleteOrderType(int id);
     }
 }
