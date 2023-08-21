@@ -18,4 +18,12 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.9" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\Client\" />
+    <Folder Include="Controllers\Managment\" />
+    <Folder Include="RepoServices\Client\" />
+    <Folder Include="RepoServices\Managment\" />
+    <Folder Include="Repositories\Client\" />
+    <Folder Include="Repositories\Managment\" />
+  </ItemGroup>
 </Project>
