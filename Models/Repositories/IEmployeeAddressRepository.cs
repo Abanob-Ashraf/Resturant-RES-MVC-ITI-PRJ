@@ -7,8 +7,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories
 
         public List<EmployeeAddress> GetAllEmployeesAddress();
         public EmployeeAddress GetEmployeeAddressById(int id);
-        public void InsertEmployeeAddress(EmployeeAddress employee);
-        public void UpdateEmployeeAddress(EmployeeAddress employee);
+        public void InsertEmployeeAddress(EmployeeAddress employeeAddress);
+        public void UpdateEmployeeAddress(EmployeeAddress employeeAddress);
         public void DeleteEmployeeAddress(int id);
     }
 }
