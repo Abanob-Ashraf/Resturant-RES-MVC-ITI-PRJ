@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Resturant_RES_MVC_ITI_PRJ.Models
+namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 {
     [Table("DishesIngredientsRel")]
     public class DishesIngredientsRel
@@ -16,10 +16,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models
 
         [Required]
         [ForeignKey("Ingredtients")]
-        public  int  IngerdientId { get; set; }
+        public int IngerdientId { get; set; }
 
-        public  Dish? Dishes { get; set; }
-        
-        public   Ingerdients? Ingredtients { get; set; }
+        public Dish? Dishes { get; set; }
+
+        public Ingerdients? Ingredtients { get; set; }
     }
 }

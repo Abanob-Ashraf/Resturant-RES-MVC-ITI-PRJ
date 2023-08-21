@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.CodeAnalysis.Options;
 
-namespace Resturant_RES_MVC_ITI_PRJ.Models
+namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
 {
     [Table("Employee")]
     //[Index("EmpEmail", IsUnique = true)]
@@ -43,7 +43,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models
         [ForeignKey("EmployeesCategories")]
         public int EmpCategoryId { get; set; }
         public EmployeesCategories? EmployeesCategories { get; set; }
-        
+
         [ForeignKey("Franchise")]
         public int FranchiseId { get; set; }
         public Franchise? Franchise { get; set; }
