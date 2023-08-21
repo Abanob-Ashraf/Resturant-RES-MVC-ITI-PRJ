@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
 {
     [Table("EmployeesCategories")]
-    public class EmployeesCategories
+    public class EmployeeCategory
     {
         [Key]
         public int EmployeesCategoriesId { get; set; }
