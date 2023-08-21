@@ -14,10 +14,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 
         [ForeignKey("Customers")]
         public int CustomerID { get; set; }
-        public Customers Customers { get; set; }
+        public Customers? Customers { get; set; }
 
         [InverseProperty("Reservation")]
-        public ICollection<ReservationTablesRel> ReservationTablesRels { get; set; }
+        public ICollection<ReservationTablesRel>? ReservationTablesRels { get; set; }
 
     }
 }

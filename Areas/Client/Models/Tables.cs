@@ -14,7 +14,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         public int ChairsNumbers { get; set; }
 
         [InverseProperty("Tables")]
-        public ICollection<ReservationTablesRel> ReservationTablesRels { get; set; }
+        public ICollection<ReservationTablesRel>? ReservationTablesRels { get; set; }
 
     }
 }

@@ -18,8 +18,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 
         [CustomMinDate]
         public DateTime ReservarionDate { get; set; }
-        public Reservations Reservation { get; set; }
+        public Reservations? Reservation { get; set; }
 
-        public Tables Tables { get; set; }
+        public Tables? Tables { get; set; }
     }
 }
