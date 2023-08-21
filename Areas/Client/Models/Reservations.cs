@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Resturant_RES_MVC_ITI_PRJ.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
@@ -16,8 +17,13 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         public int CustomerID { get; set; }
         public Customers? Customers { get; set; }
 
-        [InverseProperty("Reservation")]
-        public ICollection<ReservationTablesRel>? ReservationTablesRels { get; set; }
+        [CustomMinDate(ErrorMessage = "Reservation Date Must be Further tahn today")]
+        public DateTime ReservarionDate { get; set; }
+
+        [ForeignKey("Tables")]
+        public int TableID { get; set; }
+        public Tables? Tables { get; set; }
+
 
     }
 }
