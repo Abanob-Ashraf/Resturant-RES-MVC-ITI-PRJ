@@ -27,6 +27,5 @@
     <Folder Include="Areas\Management\Data\" />
     <Folder Include="Areas\Management\Views\" />
     <Folder Include="Models\RepoServices\" />
-    <Folder Include="Models\Repositories\" />
   </ItemGroup>
 </Project>
