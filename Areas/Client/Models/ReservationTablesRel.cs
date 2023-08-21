@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Resturant_RES_MVC_ITI_PRJ.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
@@ -15,7 +16,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         [ForeignKey("Tables")]
         public int TableID { get; set; }
 
-
+        [CustomMinDate]
+        public DateTime ReservarionDate { get; set; }
         public Reservations Reservation { get; set; }
 
         public Tables Tables { get; set; }
