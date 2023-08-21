@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MVC_Task06.Models;
+using Resturant_RES_MVC_ITI_PRJ.Models;
 using System.Diagnostics;
 
-namespace MVC_Task06.Controllers
+namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 {
     public class HomeController : Controller
     {
