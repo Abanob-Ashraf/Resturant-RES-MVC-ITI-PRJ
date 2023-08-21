@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 {
@@ -24,11 +26,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 
         [ForeignKey("OrderType")]
         public int OrderTypeId { get; set; }
-        public OrderType? OrderType { get; set; }
+        public OrderTypes? OrderType { get; set; }
 
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
-        public Customer? Customer { get; set; }
+        public Customers? Customer { get; set; }
 
 
         [ForeignKey("Franchise")]
