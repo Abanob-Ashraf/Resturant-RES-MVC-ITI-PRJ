@@ -11,10 +11,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models
 
         }
 
-        public DbSet<Customers> Customers { get; set; }
-        public DbSet<CustomersAddersses> CustomersAddersses { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<CustomerAddersses> CustomersAddersses { get; set; }
         public DbSet<Dish> Dishes { get; set; }
-        public DbSet<DishesCategories> DishesCategories { get; set; }
+        public DbSet<DishCategory> DishesCategories { get; set; }
         public DbSet<DishesIngredientsRel> dishesIngredientsRels { get; set; }
         public DbSet<Ingerdients> Ingerdients { get; set; }
         public DbSet<Order> orders { get; set; }

@@ -20,7 +20,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         [ForeignKey("DishesCategories")]
         public int DishCategoryId { get; set; }
 
-        public DishesCategories? DishesCategories { get; set; }
+        public DishCategory? DishesCategories { get; set; }
 
     }
 }

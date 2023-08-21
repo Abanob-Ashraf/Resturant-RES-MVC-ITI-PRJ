@@ -30,7 +30,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
-        public Customers? Customer { get; set; }
+        public Customer? Customer { get; set; }
 
 
         [ForeignKey("Franchise")]

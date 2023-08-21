@@ -15,7 +15,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 
         [ForeignKey("Customers")]
         public int CustomerID { get; set; }
-        public Customers? Customers { get; set; }
+        public Customer? Customers { get; set; }
 
         [CustomMinDate(ErrorMessage = "Reservation Date Must be Further tahn today")]
         public DateTime ReservarionDate { get; set; }

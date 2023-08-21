@@ -5,7 +5,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 {
     [Table("DishesCategories")]
 
-    public class DishesCategories
+    public class DishCategory
     {
         [Key]
         public int DishesCategoriesId { get; set; }
