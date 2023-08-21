@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 {
@@ -7,7 +8,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
     {
 
         [Key]
-        public int Id { get; set; }
+        public int OrderDishesRelId { get; set; }
 
 
         [Required]
