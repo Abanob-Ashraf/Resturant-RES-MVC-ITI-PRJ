@@ -21,13 +21,11 @@
   <ItemGroup>
     <Folder Include="Areas\Client\Controllers\" />
     <Folder Include="Areas\Client\Data\" />
-    <Folder Include="Areas\Client\Models\" />
     <Folder Include="Areas\Client\Views\" />
     <Folder Include="Areas\Management\Controllers\" />
     <Folder Include="Areas\Management\Data\" />
     <Folder Include="Areas\Management\Views\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="RepoServices\" />
-    <Folder Include="Repositories\" />
+    <Folder Include="Models\RepoServices\" />
+    <Folder Include="Models\Repositories\" />
   </ItemGroup>
 </Project>
