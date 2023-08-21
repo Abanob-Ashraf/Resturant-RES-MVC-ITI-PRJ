@@ -22,6 +22,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 
         public Customers Customers { get; set; }
 
+        public ICollection<Reservations> Reservations { get; set; }
+
 
     }
 }
