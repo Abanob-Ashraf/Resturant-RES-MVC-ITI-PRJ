@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Models
 {
-    [Table("DishesCategorie")]
+    [Table("DishesCategories")]
 
     public class DishesCategories
     {
@@ -11,8 +11,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models
         public int DishesCategoriesId { get; set; }
 
         [Required]
-        public string DishCategoryName { get; set; }
+        public string DishesCategoriesName { get; set; }
 
-        public ICollection<Dishes>? Dishes { get; set; }
+        public ICollection<Dish>? Dishes { get; set; }
     }
 }
