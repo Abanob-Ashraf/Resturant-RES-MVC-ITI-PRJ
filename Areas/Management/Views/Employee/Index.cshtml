@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models.Employee>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpNationalId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpHiringDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpSalary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeCategory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Franchise)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpNationalId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpHiringDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpSalary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeCategory.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Franchise.City)
+            </td>
+            <td>
+                <a aspArea="Management" asp-action="Edit" asp-route-id="@item.EmpID">Edit</a> |
+                <a aspArea="Management" asp-action="Details" asp-route-id="@item.EmpID">Details</a> |
+                <a aspArea="Management" asp-action="Delete" asp-route-id="@item.EmpID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
