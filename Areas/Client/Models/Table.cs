@@ -4,17 +4,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 {
     [Table("Tables")]
-    public class Tables
+    public class Table
     {
         [Key]
-        public int TablesID { get; set; }
+        public int TableID { get; set; }
 
         [Required(ErrorMessage = "Enter Table Number")]
         public string TableNumber { get; set; }
-        public int ChairsNumbers { get; set; }
+        public int ChairsNumber { get; set; }
 
-        [InverseProperty("Tables")]
-        public ICollection<Reservations>? Reservations { get; set; }
+        [InverseProperty("Table")]
+        public ICollection<Reservation>? Reservations { get; set; }
 
     }
 }

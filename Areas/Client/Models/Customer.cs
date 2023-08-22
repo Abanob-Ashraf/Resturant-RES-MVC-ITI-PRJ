@@ -33,8 +33,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         public ICollection<Testimonials>? Testimonials { get; set; }
 
         [InverseProperty("Customer")]
-        public ICollection<Reservations>? Reservations { get; set; }
+        public ICollection<Reservation>? Reservations { get; set; }
 
+        [InverseProperty("Customer")]
         public ICollection<Order>? Orders { get; set; }
 
     }

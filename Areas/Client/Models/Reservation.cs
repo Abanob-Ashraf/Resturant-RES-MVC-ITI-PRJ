@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 {
-    [Table("Reservations")]
-    public class Reservations
+    [Table("Reservation")]
+    public class Reservation
     {
         [Key]
         public int ReservationID { get; set; }
@@ -13,16 +13,16 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         [MaxLength]
         public string Notes { get; set; }
 
-        [ForeignKey("Customers")]
+        [ForeignKey("Customer")]
         public int CustomerID { get; set; }
-        public Customer? Customers { get; set; }
+        public Customer? Customer { get; set; }
 
         [CustomMinDate(ErrorMessage = "Reservation Date Must be Further tahn today")]
         public DateTime ReservarionDate { get; set; }
 
-        [ForeignKey("Tables")]
+        [ForeignKey("Table")]
         public int TableID { get; set; }
-        public Tables? Tables { get; set; }
+        public Table? Table { get; set; }
 
 
     }

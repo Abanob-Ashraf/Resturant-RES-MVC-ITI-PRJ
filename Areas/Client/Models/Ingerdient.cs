@@ -12,6 +12,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         [Required]
         public string IngName { get; set; }
 
-        public virtual ICollection<DishIngredientRel>? DishIngredientRels { get; set; }
+        public ICollection<DishIngredientRel>? DishIngredientRels { get; set; }
     }
 }
