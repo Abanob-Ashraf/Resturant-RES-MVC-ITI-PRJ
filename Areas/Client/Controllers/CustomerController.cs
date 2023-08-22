@@ -4,7 +4,8 @@ using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
-
+    [Area("Client")]
+    [Route("Customers")]
     public class CustomerController : Controller
     {
         public ICustomerRepository CustomerRepository { get; }
@@ -13,10 +14,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         {
             CustomerRepository = customerRepository;
         }
-
+        [Route("GetAllCustomers")]
         public ActionResult Index()
         {
-            return View();
+            return View("Index", CustomerRepository.GetAllCustomers());
         }
 
         public ActionResult Details(int id)

@@ -1,10 +1,13 @@
-﻿using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 {
     [Table("Customer")]
+    [Index("CustEmail", IsUnique = true)]
+    [Index("CustPhone", IsUnique = true)]
     public class Customer
     {
         [Key]
