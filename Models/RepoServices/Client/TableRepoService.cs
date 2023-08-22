@@ -1,35 +1,59 @@
-﻿using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
 {
     public class TableRepoService : ITableRepository
     {
+        public ResturantDbContext Ctx { get; }
+
+        public TableRepoService(ResturantDbContext ctx)
+        {
+            Ctx = ctx;
+        }
 
 
         public List<Table> GetAllTables()
         {
-            throw new NotImplementedException();
+            return Ctx.Tables
+                  .Include(tab => tab.Reservations)
+                  .ToList();
         }
 
         public Table GetTableById(int id)
         {
-            throw new NotImplementedException();
+            if (id == 0)
+            {
+                throw new ArgumentException($"Can't Find That Customer with Id: {id}");
+            }
+            return Ctx.Tables
+                  .Include(tab => tab.Reservations)
+                  .Where(tab=>tab.TableID==id).FirstOrDefault();
         }
 
         public void InsertTable(Table Table)
         {
-            throw new NotImplementedException();
+            if (Table != null)
+            {
+                Ctx.Tables.Add(Table);
+                Ctx.SaveChanges();
+            }
         }
 
         public void UpdateTable(int id, Table Table)
         {
-            throw new NotImplementedException();
+            if (Table != null)
+            {
+                Ctx.Tables.Update(Table);
+                Ctx.SaveChanges();
+            }
         }
 
         public void DeleteTable(int id)
         {
-            throw new NotImplementedException();
+            Ctx.Tables.Remove(GetTableById(id));
+            Ctx.SaveChanges();
         }
     }
 }
