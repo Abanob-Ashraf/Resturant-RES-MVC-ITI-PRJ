@@ -1,33 +1,66 @@
-﻿using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
 {
     public class OrderRepoService : IOrderRepository
     {
-        public List<Franchise> GetAllOrders()
+        public ResturantDbContext Ctx { get; }
+
+        public OrderRepoService(ResturantDbContext ctx)
         {
-            throw new NotImplementedException();
+            Ctx = ctx;
         }
 
-        public Franchise GetOrderById(int id)
+
+        public List<Order> GetAllOrders()
         {
-            throw new NotImplementedException();
+            return Ctx.Orders
+                  .Include(ord => ord.Franchise)
+                  .Include(ord => ord.OrderType)
+                  .Include(ord => ord.Customer)
+                  .Include(ord => ord.OrderesDishesRels)
+                  .ToList();
         }
 
-        public void InsertOrder(Franchise franchise)
+        public Order GetOrderById(int id)
         {
-            throw new NotImplementedException();
+            if (id == 0)
+            {
+                throw new ArgumentException($"Can't Find That Order with Id: {id}");
+            }
+            return Ctx.Orders
+                   .Include(ord => ord.Franchise)
+                   .Include(ord => ord.OrderType)
+                   .Include(ord => ord.Customer)
+                   .Include(ord => ord.OrderesDishesRels)
+                    .Where(ord => ord.OrderId == id).SingleOrDefault();
         }
 
-        public void UpdateOrder(Franchise franchise)
+        public void InsertOrder(Order Order)
         {
-            throw new NotImplementedException();
+            if (Order != null)
+            {
+                Ctx.Orders.Add(Order);
+                Ctx.SaveChanges();
+            }
+        }
+
+        public void UpdateOrder(Order Order)
+        {
+            if (Order != null)
+            {
+                Ctx.Orders.Update(Order);
+                Ctx.SaveChanges();
+            }
         }
 
         public void DeleteOrder(int id)
         {
-            throw new NotImplementedException();
+            Ctx.Orders.Remove(GetOrderById(id));
+            Ctx.SaveChanges();
         }
     }
 }
