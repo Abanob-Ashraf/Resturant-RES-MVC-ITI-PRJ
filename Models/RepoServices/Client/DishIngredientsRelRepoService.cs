@@ -23,6 +23,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
 
         public DishIngredientRel GetDishIngredientRelById(int id)
         {
+            if (id == 0)
+            {
+                throw new ArgumentException($"Can't Find That DishIngredientRel with Id: {id}");
+            }
             return Ctx.DishIngredientRels
                   .Include(dishIngredientRel => dishIngredientRel.Dish)
                   .Include(dishIngredientRel => dishIngredientRel.Ingredtient)
@@ -31,14 +35,20 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
 
         public void InsertDishIngredientRel(DishIngredientRel dishIngredientRel)
         {
-            Ctx.DishIngredientRels.Add(dishIngredientRel);
-            Ctx.SaveChanges();
+            if (dishIngredientRel != null)
+            {
+                Ctx.DishIngredientRels.Add(dishIngredientRel);
+                Ctx.SaveChanges();
+            }
         }
 
         public void UpdateDishIngredientRel(DishIngredientRel dishIngredientRel)
         {
-            Ctx.DishIngredientRels.Update(dishIngredientRel);
-            Ctx.SaveChanges();
+            if (dishIngredientRel != null)
+            {
+                Ctx.DishIngredientRels.Update(dishIngredientRel);
+                Ctx.SaveChanges();
+            }
         }
 
 
