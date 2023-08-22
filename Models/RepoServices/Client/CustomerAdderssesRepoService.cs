@@ -5,6 +5,12 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
 {
     public class CustomerAdderssesRepoService : ICustomerAdderssesRepository
     {
+        public ResturantDbContext Ctx { get; }
+
+        public CustomerAdderssesRepoService(ResturantDbContext ctx)
+        {
+            Ctx = ctx;
+        }
 
         public List<Franchise> GetAllCustomerAddersses()
         {
