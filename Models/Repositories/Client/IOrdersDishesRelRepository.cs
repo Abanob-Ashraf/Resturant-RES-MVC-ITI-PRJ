@@ -2,7 +2,7 @@
 
 namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client
 {
-    public interface IOrderesDishesRelRepository
+    public interface IOrdersDishesRelRepository
     {
         public List<OrderesDishesRel> GetAllOrderDishesRels();
 

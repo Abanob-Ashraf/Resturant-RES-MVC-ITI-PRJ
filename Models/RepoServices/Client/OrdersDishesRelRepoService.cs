@@ -4,12 +4,12 @@ using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
 {
-    public class OrderesDishesRelRepoService : IOrderesDishesRelRepository
+    public class OrdersDishesRelRepoService : IOrdersDishesRelRepository
     {
 
         public ResturantDbContext Ctx { get; }
 
-        public OrderesDishesRelRepoService(ResturantDbContext ctx)
+        public OrdersDishesRelRepoService(ResturantDbContext ctx)
         {
             Ctx = ctx;
         }
