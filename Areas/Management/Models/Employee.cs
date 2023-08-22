@@ -38,9 +38,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
         public double EmpSalary { get; set; } = 1400.0;
 
 
-        [ForeignKey("EmployeesCategories")]
+        [ForeignKey("EmployeeCategory")]
         public int EmpCategoryId { get; set; }
-        public EmployeesCategories? EmployeesCategories { get; set; }
+        public EmployeeCategory? EmployeeCategory { get; set; }
 
         [ForeignKey("Franchise")]
         public int FranchiseId { get; set; }

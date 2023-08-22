@@ -16,11 +16,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         [Required]
         public string DishImageName { get; set; }
 
-
-        [ForeignKey("DishesCategories")]
+        [ForeignKey("DishCategory")]
+        [Required]
         public int DishCategoryId { get; set; }
+        public DishCategory? DishCategory { get; set; }
 
-        public DishCategory? DishesCategories { get; set; }
-
+        public ICollection<DishIngredientRel>? DishIngredientRels { get; set; }
     }
 }

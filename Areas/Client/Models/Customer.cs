@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 {
-    [Table("Customers")]
+    [Table("Customer")]
     public class Customer
     {
         [Key]
@@ -19,7 +19,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 
         [Required(ErrorMessage = "You Must Enter Email")]
         [DataType(DataType.Password)]
-
         [RegularExpression("\"^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$\"\r\n", ErrorMessage = "Enter a strong passwor")]
         public string CustPassword { get; set; }
 
@@ -27,11 +26,16 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         [MaxLength(11)]
         public string CustPhone { get; set; }
 
-        [InverseProperty("Customers")]
-        public ICollection<CustomerAddersses>? CustomersAddersses { get; set; }
+        [InverseProperty("Customer")]
+        public ICollection<CustomerAddersses>? CustomerAddersses { get; set; }
 
-
-        [InverseProperty("Customers")]
+        [InverseProperty("Customer")]
         public ICollection<Testimonials>? Testimonials { get; set; }
+
+        [InverseProperty("Customer")]
+        public ICollection<Reservations>? Reservations { get; set; }
+
+        public ICollection<Order>? Orders { get; set; }
+
     }
 }

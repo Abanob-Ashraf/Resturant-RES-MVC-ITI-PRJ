@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
@@ -6,12 +7,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
     [Table("Franchise")]
     public class Franchise
     {
-        //  id[pk]
-        //Street string
-        //City string
-        //Country string
-        //MangerID int
-
         [Key]
         public int FranchiseId { get; set; }
 
@@ -31,6 +26,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
         [InverseProperty("Franchise")]
         public ICollection<Employee>? Employees { get; set; }
 
-
+        public ICollection<Order>? Orders { get; set; }
     }
 }

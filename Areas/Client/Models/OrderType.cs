@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 {
-    [Table("OrderTypes")]
-    public class OrderTypes
+    [Table("OrderType")]
+    public class OrderType
     {
 
         [Key]
-        public int OrderTypesId { get; set; }
+        public int OrderTypeId { get; set; }
 
         [Required(ErrorMessage = "You Must Enter Order")]
         [StringLength(50)]

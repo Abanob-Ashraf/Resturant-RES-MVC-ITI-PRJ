@@ -3,16 +3,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 {
-    [Table("DishesCategories")]
+    [Table("DishCategory")]
 
     public class DishCategory
     {
         [Key]
-        public int DishesCategoriesId { get; set; }
+        public int DishCategoryId { get; set; }
 
         [Required]
-        public string DishesCategoriesName { get; set; }
+        public string DishCategoryName { get; set; }
 
-        public ICollection<Dish>? Dishes { get; set; }
+        public ICollection<Dish>? Dish { get; set; }
     }
 }

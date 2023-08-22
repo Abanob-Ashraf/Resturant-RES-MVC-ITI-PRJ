@@ -15,13 +15,13 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models
         public DbSet<CustomerAddersses> CustomersAddersses { get; set; }
         public DbSet<Dish> Dishes { get; set; }
         public DbSet<DishCategory> DishesCategories { get; set; }
-        public DbSet<DishesIngredientsRel> dishesIngredientsRels { get; set; }
-        public DbSet<Ingerdients> Ingerdients { get; set; }
-        public DbSet<Order> orders { get; set; }
-        public DbSet<OrderDishesRel> ordersDishesRels { get; set; }
-        public DbSet<OrderTypes> OrderTypes { get; set; }
-        public DbSet<Reservations> Reservations { get; set; }
-        public DbSet<Tables> Tables { get; set; }
+        public DbSet<DishIngredientRel> DishIngredientRels { get; set; }
+        public DbSet<Ingerdient> Ingerdients { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderesDishesRel> OrderesDishesRels { get; set; }
+        public DbSet<OrderType> OrderTypes { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Table> Tables { get; set; }
         public DbSet<Testimonials> Testimonials { get; set; }
 
 
