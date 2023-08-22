@@ -15,30 +15,48 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         public List<Customer> GetAllCustomers()
         {
             return Ctx.Customers
-                 .Include(emp => emp.Testimonials)
-                 .Include(emp => emp.Reservations)
-                 .Include(emp => emp.CustomerAddersses)
-                 .Include(emp => emp.Orders).ToList();
+                 .Include(cs => cs.Testimonials)
+                 .Include(cs => cs.Reservations)
+                 .Include(cs => cs.CustomerAddersses)
+                 .Include(cs => cs.Orders).ToList();
         }
 
         public Customer GetCustomerById(int id)
         {
-            throw new NotImplementedException();
+            if (id == 0)
+            {
+                throw new ArgumentException($"Can't Find That Course with Id: {id}");
+            }
+            return Ctx.Customers
+                .Include(cs => cs.Testimonials)
+                .Include(cs => cs.Reservations)
+                .Include(cs => cs.CustomerAddersses)
+                .Include(cs => cs.Orders)
+                .Where(cs => cs.CustID == id).SingleOrDefault();
         }
 
         public void InsertCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            if (customer != null)
+            {
+                Ctx.Customers.Add(customer);
+                Ctx.SaveChanges();
+            }
         }
 
         public void UpdateCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            if (customer != null)
+            {
+                Ctx.Customers.Update(customer);
+                Ctx.SaveChanges();
+            }
         }
 
         public void DeleteCustomer(int id)
         {
-            throw new NotImplementedException();
+            Ctx.Customers.Remove(GetCustomerById(id));
+            Ctx.SaveChanges();
         }
 
     }
