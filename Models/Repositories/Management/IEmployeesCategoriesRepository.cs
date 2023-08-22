@@ -5,13 +5,13 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories
     public interface IEmployeesCategoriesRepository
     {
 
-        public List<EmployeesCategories> GetAllEmployeesCategories();
+        public List<EmployeeCategory> GetAllEmployeesCategories();
 
-        public EmployeesCategories GetEmployeesCategoryById(int id);
+        public EmployeeCategory GetEmployeesCategoryById(int id);
 
-        public void InsertEmployeesCategory(EmployeesCategories employeesCategories);
+        public void InsertEmployeesCategory(EmployeeCategory employeesCategories);
 
-        public void UpdateEmployeesCategory(EmployeesCategories employeesCategories);
+        public void UpdateEmployeesCategory(EmployeeCategory employeesCategories);
 
         public void DeleteEmployeesCategory(int id);
     }
