@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Resturant_RES_MVC_ITI_PRJ.Models;
+using Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ
 {
@@ -32,10 +34,25 @@ namespace Resturant_RES_MVC_ITI_PRJ
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapAreaControllerRoute(
+                   name: "ClientArea",
+                   areaName: "Client",
+                   pattern: "{area}/{controller=HrHome}/{action=index}/{id?}"
+               );
+                endpoints.MapAreaControllerRoute(
+                   name: "ManagementArea",
+                   areaName: "Management",
+                   pattern: "{area}/{controller=HrHome}/{action=index}/{id?}"
+               );
+
+
+            });
 
             app.Run();
         }
