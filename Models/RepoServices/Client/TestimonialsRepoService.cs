@@ -24,11 +24,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         {
             if (id == 0)
             {
-                throw new ArgumentException($"Can't Find That Customer with Id: {id}");
+                throw new ArgumentException($"Can't Find That Testimonials with Id: {id}");
             }
             return Ctx.Testimonials
                   .Include(tst => tst.Customer)
-                  .Where(tst => tst.TestimonialsID == id).FirstOrDefault();
+                  .Where(tst => tst.TestimonialsID == id).SingleOrDefault();
         }
 
         public void InsertTestimonials(Testimonials Testimonials)
