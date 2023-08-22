@@ -25,11 +25,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         {
             if (id == 0)
             {
-                throw new ArgumentException($"Can't Find That Customer with Id: {id}");
+                throw new ArgumentException($"Can't Find That Table with Id: {id}");
             }
             return Ctx.Tables
                   .Include(tab => tab.Reservations)
-                  .Where(tab=>tab.TableID==id).FirstOrDefault();
+                  .Where(tab => tab.TableID == id).SingleOrDefault();
         }
 
         public void InsertTable(Table Table)

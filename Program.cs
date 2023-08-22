@@ -1,7 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Resturant_RES_MVC_ITI_PRJ.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client;
+using Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Management;
 
 namespace Resturant_RES_MVC_ITI_PRJ
 {
@@ -16,9 +19,26 @@ namespace Resturant_RES_MVC_ITI_PRJ
 
             builder.Services.AddDbContext<ResturantDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             //builder.Services.Configure<MinDateOptions>(builder.Configuration.GetSection("MinimumDate"));
+
+            //Client
             builder.Services.AddScoped<ICustomerRepository, CustomerRepoService>();
+            builder.Services.AddScoped<ICustomerAdderssesRepository, CustomerAdderssesRepoService>();
+            builder.Services.AddScoped<IDishRepository, DishRepoService>();
+            builder.Services.AddScoped<IDishCategoryRepository, DishCategoryRepoService>();
+            builder.Services.AddScoped<IDishIngredientRelRepository, DishIngredientsRelRepoService>();
+            builder.Services.AddScoped<IIngerdientRepository, IngerdientRepoService>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepoService>();
+            builder.Services.AddScoped<IOrderTypesRepository, OrderTypesRepoService>();
+            builder.Services.AddScoped<IOrderesDishesRelRepository, OrderesDishesRelRepoService>();
+            builder.Services.AddScoped<IReservationRepository, ReservationRepoService>();
             builder.Services.AddScoped<ITableRepository, TableRepoService>();
             builder.Services.AddScoped<ITestimonialsRepository, TestimonialsRepoService>();
+
+            //Management
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepoService>();
+            builder.Services.AddScoped<IEmployeeAddressRepository, EmployeeAddressRepoService>();
+            builder.Services.AddScoped<IEmployeesCategoriesRepository, EmployeesCategoriesRepoService>();
+            builder.Services.AddScoped<IFranchiseRepository, FranchiseRepoService>();
 
             var app = builder.Build();
 
