@@ -25,7 +25,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         {
             if (id == 0)
             {
-                throw new ArgumentException($"Can't Find That Course with Id: {id}");
+                throw new ArgumentException($"Can't Find That Customer with Id: {id}");
             }
             return Ctx.Customers
                 .Include(cs => cs.Testimonials)
