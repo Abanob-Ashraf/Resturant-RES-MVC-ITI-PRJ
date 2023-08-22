@@ -16,6 +16,7 @@ namespace Resturant_RES_MVC_ITI_PRJ
 
             builder.Services.AddDbContext<ResturantDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             //builder.Services.Configure<MinDateOptions>(builder.Configuration.GetSection("MinimumDate"));
+            builder.Services.AddScoped<ICustomerRepository, CustomerRepoService>();
 
             var app = builder.Build();
 
