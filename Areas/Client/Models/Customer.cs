@@ -20,11 +20,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 
         [Required(ErrorMessage = "You Must Enter Email")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Invalid Email Address")]
+        [DisplayName("Email")]
         public string CustEmail { get; set; }
 
         [Required(ErrorMessage = "You Must Enter Email")]
         [DataType(DataType.Password)]
-        [DisplayName("Email")]
         [RegularExpression("\"^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$\"\r\n", ErrorMessage = "Enter a strong passwor")]
         public string CustPassword { get; set; }
 
