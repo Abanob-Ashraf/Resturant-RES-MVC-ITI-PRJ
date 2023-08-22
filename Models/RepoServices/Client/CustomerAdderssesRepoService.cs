@@ -52,7 +52,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
 
         public void DeleteCustomerAdderss(int id)
         {
-            throw new NotImplementedException();
+            Ctx.CustomersAddersses.Remove(GetCustomerAdderssById(id));
+            Ctx.SaveChanges();
         }
     }
 }
