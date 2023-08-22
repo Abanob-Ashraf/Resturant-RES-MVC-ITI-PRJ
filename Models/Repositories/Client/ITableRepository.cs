@@ -7,7 +7,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client
     {
         public List<Table> GetAllTables();
 
-        public Table GetTablesById(int id);
+        public Table GetTableById(int id);
 
         public void InsertTable(Table Table);
 
