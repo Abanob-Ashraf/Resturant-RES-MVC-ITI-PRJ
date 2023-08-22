@@ -1,7 +1,6 @@
-﻿
-using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+﻿using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 
-namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories
+namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client
 {
 
     public interface IOrderTypesRepository
