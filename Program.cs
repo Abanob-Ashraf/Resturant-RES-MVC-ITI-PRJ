@@ -58,19 +58,23 @@ namespace Resturant_RES_MVC_ITI_PRJ
 
             app.UseAuthorization();
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
             app.MapAreaControllerRoute(
-               name: "ClientArea",
-               areaName: "Client",
-               pattern: "{area}/{controller=Client}/{action=index}/{id?}");
+              name: "ClientArea",
+              areaName: "Client",
+              pattern: "Client/{controller}/{action=index}/{id?}");
 
             app.MapAreaControllerRoute(
                name: "ManagementArea",
                areaName: "Management",
-               pattern: "{area}/{controller=Management}/{action=index}/{id?}");
+               pattern: "Management/{controller}/{action=index}/{id?}");
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+           
 
             app.Run();
         }
