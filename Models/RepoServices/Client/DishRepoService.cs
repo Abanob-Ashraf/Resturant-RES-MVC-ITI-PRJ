@@ -1,33 +1,59 @@
-﻿using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
 {
     public class DishRepoService : IDishRepository
     {
+        public ResturantDbContext Ctx { get; }
+
+        public DishRepoService(ResturantDbContext ctx)
+        {
+            Ctx = ctx;
+        }
         public List<Dish> GetAllDishes()
         {
-            throw new NotImplementedException();
+            return Ctx.Dishes
+                .Include(d => d.DishCategory)
+                .Include(d => d.DishIngredientRels)
+                .ToList();
         }
 
         public Dish GetDishById(int id)
         {
-            throw new NotImplementedException();
+            if (id == 0)
+            {
+                throw new ArgumentException($"Can't Find That Dish with Id: {id}");
+            }
+            return Ctx.Dishes
+                .Include(d => d.DishCategory)
+                .Include(d => d.DishIngredientRels)
+                .Where(d => d.DishId == id).SingleOrDefault();
         }
 
         public void InsertDish(Dish dish)
         {
-            throw new NotImplementedException();
+            if (dish != null)
+            {
+                Ctx.Dishes.Add(dish);
+                Ctx.SaveChanges();
+            }
         }
 
         public void UpdateDish(Dish dish)
         {
-            throw new NotImplementedException();
+            if (dish != null)
+            {
+                Ctx.Dishes.Update(dish);
+                Ctx.SaveChanges();
+            }
         }
 
         public void DeleteDish(int id)
         {
-            throw new NotImplementedException();
+            Ctx.Dishes.Remove(GetDishById(id));
+            Ctx.SaveChanges();
         }
     }
 }
