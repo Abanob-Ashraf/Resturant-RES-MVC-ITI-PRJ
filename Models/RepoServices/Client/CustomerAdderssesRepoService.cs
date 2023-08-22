@@ -1,10 +1,13 @@
-﻿using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
 {
     public class CustomerAdderssesRepoService : ICustomerAdderssesRepository
     {
+
         public ResturantDbContext Ctx { get; }
 
         public CustomerAdderssesRepoService(ResturantDbContext ctx)
@@ -12,30 +15,44 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             Ctx = ctx;
         }
 
-        public List<Franchise> GetAllCustomerAddersses()
+
+        public List<CustomerAddersses> GetAllCustomerAddersses()
         {
-            throw new NotImplementedException();
+            return Ctx.CustomersAddersses.Include(add => add.Customer).ToList();
         }
 
-        public Franchise GetCustomerAdderssById(int id)
+        public CustomerAddersses GetCustomerAdderssById(int id)
         {
-            throw new NotImplementedException();
+            if (id == 0)
+            {
+                throw new ArgumentException($"Can't Find That Customer with Id: {id}");
+            }
+            return Ctx.CustomersAddersses
+                .Include(add => add.Customer)
+                .Where(cs => cs.CustomerAdderssesID == id).SingleOrDefault();
         }
 
-        public void InsertCustomerAdderss(Franchise franchise)
+        public void InsertCustomerAdderss(CustomerAddersses customerAddersses)
         {
-            throw new NotImplementedException();
+            if (customerAddersses != null)
+            {
+                Ctx.CustomersAddersses.Add(customerAddersses);
+                Ctx.SaveChanges();
+            }
         }
 
-        public void UpdateCustomerAdderss(Franchise franchise)
+        public void UpdateCustomerAdderss(CustomerAddersses customerAddersses)
         {
-            throw new NotImplementedException();
+            if (customerAddersses != null)
+            {
+                Ctx.CustomersAddersses.Update(customerAddersses);
+                Ctx.SaveChanges();
+            }
         }
 
         public void DeleteCustomerAdderss(int id)
         {
             throw new NotImplementedException();
         }
-
     }
 }
