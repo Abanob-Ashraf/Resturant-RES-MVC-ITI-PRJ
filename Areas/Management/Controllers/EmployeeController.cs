@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
 {
-    [Area("Client")]
-    [Route("Employee")]
+    [Area("Management")]
+    //[Route("Employees")]
     public class EmployeeController : Controller
     {
         public IEmployeeRepository EmployeeRepository { get; }
@@ -15,72 +16,74 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
             EmployeeRepository = employeeRepository;
         }
 
-        [Route("GetAllEmployees")]
+        //[Route("GetAllEmployees")]
         public ActionResult Index()
         {
             return View("Index", EmployeeRepository.GetAllEmployees());
         }
 
+        //[Route("GetEmployeeById/{id:int}")]
         public ActionResult Details(int id)
         {
-            return View();
+            return View("Details", EmployeeRepository.GetEmployeeById(id));
         }
-
+        
+        //[Route("CreateEmployee")]
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        //[Route("CreateEmployee")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Employee employee)
         {
-            try
+            if (ModelState.IsValid)
             {
+                EmployeeRepository.InsertEmployee(employee);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
-        public ActionResult Edit(int id)
+        //[Route("UpdateEmployee")]
+        public ActionResult Edit()
         {
             return View();
         }
 
         [HttpPost]
+        //[Route("UpdateEmployee")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Employee employee)
         {
-            try
+            if (ModelState.IsValid)
             {
+                EmployeeRepository.UpdateEmployee(employee);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
+        //[Route("DeletEmployee")]
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }
