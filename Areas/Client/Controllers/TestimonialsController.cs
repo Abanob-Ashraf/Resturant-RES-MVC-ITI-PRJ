@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
@@ -8,10 +12,12 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
     public class TestimonialsController : Controller
     {
         public ITestimonialsRepository TestimonialsRepository { get; }
+        public ICustomerRepository CustomerRepository { get; }
 
-        public TestimonialsController(ITestimonialsRepository testimonialsRepository)
+        public TestimonialsController(ITestimonialsRepository testimonialsRepository,ICustomerRepository customerRepository)
         {
             TestimonialsRepository = testimonialsRepository;
+            CustomerRepository = customerRepository;
         }
       
         public ActionResult Index()
@@ -22,70 +28,77 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         // GET: TestimonialsController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View("Details",TestimonialsRepository.GetTestimonialsById(id));
         }
 
         // GET: TestimonialsController/Create
         public ActionResult Create()
         {
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+
             return View();
         }
 
         // POST: TestimonialsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Testimonials testimonial)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+
+            if (ModelState.IsValid)
+                {
+                    TestimonialsRepository.InsertTestimonials(testimonial);
+                    return RedirectToAction(nameof(Index));
+                }
                 return View();
-            }
+                       
         }
 
         // GET: TestimonialsController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+
+            return View(TestimonialsRepository.GetTestimonialsById(id));
         }
 
         // POST: TestimonialsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Testimonials testimonial)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+
+            if (ModelState.IsValid)
+                {
+                    TestimonialsRepository.UpdateTestimonials(id,testimonial);
+                    return RedirectToAction(nameof(Index));
+                }
                 return View();
-            }
+           
         }
 
         // GET: TestimonialsController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            TestimonialsRepository.DeleteTestimonials(id);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: TestimonialsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }
