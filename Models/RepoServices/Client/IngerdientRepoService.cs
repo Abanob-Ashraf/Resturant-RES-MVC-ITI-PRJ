@@ -56,5 +56,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             Ctx.Ingerdients.Remove(GetIngerdientById(id));
             Ctx.SaveChanges();
         }
+
+        void IIngerdientRepository.UpdateIngerdient(Ingerdient ingerdient)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
