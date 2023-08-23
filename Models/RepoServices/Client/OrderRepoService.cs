@@ -62,5 +62,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             Ctx.Orders.Remove(GetOrderById(id));
             Ctx.SaveChanges();
         }
+
+        void IOrderRepository.UpdateOrder(int id, Order Order)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
