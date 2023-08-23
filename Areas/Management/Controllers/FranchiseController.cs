@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
@@ -20,76 +22,82 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         //[Route("GetAllFranchise")]
         public ActionResult Index()
         {
-            return View();
+            return View("Index", FranchiseRepository.GetAllFranchises());
         }
 
-        // GET: FranchiseController/Details/5
+        //[Route("GetFranchiseById/{id:int}")]
         public ActionResult Details(int id)
         {
-            return View();
+            return View("Index", FranchiseRepository.GetFranchiseById(id));
         }
 
-        // GET: FranchiseController/Create
+        //[Route("CreateFranchise")]
         public ActionResult Create()
         {
+            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
             return View();
         }
 
-        // POST: FranchiseController/Create
+        //[Route("CreateFranchise")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Franchise franchise)
         {
-            try
+            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
+
+            if (ModelState.IsValid)
             {
+                FranchiseRepository.InsertFranchise(franchise);
+
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
-        // GET: FranchiseController/Edit/5
+        //[Route("UpdateEmployee")]
         public ActionResult Edit(int id)
         {
+            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
+
+            return View(FranchiseRepository.GetFranchiseById(id));
+        }
+
+        //[Route("UpdateEmployee")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, Franchise franchise)
+        {
+            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
+
+            if (ModelState.IsValid)
+            {
+                FranchiseRepository.UpdateFranchise(id, franchise);
+                return RedirectToAction(nameof(Index));
+            }
             return View();
         }
 
-        // POST: FranchiseController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[Route("DeletEmployee")]
 
-        // GET: FranchiseController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            FranchiseRepository.DeleteFranchise(id);
+            return RedirectToAction(nameof(Index));
         }
 
-        // POST: FranchiseController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //// POST: FranchiseController/Delete/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }
