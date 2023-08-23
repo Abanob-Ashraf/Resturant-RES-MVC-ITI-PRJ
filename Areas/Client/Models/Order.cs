@@ -32,6 +32,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         public int FranchiseId { get; set; }
         public Franchise? Franchise { get; set; }
 
-        public ICollection<OrderesDishesRel>? OrderesDishesRels { get; set; }
+        public ICollection<OrderDishesRel>? OrderesDishesRels { get; set; }
     }
 }
