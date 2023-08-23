@@ -1,91 +1,97 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
     [Area("Client")]
+    //[Route("OrderDishesRel")]
+
     public class OrderDishesRelController : Controller
     {
 
-        public IOrdersDishesRelRepository OrdersDishesRelRepository { get; }
+        public IOrdersDishesRelRepository OrderDishesRelRepository { get; }
+        public IOrderRepository OrderRepository { get; }
+        public IDishRepository DishRepository { get; }
 
-        public OrderDishesRelController(IOrdersDishesRelRepository ordersDishesRelRepository)
+        public OrderDishesRelController(IOrdersDishesRelRepository ordersDishesRelRepository, IOrderRepository orderRepository, IDishRepository dishRepository)
         {
-            OrdersDishesRelRepository = ordersDishesRelRepository;
+            OrderDishesRelRepository = ordersDishesRelRepository;
+            OrderRepository = orderRepository;
+            DishRepository = dishRepository;
         }
         //[Route("/GetAllTables")]
         public ActionResult Index()
         {
-            return View("Index", OrdersDishesRelRepository.GetAllOrderDishesRels());
+            return View("Index", OrderDishesRelRepository.GetAllOrderDishesRels());
         }
-        // GET: OrderDishesRelController/Details/5
+        //[Route("GetOrderDishesRelById/{id:int}")]
         public ActionResult Details(int id)
         {
-            return View();
+            return View("Details", OrderDishesRelRepository.GetOrderDishesRelById(id));
         }
 
-        // GET: OrderDishesRelController/Create
+        //[Route("CreateOrderDishesRel")]
         public ActionResult Create()
         {
+            ViewBag.OrderList = new SelectList(OrderRepository.GetAllOrders(), "OrderId", "OrderState");
+            ViewBag.OrderTypeList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
+
+
             return View();
         }
 
-        // POST: OrderDishesRelController/Create
         [HttpPost]
+        //[Route("CreateOrderDishesRel")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(OrderDishesRel orderDishesRel)
         {
-            try
+            ViewBag.OrderList = new SelectList(OrderRepository.GetAllOrders(), "OrderId", "OrderState");
+            ViewBag.OrderTypeList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
+
+            if (ModelState.IsValid)
             {
+                OrderDishesRelRepository.InsertOrderDishesRel(orderDishesRel);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
-        // GET: OrderDishesRelController/Edit/5
+        //[Route("UpdateOrderDishesRel")]
         public ActionResult Edit(int id)
         {
+            ViewBag.OrderList = new SelectList(OrderRepository.GetAllOrders(), "OrderId", "OrderState");
+            ViewBag.OrderTypeList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
+            return View(OrderDishesRelRepository.GetOrderDishesRelById(id));
+        }
+
+        [HttpPost]
+        //[Route("UpdateOrderDishesRel")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, OrderDishesRel orderDishesRel)
+        {
+            ViewBag.OrderList = new SelectList(OrderRepository.GetAllOrders(), "OrderId", "OrderState");
+            ViewBag.OrderTypeList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
+
+            if (ModelState.IsValid)
+            {
+                OrderDishesRelRepository.UpdateOrderDishesRel(id, orderDishesRel);
+                return RedirectToAction(nameof(Index));
+            }
             return View();
         }
 
-        // POST: OrderDishesRelController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: OrderDishesRelController/Delete/5
+        //[Route("DeletOrderDishesRel")]
         public ActionResult Delete(int id)
         {
-            return View();
+            OrderDishesRelRepository.DeleteOrderDishesRel(id);
+            return RedirectToAction(nameof(Index));
         }
 
-        // POST: OrderDishesRelController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+       
     }
 }
