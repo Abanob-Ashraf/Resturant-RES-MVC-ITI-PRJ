@@ -47,7 +47,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
             return View();
         }
 
-        //[Route("UpdateEmployeeCategory")]
+        //[Route("UpdateEmployeeCategory/{id:int}")]
         public ActionResult Edit(int id)
         {
             return View(EmployeesCategoriesRepository.GetEmployeesCategoryById(id));
@@ -55,7 +55,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         }
 
         [HttpPost]
-        //[Route("UpdateEmployeeCategory")]
+        //[Route("UpdateEmployeeCategory/{id:int}")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EmployeeCategory employeeCategory)
         {
@@ -67,6 +67,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
             return View();
         }
 
+        //[Route("DeleteEmployeeCategory/{id:int}")]
         public ActionResult Delete(int id)
         {
             EmployeesCategoriesRepository.DeleteEmployeesCategory(id);
