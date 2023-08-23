@@ -28,7 +28,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         //[Route("GetFranchiseById/{id:int}")]
         public ActionResult Details(int id)
         {
-            return View("Index", FranchiseRepository.GetFranchiseById(id));
+            return View("Details", FranchiseRepository.GetFranchiseById(id));
         }
 
         //[Route("CreateFranchise")]
