@@ -47,7 +47,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         {
             if (Reservation != null)
             {
-                Ctx.Reservations.Update(Reservation);
+                var updatedReservation = GetReservationById(id);
+                updatedReservation.TableID = Reservation.TableID;
+                updatedReservation.Notes = Reservation.Notes;
+                updatedReservation.CustomerID =Reservation.CustomerID;
+                updatedReservation.ReservarionDate =Reservation.ReservarionDate ;
                 Ctx.SaveChanges();
             }
         }
