@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
     [Area("Client")]
+    //[Route("OrderType")]
     public class OrderTypeController : Controller
     {
 
@@ -19,73 +23,55 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         {
             return View("Index", OrderTypesRepository.GetAllOrderTypes());
         }
-        // GET: OrderTypeController/Details/5
+        //[Route("GetOrderTypeById/{id:int}")]
         public ActionResult Details(int id)
         {
-            return View();
+            return View("Details", OrderTypesRepository.GetOrderTypeById(id));
         }
 
-        // GET: OrderTypeController/Create
+        //[Route("CreateOrderType")]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: OrderTypeController/Create
         [HttpPost]
+        //[Route("CreateOrderType")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(OrderType orderType)
         {
-            try
+            if (ModelState.IsValid)
             {
+                OrderTypesRepository.InsertOrderType(orderType);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
-        // GET: OrderTypeController/Edit/5
+        //[Route("UpdateOrderType/{id:int}")]
         public ActionResult Edit(int id)
         {
+            return View(OrderTypesRepository.GetOrderTypeById(id));
+        }
+
+        [HttpPost]
+        //[Route("UpdateOrderType/{id:int}")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, OrderType orderType)
+        {
+            if (ModelState.IsValid)
+            {
+                OrderTypesRepository.UpdateOrderType(orderType);
+                return RedirectToAction(nameof(Index));
+            }
             return View();
         }
 
-        // POST: OrderTypeController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: OrderTypeController/Delete/5
+        //[Route("DeleteOrderType/{id:int}")]
         public ActionResult Delete(int id)
         {
-            return View();
-        }
-
-        // POST: OrderTypeController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            OrderTypesRepository.DeleteOrderType(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
