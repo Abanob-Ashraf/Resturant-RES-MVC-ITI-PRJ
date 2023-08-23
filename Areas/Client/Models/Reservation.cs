@@ -10,7 +10,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         [Key]
         public int ReservationID { get; set; }
 
-        [MaxLength]
+        [Required]
         public string Notes { get; set; }
 
         [ForeignKey("Customer")]
