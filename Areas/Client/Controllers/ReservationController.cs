@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
@@ -10,10 +12,14 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
        
 
         public IReservationRepository ReservationRepository { get; }
+        public ICustomerRepository CustomerRepository { get; }
+        public ITableRepository TableRepository { get; }
 
-        public ReservationController(IReservationRepository reservationrepository)
+        public ReservationController(IReservationRepository reservationrepository,ICustomerRepository customerRepository,ITableRepository tableRepository)
         {
             ReservationRepository = reservationrepository;
+            CustomerRepository = customerRepository;
+            TableRepository = tableRepository;
         }
       
         public ActionResult Index()
@@ -25,70 +31,68 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         // GET: ReservationController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View(ReservationRepository.GetReservationById(id));
         }
 
         // GET: ReservationController/Create
         public ActionResult Create()
         {
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+            ViewBag.TableList = new SelectList(TableRepository.GetAllTables(), "TableID", "TableNumber");
+
             return View();
         }
 
         // POST: ReservationController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Reservation reservation)
         {
-            try
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+            ViewBag.TableList = new SelectList(TableRepository.GetAllTables(), "TableID", "TableNumber");
+
+            if (ModelState.IsValid)
             {
+                ReservationRepository.InsertReservation(reservation);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: ReservationController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+            ViewBag.TableList = new SelectList(TableRepository.GetAllTables(), "TableID", "TableNumber");
+
+            return View(ReservationRepository.GetReservationById(id));
         }
 
         // POST: ReservationController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Reservation reservation)
         {
-            try
+
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+            ViewBag.TableList = new SelectList(TableRepository.GetAllTables(), "TableIDTableID", "TableNumber");
+
+            if (ModelState.IsValid)
             {
+                ReservationRepository.UpdateReservation(id,reservation);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: ReservationController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+
+            ReservationRepository.DeleteReservation(id);
+            return RedirectToAction(nameof(Index));
         }
 
-        // POST: ReservationController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+      
     }
 }
