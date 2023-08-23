@@ -42,24 +42,62 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
         {
             if (employee != null)
             {
-                Ctx.Employees.Add(employee);
-                Ctx.SaveChanges();
+                try
+                {
+                    Ctx.Employees.Add(employee);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+                
             }
         }
 
-        public void UpdateEmployee(Employee employee)
+        public void UpdateEmployee(int id, Employee employee)
         {
+            var updatedEmployee = GetEmployeeById(id);
             if (employee != null)
             {
-                Ctx.Employees.Update(employee);
-                Ctx.SaveChanges();
+                try
+                {
+                    updatedEmployee.EmpID = employee.EmpID;
+                    updatedEmployee.EmpName = employee.EmpName;
+                    updatedEmployee.EmpEmail = employee.EmpEmail;
+                    updatedEmployee.EmpPhone = employee.EmpPhone;
+                    updatedEmployee.EmpNationalId = employee.EmpNationalId;
+                    updatedEmployee.EmpHiringDate = employee.EmpHiringDate;
+                    updatedEmployee.EmpCategoryId = employee.EmpCategoryId;
+                    updatedEmployee.FranchiseId = employee.FranchiseId;
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+
             }
         }
 
         public void DeleteEmployee(int id)
         {
-            Ctx.Employees.Remove(GetEmployeeById(id));
-            Ctx.SaveChanges();
+            var deletedEmployee = GetEmployeeById(id);
+            if (deletedEmployee != null)
+            {
+                try
+                {
+                    Ctx.Employees.Remove(deletedEmployee);
+                    Ctx.SaveChanges();
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+                
+            }
+
+            
         }
     }
 }

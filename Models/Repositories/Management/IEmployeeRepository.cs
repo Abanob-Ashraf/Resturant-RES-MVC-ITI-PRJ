@@ -10,7 +10,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories
 
         public void InsertEmployee(Employee employee);
 
-        public void UpdateEmployee(Employee employee);
+        public void UpdateEmployee(int id, Employee employee);
 
         public void DeleteEmployee(int id);
     }
