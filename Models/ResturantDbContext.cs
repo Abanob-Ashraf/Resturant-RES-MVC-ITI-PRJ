@@ -20,7 +20,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models
         public DbSet<DishIngredientRel> DishIngredientRels { get; set; }
         public DbSet<Ingerdient> Ingerdients { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderesDishesRel> OrderesDishesRels { get; set; }
+        public DbSet<OrderDishesRel> OrderesDishesRels { get; set; }
         public DbSet<OrderType> OrderTypes { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Table> Tables { get; set; }
