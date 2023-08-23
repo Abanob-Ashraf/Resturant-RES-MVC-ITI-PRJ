@@ -1,17 +1,30 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
     [Area("Client")]
+    //[Route("Order")]
+
     public class OrderController : Controller
     {
         public IOrderRepository OrderRepository { get; }
+        public IOrderTypesRepository OrderTypeRepository { get; }
+        public ICustomerRepository CustomerRepository { get; }
+        public IFranchiseRepository FranchiseRepository { get; }
 
-        public OrderController(IOrderRepository orderRepository)
+
+        public OrderController(IOrderRepository orderRepository,IOrderTypesRepository orderTypesRepository,ICustomerRepository customerRepository, IFranchiseRepository franchiseRepository)
         {
             OrderRepository = orderRepository;
+            OrderTypeRepository = orderTypesRepository;
+            CustomerRepository = customerRepository;
+            FranchiseRepository = franchiseRepository;
         }
         //[Route("/GetAllTables")]
         public ActionResult Index()
@@ -19,73 +32,73 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View("Index", OrderRepository.GetAllOrders());
         }
 
-        // GET: OrderController/Details/5
+        //[Route("GetOrderById/{id:int}")]
         public ActionResult Details(int id)
         {
-            return View();
+            return View("Details", OrderRepository.GetOrderById(id));
         }
 
-        // GET: OrderController/Create
+        //[Route("CreateOrder")]
         public ActionResult Create()
         {
+            ViewBag.OrderTypeList = new SelectList(OrderTypeRepository.GetAllOrderTypes(), "OrderTypeId", "OrderTypeName");
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustomerId", "Customer Name");
+            ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
+
             return View();
         }
 
-        // POST: OrderController/Create
         [HttpPost]
+        //[Route("CreateOrder")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Order order)
         {
-            try
+            ViewBag.OrderTypeList = new SelectList(OrderTypeRepository.GetAllOrderTypes(), "OrderTypeId", "OrderTypeName");
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustomerId", "Customer Name");
+            ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
+
+            if (ModelState.IsValid)
             {
+                OrderRepository.InsertOrder(order);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
-        // GET: OrderController/Edit/5
+        //[Route("UpdateOrder")]
         public ActionResult Edit(int id)
         {
+            ViewBag.OrderTypeList = new SelectList(OrderTypeRepository.GetAllOrderTypes(), "OrderTypeId", "OrderTypeName");
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustomerId", "Customer Name");
+            ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
+
+            return View(OrderRepository.GetOrderById(id));
+        }
+
+        [HttpPost]
+        //[Route("UpdateOrder")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, Order order)
+        {
+            ViewBag.OrderTypeList = new SelectList(OrderTypeRepository.GetAllOrderTypes(), "OrderTypeId", "OrderTypeName");
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustomerId", "Customer Name");
+            ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
+
+            if (ModelState.IsValid)
+            {
+                OrderRepository.UpdateOrder(id, order);
+                return RedirectToAction(nameof(Index));
+            }
             return View();
         }
 
-        // POST: OrderController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: OrderController/Delete/5
+        //[Route("DeletOrder")]
         public ActionResult Delete(int id)
         {
-            return View();
+            OrderRepository.DeleteOrder(id);
+            return RedirectToAction(nameof(Index));
         }
 
-        // POST: OrderController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+       
     }
 }
