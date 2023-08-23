@@ -34,24 +34,54 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
         {
             if (employeeAddress != null)
             {
-                Ctx.EmployeesAddresses.Add(employeeAddress);
-                Ctx.SaveChanges();
+                try
+                {
+                    Ctx.EmployeesAddresses.Add(employeeAddress);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
-        public void UpdateEmployeeAddress(EmployeeAddress employeeAddress)
+        public void UpdateEmployeeAddress(int id, EmployeeAddress employeeAddress)
         {
-            if (employeeAddress != null)
+            var updatedEmployeeAddress = GetEmployeeAddressById(id);
+            if (updatedEmployeeAddress != null)
             {
-                Ctx.EmployeesAddresses.Update(employeeAddress);
-                Ctx.SaveChanges();
+                try
+                {
+                    updatedEmployeeAddress.AddressId = employeeAddress.AddressId;
+                    updatedEmployeeAddress.City = employeeAddress.City;
+                    updatedEmployeeAddress.Country = employeeAddress.Country;
+                    updatedEmployeeAddress.EmpId = employeeAddress.EmpId;
+
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
         public void DeleteEmployeeAddress(int id)
         {
-            Ctx.EmployeesAddresses.Remove(GetEmployeeAddressById(id));
-            Ctx.SaveChanges();
+            var deletedEmployeeAddress = GetEmployeeAddressById(id);
+            if (deletedEmployeeAddress != null)
+            {
+                try
+                {
+                    Ctx.EmployeesAddresses.Remove(deletedEmployeeAddress);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
         }
     }
 }

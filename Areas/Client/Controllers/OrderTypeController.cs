@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
@@ -27,6 +29,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         public ActionResult Details(int id)
         {
             return View("Details", OrderTypesRepository.GetOrderTypeById(id));
+            return View(OrderTypesRepository.GetOrderTypeById(id));
         }
 
         //[Route("CreateOrderType")]
@@ -54,24 +57,30 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View(OrderTypesRepository.GetOrderTypeById(id));
         }
 
+       
+
+        // POST: OrderTypeController/Edit/5
         [HttpPost]
-        //[Route("UpdateOrderType/{id:int}")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, OrderType orderType)
         {
             if (ModelState.IsValid)
             {
-                OrderTypesRepository.UpdateOrderType(orderType);
+                OrderTypesRepository.UpdateOrderType(id, orderType);
                 return RedirectToAction(nameof(Index));
             }
             return View();
         }
 
-        //[Route("DeleteOrderType/{id:int}")]
+        // GET: OrderTypeController/Delete/5
         public ActionResult Delete(int id)
         {
             OrderTypesRepository.DeleteOrderType(id);
             return RedirectToAction(nameof(Index));
         }
+
     }
+
+
 }
+

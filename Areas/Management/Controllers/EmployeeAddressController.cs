@@ -3,89 +3,88 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Management;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
 {
     [Area("Management")]
-    //[Route("Franchise")]
-    public class FranchiseController : Controller
+    //[Route("EmployeeAddress")]
+    public class EmployeeAddressController : Controller
     {
         public IEmployeeRepository EmployeeRepository { get; }
-        public IFranchiseRepository FranchiseRepository { get; }
+        public IEmployeeAddressRepository EmployeeAddressRepository { get; }
 
-        public FranchiseController(IEmployeeRepository employeeRepository,  IFranchiseRepository franchiseRepository)
+        public EmployeeAddressController(IEmployeeRepository employeeRepository, IEmployeeAddressRepository employeeAddressRepository)
         {
             EmployeeRepository = employeeRepository;
-            FranchiseRepository = franchiseRepository;
+            EmployeeAddressRepository = employeeAddressRepository;
         }
 
-        //[Route("GetAllFranchise")]
+        //[Route("GetAllEmployeeAddress")]
         public ActionResult Index()
         {
-            return View("Index", FranchiseRepository.GetAllFranchises());
+            return View("Index", EmployeeAddressRepository.GetAllEmployeesAddress());
         }
 
-        //[Route("GetFranchiseById/{id:int}")]
+        //[Route("GetEmployeeAddressById/{id:int}")]
         public ActionResult Details(int id)
         {
-            return View("Details", FranchiseRepository.GetFranchiseById(id));
+            return View("Details", EmployeeAddressRepository.GetEmployeeAddressById(id));
         }
 
-        //[Route("CreateFranchise")]
+        //[Route("CreateEmployeeAddress")]
         public ActionResult Create()
         {
             ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
             return View();
         }
 
-        //[Route("CreateFranchise")]
+        //[Route("CreateEmployeeAddress")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Franchise franchise)
+        public ActionResult Create(EmployeeAddress employeeAddress)
         {
             ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
 
             if (ModelState.IsValid)
             {
-                FranchiseRepository.InsertFranchise(franchise);
+                EmployeeAddressRepository.InsertEmployeeAddress(employeeAddress);
 
                 return RedirectToAction(nameof(Index));
             }
             return View();
         }
 
-        //[Route("UpdateEmployee")]
+        //[Route("UpdateEmployeeAddress/{id:int}")]
         public ActionResult Edit(int id)
         {
             ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
-
-            return View(FranchiseRepository.GetFranchiseById(id));
+            return View(EmployeeAddressRepository.GetEmployeeAddressById(id));
         }
 
-        //[Route("UpdateEmployee")]
+        //[Route("UpdateEmployeeAddress/{id:int}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Franchise franchise)
+        public ActionResult Edit(int id, EmployeeAddress employeeAddress)
         {
             ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
 
             if (ModelState.IsValid)
             {
-                FranchiseRepository.UpdateFranchise(id, franchise);
+                EmployeeAddressRepository.UpdateEmployeeAddress(id, employeeAddress);
                 return RedirectToAction(nameof(Index));
             }
             return View();
         }
 
-        //[Route("DeletEmployee")]
-
+        //[Route("DeletEmployeeAddress/{id:int}")]
         public ActionResult Delete(int id)
         {
-            FranchiseRepository.DeleteFranchise(id);
+            EmployeeAddressRepository.DeleteEmployeeAddress(id);
             return RedirectToAction(nameof(Index));
         }
 
-        //// POST: FranchiseController/Delete/5
+        // POST: EmployeeAddressController/Delete/5
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public ActionResult Delete(int id, IFormCollection collection)
