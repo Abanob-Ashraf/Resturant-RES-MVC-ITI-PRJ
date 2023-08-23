@@ -14,7 +14,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             Ctx = ctx;
         }
 
-        public List<OrderesDishesRel> GetAllOrderDishesRels()
+        public List<OrderDishesRel> GetAllOrderDishesRels()
         {
             return Ctx.OrderesDishesRels
                  .Include(orderdishRel => orderdishRel.Dish)
@@ -23,7 +23,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
 
         }
 
-        public OrderesDishesRel GetOrderDishesRelById(int id)
+        public OrderDishesRel GetOrderDishesRelById(int id)
         {
             if (id == 0)
             {
@@ -35,7 +35,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
                   .Where(ordSishRel => ordSishRel.OrderDishesRelId == id).SingleOrDefault();
         }
 
-        public void InsertOrderDishesRel(OrderesDishesRel orderDishesRel)
+        public void InsertOrderDishesRel(OrderDishesRel orderDishesRel)
         {
 
             if (orderDishesRel != null)
@@ -45,7 +45,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             }
         }
 
-        public void UpdateOrderDishesRel(OrderesDishesRel orderDishesRel)
+        public void UpdateOrderDishesRel(OrderDishesRel orderDishesRel)
         {
             if (orderDishesRel != null)
             {
@@ -58,6 +58,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         {
             Ctx.OrderesDishesRels.Remove(GetOrderDishesRelById(id));
             Ctx.SaveChanges();
+        }
+
+        void IOrdersDishesRelRepository.UpdateOrderDishesRel(int id, OrderDishesRel orderDishesRel)
+        {
+            throw new NotImplementedException();
         }
     }
 }
