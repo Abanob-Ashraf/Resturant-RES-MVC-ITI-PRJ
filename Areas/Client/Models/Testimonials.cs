@@ -9,8 +9,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         [Key]
         public int TestimonialsID { get; set; }
 
-        [MaxLength]
-        public int TestimonialsText { get; set; }
+        [Required]
+        public string TestimonialsText { get; set; }
 
         [ForeignKey("Customer")]
         public int CustomerID { get; set; }
