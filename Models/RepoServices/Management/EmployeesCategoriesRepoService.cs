@@ -34,8 +34,16 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
         {
             if (employeesCategories != null)
             {
-                Ctx.EmployeeCategories.Add(employeesCategories);
-                Ctx.SaveChanges();
+                try
+                {
+                    Ctx.EmployeeCategories.Add(employeesCategories);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+
             }
         }
 
@@ -43,15 +51,34 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
         {
             if (employeesCategories != null)
             {
-                Ctx.EmployeeCategories.Update(employeesCategories);
-                Ctx.SaveChanges();
+                try
+                {
+                    Ctx.EmployeeCategories.Update(employeesCategories);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
         public void DeleteEmployeesCategory(int id)
         {
-            Ctx.EmployeeCategories.Remove(GetEmployeesCategoryById(id));
-            Ctx.SaveChanges();
+            var deletedEmployeesCategories = GetEmployeesCategoryById(id);
+            if (deletedEmployeesCategories != null)
+            {
+                try
+                {
+                    Ctx.EmployeeCategories.Remove(deletedEmployeesCategories);
+                    Ctx.SaveChanges();
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }    
+            
         }
     }
 }
