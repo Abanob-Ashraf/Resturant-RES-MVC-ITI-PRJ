@@ -20,7 +20,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 
         public ActionResult Details(int id)
         {
-            return View();
+            return View(CustomerRepository.GetCustomerById(id));
         }
 
         public ActionResult Create()
