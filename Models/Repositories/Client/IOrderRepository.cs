@@ -11,7 +11,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client
 
         public void InsertOrder(Order Order);
 
-        public void UpdateOrder(Order Order);
+        public void UpdateOrder(int id, Order Order);
 
         public void DeleteOrder(int id);
     }
