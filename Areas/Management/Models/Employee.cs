@@ -2,6 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.CodeAnalysis.Options;
+using Resturant_RES_MVC_ITI_PRJ.Models;
+using System.Configuration;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
 {
@@ -11,6 +13,14 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
     [Index("EmpNationalId", IsUnique = true)]
     public class Employee
     {
+        //public IConfiguration Configuration { get; set; }
+        //public static string minDate { get; set; }
+        //public Employee(IConfiguration configuration)
+        //{
+        //    Configuration = configuration;
+        //    minDate = configuration["MinimumDate"].ToString();
+        //}
+
         [Key]
         public int EmpID { get; set; }
 
@@ -30,7 +40,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
         [MaxLength(14)]
         public string EmpNationalId { get; set; }
 
-        [Range(typeof(DateTime), "1/1/1900", "31/12/3100", ErrorMessage = "Date must be between {1} and {2}")]
+        //[Range(typeof(DateTime), "1/1/1900", "31/12/3100", ErrorMessage = "Date must be between {1} and {2}")]
+        [DateRange("01/01/2010")]
         public DateTime EmpHiringDate { get; set; }
 
         [Required]
