@@ -1,83 +1,82 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
+    [Area("Client")]
+    //[Route("Ingerdient")]
     public class IngerdientController : Controller
     {
-        // GET: IngerdientController
+        public IIngerdientRepository IngerdientRepository { get; }
+
+        public IngerdientController(IIngerdientRepository ingerdientRepository)
+        {
+            IngerdientRepository = ingerdientRepository;
+        }
+
+        //[Route("GetAllIngerdients")]
         public ActionResult Index()
         {
-            return View();
+            return View("Index", IngerdientRepository.GetAllIngerdients());
         }
 
-        // GET: IngerdientController/Details/5
+        //[Route("GetIngerdientById/{id:int}")]
         public ActionResult Details(int id)
         {
-            return View();
+            return View("Details", IngerdientRepository.GetIngerdientById(id));
         }
 
-        // GET: IngerdientController/Create
+        //[Route("CreateIngerdient")]
         public ActionResult Create()
         {
+
             return View();
         }
 
-        // POST: IngerdientController/Create
         [HttpPost]
+        //[Route("CreateIngerdient")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Ingerdient ingerdient)
         {
-            try
+            if (ModelState.IsValid)
             {
+                IngerdientRepository.InsertIngerdient(ingerdient);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
-        // GET: IngerdientController/Edit/5
+        //[Route("UpdateIngerdient/{id:int}")]
         public ActionResult Edit(int id)
         {
+            return View(IngerdientRepository.GetIngerdientById(id));
+        }
+
+        [HttpPost]
+        //[Route("UpdateIngerdient/{id:int}")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Ingerdient ingerdient)
+        {
+            if (ModelState.IsValid)
+            {
+                IngerdientRepository.UpdateIngerdient(ingerdient);
+                return RedirectToAction(nameof(Index));
+            }
             return View();
         }
 
-        // POST: IngerdientController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: IngerdientController/Delete/5
+        //[Route("DeleteIngerdient/{id:int}")]
         public ActionResult Delete(int id)
         {
-            return View();
+            IngerdientRepository.DeleteIngerdient(id);
+            return RedirectToAction(nameof(Index));
         }
 
-        // POST: IngerdientController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
     }
 }
