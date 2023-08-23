@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
@@ -44,7 +45,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         {
             if (Testimonials != null)
             {
-                Ctx.Testimonials.Update(Testimonials);
+                var updatedTestimonials = GetTestimonialsById(id);
+                updatedTestimonials.CustomerID = Testimonials.CustomerID;
+                updatedTestimonials.TestimonialsText = Testimonials.TestimonialsText;
                 Ctx.SaveChanges();
             }
         }
