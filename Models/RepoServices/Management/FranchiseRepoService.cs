@@ -38,24 +38,55 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
         {
             if (franchise != null)
             {
-                Ctx.Franchises.Add(franchise);
-                Ctx.SaveChanges();
+                try
+                {
+                    Ctx.Franchises.Add(franchise);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
-        public void UpdateFranchise(Franchise franchise)
+        public void UpdateFranchise(int id, Franchise franchise)
         {
+            var updatedFranchise = GetFranchiseById(id);
             if (franchise != null)
             {
-                Ctx.Franchises.Update(franchise);
-                Ctx.SaveChanges();
+                try
+                {
+                    updatedFranchise.FranchiseId = franchise.FranchiseId;
+                    updatedFranchise.Street = franchise.Street;
+                    updatedFranchise.City = franchise.City;
+                    updatedFranchise.Country = franchise.Country;
+                    updatedFranchise.ManagerId = franchise.ManagerId;
+
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
         public void DeleteFranchise(int id)
         {
-            Ctx.Franchises.Remove(GetFranchiseById(id));
-            Ctx.SaveChanges();
+            var deletedFranchise = GetFranchiseById(id);
+            if (deletedFranchise != null)
+            {
+                try
+                {
+                    Ctx.Franchises.Remove(deletedFranchise);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
         }
     }
 }
