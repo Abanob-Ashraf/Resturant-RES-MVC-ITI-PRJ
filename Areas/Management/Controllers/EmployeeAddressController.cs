@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Management;
 
@@ -18,79 +20,83 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
             EmployeeAddressRepository = employeeAddressRepository;
         }
 
-        //[Route("GetAllFranchise")]
+        //[Route("GetAllEmployeeAddress")]
         public ActionResult Index()
         {
-            return View();
+            return View("Index", EmployeeAddressRepository.GetAllEmployeesAddress());
         }
 
-        // GET: EmployeeAddressController/Details/5
+        //[Route("GetEmployeeAddressById/{id:int}")]
         public ActionResult Details(int id)
         {
-            return View();
+            return View("Details", EmployeeAddressRepository.GetEmployeeAddressById(id));
         }
 
-        // GET: EmployeeAddressController/Create
+        //[Route("CreateEmployeeAddress")]
         public ActionResult Create()
         {
+            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
             return View();
         }
 
-        // POST: EmployeeAddressController/Create
+        //[Route("CreateEmployeeAddress")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(EmployeeAddress employeeAddress)
         {
-            try
+            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
+
+            if (ModelState.IsValid)
             {
+                EmployeeAddressRepository.InsertEmployeeAddress(employeeAddress);
+
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
-        // GET: EmployeeAddressController/Edit/5
+        //[Route("UpdateEmployeeAddress/{id:int}")]
         public ActionResult Edit(int id)
         {
-            return View();
+            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
+            return View(EmployeeAddressRepository.GetEmployeeAddressById(id));
         }
 
-        // POST: EmployeeAddressController/Edit/5
+        //[Route("UpdateEmployeeAddress/{id:int}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, EmployeeAddress employeeAddress)
         {
-            try
+            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
+
+            if (ModelState.IsValid)
             {
+                EmployeeAddressRepository.UpdateEmployeeAddress(id, employeeAddress);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
-        // GET: EmployeeAddressController/Delete/5
+        //[Route("DeletEmployeeAddress/{id:int}")]
         public ActionResult Delete(int id)
         {
-            return View();
+            EmployeeAddressRepository.DeleteEmployeeAddress(id);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: EmployeeAddressController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }
