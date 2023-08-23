@@ -32,7 +32,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 
         public ActionResult Details(int id)
         {
-            return View();
+            return View(TableRepository.GetTableById(id));
         }
 
         //[Route("NewTable")]
@@ -46,60 +46,45 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Table table)
         {
-            try
+            if (ModelState.IsValid)
             {
+                TableRepository.InsertTable(table);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         //[Route("Update/{id:int}")]
 
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(TableRepository.GetTableById(id));
         }
 
         //[Route("Update/{id:int}")]
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Table table)
         {
-            try
+            if (ModelState.IsValid)
             {
+                TableRepository.UpdateTable(id, table);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         //[Route("delete")]
         public ActionResult Delete(int id)
         {
-            return View();
+            TableRepository.DeleteTable(id);
+            return RedirectToAction(nameof(Index));
         }
 
-        //[Route("delete")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+      
+      
     }
 }
