@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 
@@ -10,10 +11,15 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
     public class EmployeeController : Controller
     {
         public IEmployeeRepository EmployeeRepository { get; }
+        public IEmployeesCategoriesRepository EmployeesCategoriesRepository { get; }
 
-        public EmployeeController(IEmployeeRepository employeeRepository)
+        public IFranchiseRepository FranchiseRepository { get; }
+
+        public EmployeeController(IEmployeeRepository employeeRepository, IEmployeesCategoriesRepository employeesCategoriesRepository, IFranchiseRepository franchiseRepository)
         {
             EmployeeRepository = employeeRepository;
+            EmployeesCategoriesRepository = employeesCategoriesRepository;
+            FranchiseRepository = franchiseRepository;
         }
 
         //[Route("GetAllEmployees")]
@@ -31,6 +37,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         //[Route("CreateEmployee")]
         public ActionResult Create()
         {
+            ViewBag.CategoryList = new SelectList(EmployeesCategoriesRepository.GetAllEmployeesCategories(), "EmployeeCategoryId", "CategoryName");
+            ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
             return View();
         }
 
@@ -39,6 +47,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Employee employee)
         {
+            ViewBag.CategoryList = new SelectList(EmployeesCategoriesRepository.GetAllEmployeesCategories(), "EmployeeCategoryId", "CategoryName");
+            ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
+
             if (ModelState.IsValid)
             {
                 EmployeeRepository.InsertEmployee(employee);
@@ -48,19 +59,24 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         }
 
         //[Route("UpdateEmployee")]
-        public ActionResult Edit()
+        public ActionResult Edit(int id)
         {
-            return View();
+            ViewBag.CategoryList = new SelectList(EmployeesCategoriesRepository.GetAllEmployeesCategories(), "EmployeeCategoryId", "CategoryName");
+            ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
+            return View(EmployeeRepository.GetEmployeeById(id));
         }
 
         [HttpPost]
         //[Route("UpdateEmployee")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Employee employee)
+        public ActionResult Edit(int id, Employee employee)
         {
+            ViewBag.CategoryList = new SelectList(EmployeesCategoriesRepository.GetAllEmployeesCategories(), "EmployeeCategoryId", "CategoryName");
+            ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
+
             if (ModelState.IsValid)
             {
-                EmployeeRepository.UpdateEmployee(employee);
+                EmployeeRepository.UpdateEmployee(id, employee);
                 return RedirectToAction(nameof(Index));
             }
             return View();
@@ -69,21 +85,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         //[Route("DeletEmployee")]
         public ActionResult Delete(int id)
         {
-            return View();
+            EmployeeRepository.DeleteEmployee(id);
+            return RedirectToAction(nameof(Index));
         }
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
     }
 }
