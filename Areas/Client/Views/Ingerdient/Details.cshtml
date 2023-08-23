@@ -1,0 +1,24 @@
+﻿@model Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models.Ingerdient
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Ingerdient</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IngName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IngName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IngerdientId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
