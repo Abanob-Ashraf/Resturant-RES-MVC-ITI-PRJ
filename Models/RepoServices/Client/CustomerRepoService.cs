@@ -39,8 +39,16 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         {
             if (customer != null)
             {
-                Ctx.Customers.Add(customer);
-                Ctx.SaveChanges();
+                try
+                {
+                    Ctx.Customers.Add(customer);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+
             }
         }
 
@@ -48,16 +56,33 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         {
             if (customer != null)
             {
-                Ctx.Customers.Update(customer);
-                Ctx.SaveChanges();
+                try
+                {
+                    Ctx.Customers.Update(customer);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
         public void DeleteCustomer(int id)
         {
-            Ctx.Customers.Remove(GetCustomerById(id));
-            Ctx.SaveChanges();
+            var deleteCustomer = GetCustomerById(id);
+            if (deleteCustomer != null)
+            {
+                try
+                {
+                    Ctx.Customers.Remove(deleteCustomer);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
         }
-
     }
 }
