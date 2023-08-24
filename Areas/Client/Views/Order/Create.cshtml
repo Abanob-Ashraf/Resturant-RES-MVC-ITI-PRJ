@@ -28,16 +28,16 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="OrderTypeId" class="control-label"></label>
-                <select asp-for="OrderTypeId" class ="form-control" asp-items="ViewBag.OrderTypeId"></select>
+                <label asp-for="OrderTypeId" class="control-label">OrderType</label>
+                <select asp-for="OrderTypeId" class="form-control" asp-items="ViewBag.OrderTypeList"></select>
             </div>
             <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>
-                <select asp-for="CustomerId" class ="form-control" asp-items="ViewBag.CustomerId"></select>
+                <label asp-for="CustomerId" class="control-label">Customer</label>
+                <select asp-for="CustomerId" class ="form-control" asp-items="ViewBag.CustomerList"></select>
             </div>
             <div class="form-group">
-                <label asp-for="FranchiseId" class="control-label"></label>
-                <select asp-for="FranchiseId" class ="form-control" asp-items="ViewBag.FranchiseId"></select>
+                <label asp-for="FranchiseId" class="control-label">Franchise</label>
+                <select asp-for="FranchiseId" class ="form-control" asp-items="ViewBag.FranchiseList"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

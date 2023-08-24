@@ -42,7 +42,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         public ActionResult Create()
         {
             ViewBag.OrderTypeList = new SelectList(OrderTypeRepository.GetAllOrderTypes(), "OrderTypeId", "OrderTypeName");
-            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustomerId", "Customer Name");
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
             ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
 
             return View();
@@ -53,8 +53,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Order order)
         {
+
             ViewBag.OrderTypeList = new SelectList(OrderTypeRepository.GetAllOrderTypes(), "OrderTypeId", "OrderTypeName");
-            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustomerId", "Customer Name");
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
             ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
 
             if (ModelState.IsValid)
@@ -68,8 +69,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         //[Route("UpdateOrder")]
         public ActionResult Edit(int id)
         {
+
             ViewBag.OrderTypeList = new SelectList(OrderTypeRepository.GetAllOrderTypes(), "OrderTypeId", "OrderTypeName");
-            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustomerId", "Customer Name");
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
             ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
 
             return View(OrderRepository.GetOrderById(id));
@@ -80,8 +82,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Order order)
         {
+
             ViewBag.OrderTypeList = new SelectList(OrderTypeRepository.GetAllOrderTypes(), "OrderTypeId", "OrderTypeName");
-            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustomerId", "Customer Name");
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
             ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
 
             if (ModelState.IsValid)

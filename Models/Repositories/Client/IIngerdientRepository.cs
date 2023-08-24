@@ -11,9 +11,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client
 
         public void InsertIngerdient(Ingerdient Ingerdient);
 
-        public void UpdateIngerdient(int id, Ingerdient Ingerdient);
+        public void UpdateIngerdient( Ingerdient Ingerdient);
 
         public void DeleteIngerdient(int id);
-        void UpdateIngerdient(Ingerdient ingerdient);
+       
     }
 }

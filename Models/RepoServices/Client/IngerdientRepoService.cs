@@ -42,7 +42,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             }
         }
 
-        public void UpdateIngerdient(int id, Ingerdient Ingerdient)
+        public void UpdateIngerdient( Ingerdient Ingerdient)
         {
             if (Ingerdient != null)
             {
@@ -57,9 +57,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             Ctx.SaveChanges();
         }
 
-        void IIngerdientRepository.UpdateIngerdient(Ingerdient ingerdient)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

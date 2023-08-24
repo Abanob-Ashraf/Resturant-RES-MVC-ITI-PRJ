@@ -39,7 +39,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         public ActionResult Create()
         {
             ViewBag.OrderList = new SelectList(OrderRepository.GetAllOrders(), "OrderId", "OrderState");
-            ViewBag.OrderTypeList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
+            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
 
 
             return View();
@@ -51,7 +51,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         public ActionResult Create(OrderDishesRel orderDishesRel)
         {
             ViewBag.OrderList = new SelectList(OrderRepository.GetAllOrders(), "OrderId", "OrderState");
-            ViewBag.OrderTypeList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
+            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
 
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         public ActionResult Edit(int id)
         {
             ViewBag.OrderList = new SelectList(OrderRepository.GetAllOrders(), "OrderId", "OrderState");
-            ViewBag.OrderTypeList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
+            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
             return View(OrderDishesRelRepository.GetOrderDishesRelById(id));
         }
 
@@ -75,7 +75,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         public ActionResult Edit(int id, OrderDishesRel orderDishesRel)
         {
             ViewBag.OrderList = new SelectList(OrderRepository.GetAllOrders(), "OrderId", "OrderState");
-            ViewBag.OrderTypeList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
+            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
 
             if (ModelState.IsValid)
             {

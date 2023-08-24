@@ -45,12 +45,24 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             }
         }
 
-        public void UpdateOrderDishesRel(OrderDishesRel orderDishesRel)
+        public void UpdateOrderDishesRel(int id,OrderDishesRel orderDishesRel)
         {
-            if (orderDishesRel != null)
+            var updateOrderDishesRel = GetOrderDishesRelById(id);
+            if (updateOrderDishesRel != null)
             {
-                Ctx.OrderesDishesRels.Update(orderDishesRel);
-                Ctx.SaveChanges();
+                try
+                {
+                    updateOrderDishesRel.OrderId = orderDishesRel.OrderId;
+                    updateOrderDishesRel.DishId = orderDishesRel.DishId;
+                    updateOrderDishesRel.Quantity = orderDishesRel.Quantity;
+
+                  
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
@@ -60,9 +72,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             Ctx.SaveChanges();
         }
 
-        void IOrdersDishesRelRepository.UpdateOrderDishesRel(int id, OrderDishesRel orderDishesRel)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
