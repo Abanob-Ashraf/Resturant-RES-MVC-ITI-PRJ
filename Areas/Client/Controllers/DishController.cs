@@ -1,83 +1,97 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
+    [Area("Client")]
+    //[Route("Customer")]
     public class DishController : Controller
     {
-        // GET: DishController
+        public IDishRepository DishRepository { get; }
+
+        public IDishCategoryRepository CategoryRepository { get; }
+
+        public DishController(IDishRepository dishRepository, IDishCategoryRepository dishCategoryRepository)
+        {
+            DishRepository = dishRepository;
+            CategoryRepository = dishCategoryRepository;
+        }
+
         public ActionResult Index()
         {
-            return View();
+            return View("Index", DishRepository.GetAllDishes());
         }
 
-        // GET: DishController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View("Details", DishRepository.GetDishById(id));
         }
 
-        // GET: DishController/Create
         public ActionResult Create()
         {
+            ViewBag.CategoryList = new SelectList(CategoryRepository.GetAllDishCategories(), "DishCategoryId", "DishCategoryName");
             return View();
         }
 
-        // POST: DishController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Dish dish)
         {
-            try
+            ViewBag.CategoryList = new SelectList(CategoryRepository.GetAllDishCategories(), "DishCategoryId", "DishCategoryName");
+
+            if (ModelState.IsValid)
             {
+                DishRepository.InsertDish(dish);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
-        // GET: DishController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ViewBag.CategoryList = new SelectList(CategoryRepository.GetAllDishCategories(), "DishCategoryId", "DishCategoryName");
+
+            return View(DishRepository.GetDishById(id));
         }
 
         // POST: DishController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Dish dish)
         {
-            try
+            ViewBag.CategoryList = new SelectList(CategoryRepository.GetAllDishCategories(), "DishCategoryId", "DishCategoryName");
+
+            if (ModelState.IsValid)
             {
+                DishRepository.UpdateDish(id, dish);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: DishController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            DishRepository.DeleteDish(id);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: DishController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }
