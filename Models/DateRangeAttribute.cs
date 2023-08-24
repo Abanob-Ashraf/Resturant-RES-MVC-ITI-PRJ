@@ -26,7 +26,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models
                 }
                 else
                 {
-                    ErrorMessage = $"Min Value {Minimum} and Max Value {Maximum}";
+                    ErrorMessage = $"Min Value {Minimum.ToShortDateString()} and Max Value {Maximum.ToShortDateString()}";
                     return new ValidationResult(ErrorMessage);
                 }
             }

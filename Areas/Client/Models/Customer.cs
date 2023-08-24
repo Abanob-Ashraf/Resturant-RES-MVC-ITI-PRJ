@@ -13,6 +13,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
     {
         [Key]
         public int CustID { get; set; }
+
         [Required(ErrorMessage = "You Must Enter Customer Name")]
         [StringLength(50)]
         [DisplayName("Customer Name")]

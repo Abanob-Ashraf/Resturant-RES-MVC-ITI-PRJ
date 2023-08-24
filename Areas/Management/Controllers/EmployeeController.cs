@@ -57,7 +57,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
             return View();
         }
 
-        //[Route("UpdateEmployee")]
+        //[Route("UpdateEmployee/{id:int}")]
         public ActionResult Edit(int id)
         {
             ViewBag.CategoryList = new SelectList(EmployeesCategoriesRepository.GetAllEmployeesCategories(), "EmployeeCategoryId", "CategoryName");
@@ -66,7 +66,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         }
 
         [HttpPost]
-        //[Route("UpdateEmployee")]
+        //[Route("UpdateEmployee/{id:int}")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Employee employee)
         {
