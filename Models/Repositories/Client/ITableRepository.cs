@@ -11,7 +11,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client
 
         public void InsertTable(Table Table);
 
-        public void UpdateTable(int id, Table Table);
+        public void UpdateTable(Table Table);
 
         public void DeleteTable(int id);
     }

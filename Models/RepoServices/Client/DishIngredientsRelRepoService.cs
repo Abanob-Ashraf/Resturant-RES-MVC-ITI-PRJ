@@ -37,25 +37,51 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         {
             if (dishIngredientRel != null)
             {
-                Ctx.DishIngredientRels.Add(dishIngredientRel);
-                Ctx.SaveChanges();
+                try
+                {
+                    Ctx.DishIngredientRels.Add(dishIngredientRel);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
-        public void UpdateDishIngredientRel(DishIngredientRel dishIngredientRel)
+        public void UpdateDishIngredientRel(int id, DishIngredientRel dishIngredientRel)
         {
-            if (dishIngredientRel != null)
+            var updatedDishIngredientRel = GetDishIngredientRelById(id);
+            if (updatedDishIngredientRel != null)
             {
-                Ctx.DishIngredientRels.Update(dishIngredientRel);
-                Ctx.SaveChanges();
+                try
+                {
+                    updatedDishIngredientRel.DishId = dishIngredientRel.DishId;
+                    updatedDishIngredientRel.DishIngredientRelId = dishIngredientRel.DishIngredientRelId;
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
-
 
         public void DeleteDishIngredientRel(int id)
         {
-            Ctx.DishIngredientRels.Remove(GetDishIngredientRelById(id));
-            Ctx.SaveChanges();
+            var deletededDishIngredientRel = GetDishIngredientRelById(id);
+            if (deletededDishIngredientRel != null)
+            {
+                try
+                {
+                    Ctx.DishIngredientRels.Remove(deletededDishIngredientRel);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
         }
     }
 }

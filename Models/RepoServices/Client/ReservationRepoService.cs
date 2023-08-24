@@ -13,7 +13,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             Ctx = ctx;
         }
 
-
         public List<Reservation> GetAllReservations()
         {
             return Ctx.Reservations
@@ -38,28 +37,53 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         {
             if (Reservation != null)
             {
-                Ctx.Reservations.Add(Reservation);
-                Ctx.SaveChanges();
+                try
+                {
+                    Ctx.Reservations.Add(Reservation);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
         public void UpdateReservation(int id, Reservation Reservation)
         {
-            if (Reservation != null)
+            var updatedReservation = GetReservationById(id);
+            if (updatedReservation != null)
             {
-                var updatedReservation = GetReservationById(id);
-                updatedReservation.TableID = Reservation.TableID;
-                updatedReservation.Notes = Reservation.Notes;
-                updatedReservation.CustomerID =Reservation.CustomerID;
-                updatedReservation.ReservarionDate =Reservation.ReservarionDate ;
-                Ctx.SaveChanges();
+                try
+                {
+                    updatedReservation.TableID = Reservation.TableID;
+                    updatedReservation.Notes = Reservation.Notes;
+                    updatedReservation.CustomerID = Reservation.CustomerID;
+                    updatedReservation.ReservarionDate = Reservation.ReservarionDate;
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
         public void DeleteReservation(int id)
         {
-            Ctx.Reservations.Remove(GetReservationById(id));
-            Ctx.SaveChanges();
+            var deletedReservation = GetReservationById(id);
+            if (deletedReservation != null)
+            {
+                try
+                {
+                    Ctx.Reservations.Remove(deletedReservation);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
         }
     }
 }

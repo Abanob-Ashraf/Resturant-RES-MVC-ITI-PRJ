@@ -53,7 +53,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
             {
                 try
                 {
-                    updatedEmployeeAddress.AddressId = employeeAddress.AddressId;
                     updatedEmployeeAddress.City = employeeAddress.City;
                     updatedEmployeeAddress.Country = employeeAddress.Country;
                     updatedEmployeeAddress.EmpId = employeeAddress.EmpId;

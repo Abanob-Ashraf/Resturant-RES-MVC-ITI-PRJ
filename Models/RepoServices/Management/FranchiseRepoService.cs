@@ -57,7 +57,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
             {
                 try
                 {
-                    updatedFranchise.FranchiseId = franchise.FranchiseId;
                     updatedFranchise.Street = franchise.Street;
                     updatedFranchise.City = franchise.City;
                     updatedFranchise.Country = franchise.Country;

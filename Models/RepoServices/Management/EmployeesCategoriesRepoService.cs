@@ -7,7 +7,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
     public class EmployeesCategoriesRepoService : IEmployeesCategoriesRepository
     {
         public ResturantDbContext Ctx { get; }
-
         public EmployeesCategoriesRepoService(ResturantDbContext ctx)
         {
             Ctx = ctx;
@@ -43,7 +42,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
                 {
                     Console.WriteLine(ex.ToString());
                 }
-
             }
         }
 
@@ -77,8 +75,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
                 {
                     Console.WriteLine(ex.ToString());
                 }
-            }    
-            
+            }
         }
     }
 }
