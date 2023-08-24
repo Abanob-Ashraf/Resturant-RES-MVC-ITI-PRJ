@@ -11,7 +11,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client
 
         public void InsertCustomerAdderss(CustomerAddersses customerAddersses);
 
-        public void UpdateCustomerAdderss(CustomerAddersses customerAddersses);
+        public void UpdateCustomerAdderss(int id, CustomerAddersses customerAddersses);
 
         public void DeleteCustomerAdderss(int id);
     }

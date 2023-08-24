@@ -36,24 +36,57 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         {
             if (customerAddersses != null)
             {
-                Ctx.CustomersAddersses.Add(customerAddersses);
-                Ctx.SaveChanges();
+                try
+                {
+                    Ctx.CustomersAddersses.Add(customerAddersses);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
-        public void UpdateCustomerAdderss(CustomerAddersses customerAddersses)
+        public void UpdateCustomerAdderss(int id, CustomerAddersses customerAddersses)
         {
-            if (customerAddersses != null)
+            var updatedCustomerAderss = GetCustomerAdderssById(id);
+            if (updatedCustomerAderss != null)
             {
-                Ctx.CustomersAddersses.Update(customerAddersses);
-                Ctx.SaveChanges();
+                try
+                {
+                    updatedCustomerAderss.CustAddressApartment = customerAddersses.CustAddressApartment;
+                    updatedCustomerAderss.CustAddressFloor = customerAddersses.CustAddressFloor;
+                    updatedCustomerAderss.CustAddressBuildingNo = customerAddersses.CustAddressBuildingNo;
+                    updatedCustomerAderss.CustAddressStreet = customerAddersses.CustAddressStreet;
+                    updatedCustomerAderss.CustAddressCity = customerAddersses.CustAddressCity;
+                    updatedCustomerAderss.CustAddressCounty = customerAddersses.CustAddressCounty;
+                    updatedCustomerAderss.CustomerID = customerAddersses.CustomerID;
+
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
         public void DeleteCustomerAdderss(int id)
         {
-            Ctx.CustomersAddersses.Remove(GetCustomerAdderssById(id));
-            Ctx.SaveChanges();
+            var deletedCustomerAderss = GetCustomerAdderssById(id);
+            if(deletedCustomerAderss != null)
+            {
+                try
+                {
+                    Ctx.CustomersAddersses.Remove(deletedCustomerAderss);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
         }
     }
 }
