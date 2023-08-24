@@ -11,9 +11,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client
 
         public void InsertOrderType(OrderType orderTypes);
 
-        public void UpdateOrderType(int id, OrderType orderTypes);
+        public void UpdateOrderType(OrderType orderTypes);
 
         public void DeleteOrderType(int id);
-        void UpdateOrderType(OrderType orderType);
     }
 }
