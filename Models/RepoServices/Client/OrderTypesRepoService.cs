@@ -6,7 +6,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
 {
     public class OrderTypesRepoService : IOrderTypesRepository
     {
-
         public ResturantDbContext Ctx { get; }
 
         public OrderTypesRepoService(ResturantDbContext ctx)
@@ -14,14 +13,12 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             Ctx = ctx;
         }
 
-
         public List<OrderType> GetAllOrderTypes()
         {
             return Ctx.OrderTypes
                   .Include(OrderType => OrderType.Orders)
                   .ToList();
         }
-
 
         public OrderType GetOrderTypeById(int id)
         {
@@ -34,36 +31,53 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
                  .Where(OrderType => OrderType.OrderTypeId == id).SingleOrDefault();
         }
         
-
         public void InsertOrderType(OrderType OrderType)
         {
             if (OrderType != null)
             {
-                Ctx.OrderTypes.Add(OrderType);
-                Ctx.SaveChanges();
+                try
+                {
+                    Ctx.OrderTypes.Add(OrderType);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
-        public void UpdateOrderType(int id, OrderType OrderType)
+        public void UpdateOrderType(OrderType OrderType)
         {
             if (OrderType != null)
             {
-                Ctx.OrderTypes.Update(OrderType);
-                Ctx.SaveChanges();
+                try
+                {
+                    Ctx.OrderTypes.Update(OrderType);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
-       
-
         public void DeleteOrderType(int id)
         {
-            Ctx.OrderTypes.Remove(GetOrderTypeById(id));
-            Ctx.SaveChanges();
-        }
-
-        void IOrderTypesRepository.UpdateOrderType(OrderType orderType)
-        {
-            throw new NotImplementedException();
+            var deleted = GetOrderTypeById(id);
+            if (deleted != null)
+            {
+                try
+                {
+                    Ctx.OrderTypes.Remove(deleted);
+                    Ctx.SaveChanges();
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
         }
     }
 }
