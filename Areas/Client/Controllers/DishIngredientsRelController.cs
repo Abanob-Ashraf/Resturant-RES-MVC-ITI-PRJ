@@ -1,83 +1,102 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
+    [Area("Client")]
+    //[Route("Customer")]
     public class DishIngredientsRelController : Controller
     {
-        // GET: DishIngredientsRelController
-        public ActionResult Index()
+        public IDishIngredientRelRepository RelRepository { get; }
+        public IDishRepository DishRepository { get; }
+        public IIngerdientRepository IngerdientRepository { get; }
+
+        public DishIngredientsRelController(IDishIngredientRelRepository relRepository, IDishRepository dishRepository, IIngerdientRepository ingerdientRepository)
         {
-            return View();
+            RelRepository = relRepository;
+            DishRepository = dishRepository;
+            IngerdientRepository = ingerdientRepository;
         }
 
-        // GET: DishIngredientsRelController/Details/5
+        public ActionResult Index()
+        {
+            return View("Index", RelRepository.GetAllDishIngredientRels());
+        }
+
         public ActionResult Details(int id)
         {
-            return View();
+            return View("Details", RelRepository.GetDishIngredientRelById(id));
         }
 
         // GET: DishIngredientsRelController/Create
         public ActionResult Create()
         {
+            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
+            ViewBag.IngerdientList = new SelectList(IngerdientRepository.GetAllIngerdients(), "IngerdientId", "IngName");
+
             return View();
         }
 
-        // POST: DishIngredientsRelController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(DishIngredientRel dishIngredientRel)
         {
-            try
+            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
+            ViewBag.IngerdientList = new SelectList(IngerdientRepository.GetAllIngerdients(), "IngerdientId", "IngName");
+
+            if (ModelState.IsValid)
             {
+                RelRepository.InsertDishIngredientRel(dishIngredientRel);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
-        // GET: DishIngredientsRelController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
+            ViewBag.IngerdientList = new SelectList(IngerdientRepository.GetAllIngerdients(), "IngerdientId", "IngName");
+
+            return View(RelRepository.GetDishIngredientRelById(id));
         }
 
-        // POST: DishIngredientsRelController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, DishIngredientRel dishIngredientRel)
         {
-            try
+            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
+            ViewBag.IngerdientList = new SelectList(IngerdientRepository.GetAllIngerdients(), "IngerdientId", "IngName");
+
+            if (ModelState.IsValid)
             {
+                RelRepository.UpdateDishIngredientRel(id, dishIngredientRel);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
-        // GET: DishIngredientsRelController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            RelRepository.DeleteDishIngredientRel(id);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: DishIngredientsRelController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }
