@@ -43,29 +43,56 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         {
             if (Order != null)
             {
-                Ctx.Orders.Add(Order);
-                Ctx.SaveChanges();
+                try
+                {
+                    Ctx.Orders.Add(Order);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
-        public void UpdateOrder(Order Order)
+        public void UpdateOrder(int id, Order Order)
         {
-            if (Order != null)
+            var updateOrder = GetOrderById(id);
+            if (updateOrder != null)
             {
-                Ctx.Orders.Update(Order);
-                Ctx.SaveChanges();
+                try
+                {
+                    updateOrder.OrderState = Order.OrderState;
+                    updateOrder.PaymentMethod = Order.PaymentMethod;
+                    updateOrder.IsPaid = Order.IsPaid;
+                    updateOrder.OrderTypeId = Order.OrderTypeId;
+                    updateOrder.CustomerId = Order.CustomerId;
+                    updateOrder.FranchiseId = Order.FranchiseId;
+
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
         public void DeleteOrder(int id)
         {
-            Ctx.Orders.Remove(GetOrderById(id));
-            Ctx.SaveChanges();
-        }
-
-        void IOrderRepository.UpdateOrder(int id, Order Order)
-        {
-            throw new NotImplementedException();
+            var deleteOrder = GetOrderById(id);
+            if (deleteOrder != null)
+            {
+                try
+                {
+                    Ctx.Orders.Remove(deleteOrder);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
         }
     }
 }
