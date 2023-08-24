@@ -12,7 +12,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
     {
         public IEmployeeRepository EmployeeRepository { get; }
         public IEmployeesCategoriesRepository EmployeesCategoriesRepository { get; }
-
         public IFranchiseRepository FranchiseRepository { get; }
 
         public EmployeeController(IEmployeeRepository employeeRepository, IEmployeesCategoriesRepository employeesCategoriesRepository, IFranchiseRepository franchiseRepository)
