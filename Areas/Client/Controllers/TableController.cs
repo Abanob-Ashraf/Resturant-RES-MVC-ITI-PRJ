@@ -67,11 +67,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Table table)
+        public ActionResult Edit(Table table)
         {
             if (ModelState.IsValid)
             {
-                TableRepository.UpdateTable(id, table);
+                TableRepository.UpdateTable(table);
                 return RedirectToAction(nameof(Index));
             }
             return View();
@@ -83,8 +83,5 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             TableRepository.DeleteTable(id);
             return RedirectToAction(nameof(Index));
         }
-
-      
-      
     }
 }
