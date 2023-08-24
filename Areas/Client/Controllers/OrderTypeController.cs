@@ -13,23 +13,23 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
     //[Route("OrderType")]
     public class OrderTypeController : Controller
     {
-
         public IOrderTypesRepository OrderTypesRepository { get; }
 
         public OrderTypeController(IOrderTypesRepository orderTypesRepository)
         {
             OrderTypesRepository = orderTypesRepository;
         }
+
         //[Route("/GetAllTables")]
         public ActionResult Index()
         {
             return View("Index", OrderTypesRepository.GetAllOrderTypes());
         }
+
         //[Route("GetOrderTypeById/{id:int}")]
         public ActionResult Details(int id)
         {
             return View("Details", OrderTypesRepository.GetOrderTypeById(id));
-            return View(OrderTypesRepository.GetOrderTypeById(id));
         }
 
         //[Route("CreateOrderType")]
@@ -59,20 +59,18 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 
        
 
-        // POST: OrderTypeController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, OrderType orderType)
+        public ActionResult Edit(OrderType orderType)
         {
             if (ModelState.IsValid)
             {
-                OrderTypesRepository.UpdateOrderType(id, orderType);
+                OrderTypesRepository.UpdateOrderType(orderType);
                 return RedirectToAction(nameof(Index));
             }
             return View();
         }
 
-        // GET: OrderTypeController/Delete/5
         public ActionResult Delete(int id)
         {
             OrderTypesRepository.DeleteOrderType(id);
