@@ -40,7 +40,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
         [MaxLength(14)]
         public string EmpNationalId { get; set; }
 
-        //[Range(typeof(DateTime), "1/1/1900", "31/12/3100", ErrorMessage = "Date must be between {1} and {2}")]
+
+        [Required, DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [DateRange("01/01/2010")]
         public DateTime EmpHiringDate { get; set; }
 
