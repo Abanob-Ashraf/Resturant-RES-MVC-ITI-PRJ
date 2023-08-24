@@ -1,83 +1,102 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
+    [Area("Client")]
+    //[Route("CustomerAddersse")]
     public class CustomerAdderssesController : Controller
     {
-        // GET: CustomerAdderssesController
+        public ICustomerRepository CustomerRepository { get; }
+        public ICustomerAdderssesRepository CustomerAdderssesRepository { get; }
+
+        public CustomerAdderssesController(ICustomerRepository customerRepository, ICustomerAdderssesRepository customerAdderssesRepository)
+        {
+            CustomerRepository = customerRepository;
+            CustomerAdderssesRepository = customerAdderssesRepository;
+        }
+
+        //[Route("GetAllCustomerAddersses")]
         public ActionResult Index()
         {
-            return View();
+            return View("Index", CustomerAdderssesRepository.GetAllCustomerAddersses());
         }
 
-        // GET: CustomerAdderssesController/Details/5
+        //[Route("GetCustomerAdderssById/{id:int}")]
         public ActionResult Details(int id)
         {
-            return View();
+            return View("Details", CustomerAdderssesRepository.GetCustomerAdderssById(id));
         }
 
-        // GET: CustomerAdderssesController/Create
+        //[Route("CreateCustomerAdderss")]
         public ActionResult Create()
         {
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
             return View();
         }
 
-        // POST: CustomerAdderssesController/Create
+        //[Route("CreateCustomerAdderss")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(CustomerAddersses customerAddersses)
         {
-            try
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+
+            if (ModelState.IsValid)
             {
+                CustomerAdderssesRepository.InsertCustomerAdderss(customerAddersses);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
-        // GET: CustomerAdderssesController/Edit/5
+        //[Route("UpdateCustomerAdderss/{id:int}")]
         public ActionResult Edit(int id)
         {
-            return View();
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+
+            return View(CustomerAdderssesRepository.GetCustomerAdderssById(id));
         }
 
-        // POST: CustomerAdderssesController/Edit/5
+        //[Route("UpdateCustomerAdderss/{id:int}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, CustomerAddersses customerAddersses)
         {
-            try
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+
+            if (ModelState.IsValid)
             {
+                CustomerAdderssesRepository.UpdateCustomerAdderss(id, customerAddersses);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
-        // GET: CustomerAdderssesController/Delete/5
+        //[Route("DeletCustomerAdderss")]
         public ActionResult Delete(int id)
         {
-            return View();
+            CustomerAdderssesRepository.DeleteCustomerAdderss(id);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: CustomerAdderssesController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }
