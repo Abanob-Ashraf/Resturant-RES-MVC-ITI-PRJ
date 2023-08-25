@@ -36,26 +36,51 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         {
             if (Testimonials != null)
             {
-                Ctx.Testimonials.Add(Testimonials);
-                Ctx.SaveChanges();
+                try
+                {
+                    Ctx.Testimonials.Add(Testimonials);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
         public void UpdateTestimonials(int id, Testimonials Testimonials)
         {
-            if (Testimonials != null)
+            var updatedTestimonials = GetTestimonialsById(id);
+            if (updatedTestimonials != null)
             {
-                var updatedTestimonials = GetTestimonialsById(id);
-                updatedTestimonials.CustomerID = Testimonials.CustomerID;
-                updatedTestimonials.TestimonialsText = Testimonials.TestimonialsText;
-                Ctx.SaveChanges();
+                try
+                {
+                    updatedTestimonials.CustomerID = Testimonials.CustomerID;
+                    updatedTestimonials.TestimonialsText = Testimonials.TestimonialsText;
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
         public void DeleteTestimonials(int id)
         {
-            Ctx.Testimonials.Remove(GetTestimonialsById(id));
-            Ctx.SaveChanges();
+            var deletedTestimonials = GetTestimonialsById(id);
+            if (deletedTestimonials != null)
+            {
+                try
+                {
+                    Ctx.Testimonials.Remove(deletedTestimonials);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
         }
     }
 }

@@ -58,7 +58,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
         public void UpdateEmployee(int id, Employee employee)
         {
             var updatedEmployee = GetEmployeeById(id);
-            if (employee != null)
+            if (updatedEmployee != null)
             {
                 try
                 {

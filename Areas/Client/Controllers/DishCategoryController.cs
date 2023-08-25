@@ -53,11 +53,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         // POST: OrderTypeController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, DishCategory dishCategory)
+        public ActionResult Edit(DishCategory dishCategory)
         {
             if (ModelState.IsValid)
             {
-                DishCategoryRepository.UpdateDishCategory( dishCategory);
+                DishCategoryRepository.UpdateDishCategory(dishCategory);
                 return RedirectToAction(nameof(Index));
             }
             return View();

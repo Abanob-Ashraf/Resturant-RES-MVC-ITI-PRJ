@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models.Dish>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DishPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DishImageName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DishCategory)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DishPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DishImageName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DishCategory.DishCategoryName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DishId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.DishId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.DishId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

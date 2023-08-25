@@ -13,7 +13,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             Ctx = ctx;
         }
 
-
         public List<Table> GetAllTables()
         {
             return Ctx.Tables
@@ -36,24 +35,49 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         {
             if (Table != null)
             {
-                Ctx.Tables.Add(Table);
-                Ctx.SaveChanges();
+                try
+                {
+                    Ctx.Tables.Add(Table);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
-        public void UpdateTable(int id, Table Table)
+        public void UpdateTable(Table Table)
         {
             if (Table != null)
             {
-                Ctx.Tables.Update(Table);
-                Ctx.SaveChanges();
+                try
+                {
+                    Ctx.Tables.Update(Table);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
         public void DeleteTable(int id)
         {
-            Ctx.Tables.Remove(GetTableById(id));
-            Ctx.SaveChanges();
+            var deleted = GetTableById(id);
+            if(deleted != null)
+            {
+                try
+                {
+                    Ctx.Tables.Remove(deleted);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
         }
     }
 }

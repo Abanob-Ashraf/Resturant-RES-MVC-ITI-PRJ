@@ -10,7 +10,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client
 
         public void InsertDishIngredientRel(DishIngredientRel dishIngredientRel);
 
-        public void UpdateDishIngredientRel(DishIngredientRel dishIngredientRel);
+        public void UpdateDishIngredientRel(int id, DishIngredientRel dishIngredientRel);
 
         public void DeleteDishIngredientRel(int id);
     }

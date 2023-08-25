@@ -1,0 +1,36 @@
+﻿@model Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models.DishIngredientRel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>DishIngredientRel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DishId" class="control-label"></label>
+                <select asp-for="DishId" class="form-control" asp-items="ViewBag.DishList"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IngerdientId" class="control-label"></label>
+                <select asp-for="IngerdientId" class="form-control" asp-items="ViewBag.IngerdientList"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

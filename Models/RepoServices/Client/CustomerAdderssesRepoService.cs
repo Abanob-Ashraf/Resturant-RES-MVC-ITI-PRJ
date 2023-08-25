@@ -15,7 +15,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             Ctx = ctx;
         }
 
-
         public List<CustomerAddersses> GetAllCustomerAddersses()
         {
             return Ctx.CustomersAddersses.Include(add => add.Customer).ToList();

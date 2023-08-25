@@ -36,24 +36,52 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         {
             if (dish != null)
             {
-                Ctx.Dishes.Add(dish);
-                Ctx.SaveChanges();
+                try
+                {
+                    Ctx.Dishes.Add(dish);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
-        public void UpdateDish(Dish dish)
+        public void UpdateDish(int id, Dish dish)
         {
-            if (dish != null)
+            var updatedDish = GetDishById(id);
+            if (updatedDish != null)
             {
-                Ctx.Dishes.Update(dish);
-                Ctx.SaveChanges();
+                try
+                {
+                    updatedDish.DishPrice = dish.DishPrice;
+                    updatedDish.DishImageName = dish.DishImageName;
+                    updatedDish.DishCategoryId = dish.DishCategoryId;
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
         public void DeleteDish(int id)
         {
-            Ctx.Dishes.Remove(GetDishById(id));
-            Ctx.SaveChanges();
+            var deletedDish = GetDishById(id);
+            if (deletedDish != null)
+            {
+                try
+                {
+                    Ctx.Dishes.Remove(deletedDish);
+                    Ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
         }
     }
 }
