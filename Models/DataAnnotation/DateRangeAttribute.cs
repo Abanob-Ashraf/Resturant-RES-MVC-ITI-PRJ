@@ -2,7 +2,7 @@
 using System.Configuration;
 using Microsoft.Extensions.Configuration;
 
-namespace Resturant_RES_MVC_ITI_PRJ.Models
+namespace Resturant_RES_MVC_ITI_PRJ.Models.DataAnnotation
 {
     public class DateRangeAttribute : ValidationAttribute
     {

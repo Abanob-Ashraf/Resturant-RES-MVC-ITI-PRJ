@@ -1,4 +1,5 @@
 ﻿using Resturant_RES_MVC_ITI_PRJ.Models;
+using Resturant_RES_MVC_ITI_PRJ.Models.DataAnnotation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

@@ -5,7 +5,7 @@ using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Models
 {
-    public class ResturantDbContext : IdentityDbContext
+    public class ResturantDbContext : IdentityDbContext<AppUser>
     {
         public ResturantDbContext(DbContextOptions<ResturantDbContext> options) : base(options)
         {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
@@ -10,7 +11,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
     [Area("Client")]
     //[Route("Order")]
-
+    [Authorize(Roles ="cust")]
     public class OrderController : Controller
     {
         public IOrderRepository OrderRepository { get; }

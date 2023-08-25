@@ -1,3 +1,5 @@
+using Resturant_RES_MVC_ITI_PRJ.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Resturant_RES_MVC_ITI_PRJ.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client;
@@ -15,10 +17,27 @@ namespace Resturant_RES_MVC_ITI_PRJ
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+
+
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddDbContext<ResturantDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             //builder.Services.Configure<MinDateOptions>(builder.Configuration.GetSection("MinimumDate"));
+
+
+            builder.Services.AddAuthentication()
+             .AddGoogle("google", opt =>
+             {
+                 var googleAuth = builder.Configuration.GetSection("Authentication:Google");
+                 opt.ClientId = googleAuth["ClientId"];
+                 opt.ClientSecret = googleAuth["ClientSecret"];
+                 opt.SignInScheme = IdentityConstants.ExternalScheme;
+             });
+
+            //identity
+            builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<ResturantDbContext>();
+
 
             //Client
             builder.Services.AddScoped<ICustomerRepository, CustomerRepoService>();
@@ -55,7 +74,7 @@ namespace Resturant_RES_MVC_ITI_PRJ
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

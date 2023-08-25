@@ -31,6 +31,27 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Management" asp-controller="Employee" asp-action="Index">Employees</a>
                         </li>
+                      
+                    </ul>
+                    <ul class="navbar-nav">
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-Dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-Dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-Dark"> Welcom @User.Identity.Name </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-Dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

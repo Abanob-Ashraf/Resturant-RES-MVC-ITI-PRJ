@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.CodeAnalysis.Options;
 using Resturant_RES_MVC_ITI_PRJ.Models;
 using System.Configuration;
+using Resturant_RES_MVC_ITI_PRJ.Models.DataAnnotation;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
 {
