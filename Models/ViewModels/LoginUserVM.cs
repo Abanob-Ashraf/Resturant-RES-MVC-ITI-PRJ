@@ -4,8 +4,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.ViewModels
 {
     public class LoginUserVM
     {
-        
-
         [Required]
         public string UserName { get; set; }
 

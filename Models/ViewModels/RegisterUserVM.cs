@@ -5,11 +5,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.ViewModels
 {
     public class RegisterUserVM
     {
-     
-
         [Required]
         public string UserName { get; set; }
-
 
         [Required]
         [DataType(DataType.EmailAddress)]
@@ -29,9 +26,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.ViewModels
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
 
-
         [Required]
         public string  Phone { get; set; }
-
     }
 }
