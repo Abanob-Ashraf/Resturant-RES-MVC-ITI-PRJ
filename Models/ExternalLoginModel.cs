@@ -5,10 +5,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models
 {
     public class ExternalLoginModel
     {
-   
-
-
-
             [Required]
             [EmailAddress]
             public string Email { get; set; }

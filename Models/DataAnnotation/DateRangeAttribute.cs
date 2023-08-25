@@ -15,6 +15,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.DataAnnotation
             Maximum = DateTime.Today.AddDays(15);
         }
 
+        public DateRangeAttribute()
+        {
+            Minimum = DateTime.Today;
+            Maximum = DateTime.Today.AddDays(15);
+        }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
