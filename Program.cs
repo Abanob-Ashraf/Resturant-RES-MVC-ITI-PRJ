@@ -7,6 +7,8 @@ using Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Management;
+using System.Configuration;
+using Resturant_RES_MVC_ITI_PRJ.Services;
 
 namespace Resturant_RES_MVC_ITI_PRJ
 {
@@ -36,7 +38,23 @@ namespace Resturant_RES_MVC_ITI_PRJ
              });
 
             //identity
-            builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<ResturantDbContext>();
+            builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>
+            {
+                opt.Password.RequiredLength = 8;
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireNonAlphanumeric=false;
+                opt.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<ResturantDbContext>().AddDefaultTokenProviders();
+
+            builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
+   opt.TokenLifespan = TimeSpan.FromHours(2));
+
+            var emailConfig = builder.Configuration.GetSection("EmailConfiguration")
+  .Get<EmailConfiguration>();
+
+            builder.Services.AddSingleton(emailConfig);
+            builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 
             //Client
