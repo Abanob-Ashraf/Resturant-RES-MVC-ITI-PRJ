@@ -17,7 +17,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         public int CustomerID { get; set; }
         public Customer? Customer { get; set; }
 
+        [Required, DataType(DataType.Date)]
         [CustomMinDate(ErrorMessage = "Reservation Date Must be Further tahn today")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime ReservarionDate { get; set; }
 
         [ForeignKey("Table")]
