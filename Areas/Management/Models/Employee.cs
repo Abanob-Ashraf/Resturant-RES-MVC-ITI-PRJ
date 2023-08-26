@@ -27,6 +27,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
 
         [Required(ErrorMessage = "You Must Enter Name")]
         [StringLength(50)]
+        //[Display("Name")]
         public string EmpName { get; set; }
 
         [Required(ErrorMessage = "You Must Enter Email")]

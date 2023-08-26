@@ -34,7 +34,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         // GET: DishIngredientsRelController/Create
         public ActionResult Create()
         {
-            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
+            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishName");
             ViewBag.IngerdientList = new SelectList(IngerdientRepository.GetAllIngerdients(), "IngerdientId", "IngName");
 
             return View();
@@ -44,7 +44,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(DishIngredientRel dishIngredientRel)
         {
-            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
+            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishName");
             ViewBag.IngerdientList = new SelectList(IngerdientRepository.GetAllIngerdients(), "IngerdientId", "IngName");
 
             if (ModelState.IsValid)
@@ -57,7 +57,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 
         public ActionResult Edit(int id)
         {
-            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
+            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishName");
             ViewBag.IngerdientList = new SelectList(IngerdientRepository.GetAllIngerdients(), "IngerdientId", "IngName");
 
             return View(RelRepository.GetDishIngredientRelById(id));
@@ -67,7 +67,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, DishIngredientRel dishIngredientRel)
         {
-            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
+            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishName");
             ViewBag.IngerdientList = new SelectList(IngerdientRepository.GetAllIngerdients(), "IngerdientId", "IngName");
 
             if (ModelState.IsValid)

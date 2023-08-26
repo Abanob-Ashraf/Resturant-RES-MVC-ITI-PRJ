@@ -38,8 +38,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         public ActionResult Create()
         {
             ViewBag.OrderList = new SelectList(OrderRepository.GetAllOrders(), "OrderId", "OrderState");
-            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
-
+            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishName");
 
             return View();
         }
@@ -50,7 +49,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         public ActionResult Create(OrderDishesRel orderDishesRel)
         {
             ViewBag.OrderList = new SelectList(OrderRepository.GetAllOrders(), "OrderId", "OrderState");
-            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishImageName");
+            ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishName");
 
             if (ModelState.IsValid)
             {
