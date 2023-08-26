@@ -9,6 +9,7 @@ using Resturant_RES_MVC_ITI_PRJ.Models.ViewModels;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Resturant_RES_MVC_ITI_PRJ.Services;
 using Message = Resturant_RES_MVC_ITI_PRJ.Services.Message;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace WebAppday8.Controllers
 {
@@ -30,7 +31,12 @@ namespace WebAppday8.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            return View();
+            if (!User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
+
         }
 
         [HttpPost]
@@ -59,10 +65,17 @@ namespace WebAppday8.Controllers
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, "cust");
-                    await signInManager.SignInAsync(user, false);
+                    
 
                     //Traineerepo.Insert(trainee);
-                    return RedirectToAction("Index", "Order", routeValues);
+
+
+                    var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email,username=user.UserName }, Request.Scheme);
+                    var message = new Message(new string[] { user.Email }, "Confirmation email link", confirmationLink, null);
+                    await emailSender.SendEmailAsync(message);
+
+                    return RedirectToAction(nameof(SuccessRegistration));
                 }
                 else
                 {
@@ -75,10 +88,43 @@ namespace WebAppday8.Controllers
             return View(registerUserVM);
         }
 
+
+        //ConfirmEmail
+
+        [HttpGet]
+        public async Task<IActionResult> ConfirmEmail(string token, string email, string username)
+        {
+            var user = await userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                return View("Error");
+            }
+            var result = await userManager.ConfirmEmailAsync(user, token);
+            return View(result.Succeeded ? nameof(ConfirmEmail) : "Error");
+        }
+        [HttpGet]
+        public IActionResult Error()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult SuccessRegistration()
+        {
+            return View();
+        }
+
+
+        //Login
+
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            if (!User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            return RedirectToAction("Index","Home");
         }
 
         [HttpPost]
@@ -91,13 +137,27 @@ namespace WebAppday8.Controllers
 
             if (userFromDB != null)
             {
-                bool exist = await userManager.CheckPasswordAsync(userFromDB, userVM.Password);
+               bool result= await userManager.IsEmailConfirmedAsync(userFromDB);
 
-                if (exist == true)
+                if (result==true)
                 {
-                    await signInManager.SignInAsync(userFromDB, userVM.RemeberMe);
-                    return RedirectToAction("Index", "Order", routeValues);
+                    bool exist = await userManager.CheckPasswordAsync(userFromDB, userVM.Password);
+
+                    if (exist == true)
+                    {
+                        await signInManager.SignInAsync(userFromDB, userVM.RemeberMe);
+                        return RedirectToAction("Index", "Order", routeValues);
+                    }
                 }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid Login Attempt Please confirm your email");
+                    return View();
+                }
+
+
+
+               
             }
 
 
@@ -113,6 +173,11 @@ namespace WebAppday8.Controllers
             signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
         }
+
+
+
+        //external login
+
 
         [HttpGet]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null)
@@ -138,17 +203,24 @@ namespace WebAppday8.Controllers
 
                 var user = new AppUser
                 {
-                    UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
+                    Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                    UserName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
                     FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
-                    LastName = info.Principal.FindFirstValue(ClaimTypes.Surname)
+                    LastName = info.Principal.FindFirstValue(ClaimTypes.Surname),
+                    EmailConfirmed = true
+                    
                 
                 };
                 var createResult = await userManager.CreateAsync(user);
                 if (createResult.Succeeded)
                 {
+                    
+
                     await userManager.AddToRoleAsync(user, "cust");
                     await userManager.AddLoginAsync(user, info);
                     await signInManager.SignInAsync(user, isPersistent: false);
+                    var message = new Message(new string[] { user.Email }, "Welcome to ZMAN Resturant", null, null);
+                    await emailSender.SendEmailAsync(message);
                     return RedirectToLocal(returnUrl);
                 }
 
