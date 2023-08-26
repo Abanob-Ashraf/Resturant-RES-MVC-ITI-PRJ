@@ -38,13 +38,12 @@ namespace WebAppday8.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 AppUser user = new AppUser();
                 user.UserName = registerUserVM.UserName;
-              user.Email= registerUserVM.Email;
+                user.Email = registerUserVM.Email;
                 user.PhoneNumber = registerUserVM.Phone;
                 user.PasswordHash = registerUserVM.Password;
-             IdentityResult result= await userManager.CreateAsync(user,registerUserVM.Password);
+                IdentityResult result = await userManager.CreateAsync(user, registerUserVM.Password);
 
                 //Trainee trainee = new Trainee() {
                 //    Name=registerUserVM.UserName,
@@ -55,32 +54,26 @@ namespace WebAppday8.Controllers
                 //    TrackID=2
                 //};
 
-
                 var routeValues = new RouteValueDictionary(new { area = "Client" });
 
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, "cust");
-                    await signInManager.SignInAsync(user,false);
+                    await signInManager.SignInAsync(user, false);
 
                     //Traineerepo.Insert(trainee);
                     return RedirectToAction("Index", "Order", routeValues);
                 }
                 else
                 {
-                    foreach(var error in result.Errors)
+                    foreach (var error in result.Errors)
                     {
-                        ModelState.AddModelError("all", error.Description); 
+                        ModelState.AddModelError("all", error.Description);
                     }
                 }
-
             }
-
             return View(registerUserVM);
-
         }
-
-
 
         [HttpGet]
         public IActionResult Login()
@@ -92,7 +85,7 @@ namespace WebAppday8.Controllers
         public async Task<IActionResult> Login(LoginUserVM userVM)
         {
 
-            var routeValues = new RouteValueDictionary(new { area = "Client"  });
+            var routeValues = new RouteValueDictionary(new { area = "Client" });
 
             AppUser userFromDB = await userManager.FindByNameAsync(userVM.UserName);
 
@@ -101,17 +94,17 @@ namespace WebAppday8.Controllers
                 bool exist = await userManager.CheckPasswordAsync(userFromDB, userVM.Password);
 
                 if (exist == true)
-                { 
+                {
                     await signInManager.SignInAsync(userFromDB, userVM.RemeberMe);
-                    return RedirectToAction("Index", "Order" , routeValues);
+                    return RedirectToAction("Index", "Order", routeValues);
                 }
             }
-        
 
-        ModelState.AddModelError("error", "Not Correct UserName Or Password Try again"); 
+
+            ModelState.AddModelError("error", "Not Correct UserName Or Password Try again");
             return View(userVM);
 
-    }
+        }
 
 
         [HttpGet]
@@ -119,8 +112,6 @@ namespace WebAppday8.Controllers
         {
             signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
-           
-
         }
 
         [HttpGet]
@@ -165,8 +156,6 @@ namespace WebAppday8.Controllers
             }
         }
 
-
-
         private ActionResult RedirectToLocal(string returnUrl)
         {
             var routeValues = new RouteValueDictionary(new { area = "Client" });
@@ -189,9 +178,6 @@ namespace WebAppday8.Controllers
             var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return Challenge(properties, provider);
         }
-
-
-
 
         //---------------------------------------------forget password
 
@@ -250,7 +236,6 @@ namespace WebAppday8.Controllers
                 return View();
             }
             return RedirectToAction(nameof(ResetPasswordConfirmation));
-
         }
 
         [HttpGet]
@@ -258,8 +243,5 @@ namespace WebAppday8.Controllers
         {
             return View();
         }
-
-
-
     }
 }
