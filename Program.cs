@@ -83,15 +83,12 @@ namespace Resturant_RES_MVC_ITI_PRJ
                 app.UseHsts();
             }
 
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
-
 
             app.MapAreaControllerRoute(
               name: "ClientArea",
@@ -106,8 +103,6 @@ namespace Resturant_RES_MVC_ITI_PRJ
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
-
 
             app.Run();
         }
