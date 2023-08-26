@@ -11,7 +11,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
     [Area("Client")]
     //[Route("Order")]
-    [Authorize(Roles ="cust")]
+    [Authorize(Roles = "Customer")]
     public class OrderController : Controller
     {
         public IOrderRepository OrderRepository { get; }

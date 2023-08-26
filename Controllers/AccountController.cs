@@ -64,7 +64,7 @@ namespace WebAppday8.Controllers
 
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(user, "cust");
+                    await userManager.AddToRoleAsync(user, "Customer");
                     
 
                     //Traineerepo.Insert(trainee);
@@ -216,7 +216,7 @@ namespace WebAppday8.Controllers
                 {
                     
 
-                    await userManager.AddToRoleAsync(user, "cust");
+                    await userManager.AddToRoleAsync(user, "Customer");
                     await userManager.AddLoginAsync(user, info);
                     await signInManager.SignInAsync(user, isPersistent: false);
                     var message = new Message(new string[] { user.Email }, "Welcome to ZMAN Resturant", null, null);

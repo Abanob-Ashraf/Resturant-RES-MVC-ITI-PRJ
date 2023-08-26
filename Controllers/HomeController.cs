@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Resturant_RES_MVC_ITI_PRJ.Models;
 using System.Diagnostics;
 
@@ -8,13 +9,25 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public RoleManager<IdentityRole> RoleManager { get; }
+
+        public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager)
         {
             _logger = logger;
+            RoleManager = roleManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            IdentityRole role1 = new IdentityRole();
+            role1.Name = "Customer";
+            IdentityRole role2 = new IdentityRole();
+            role2.Name = "Admin";
+
+            //Save Role to DB
+             await RoleManager.CreateAsync(role1);
+            await RoleManager.CreateAsync(role2);
+
             return View();
         }
 
