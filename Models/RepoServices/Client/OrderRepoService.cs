@@ -61,7 +61,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             {
                 try
                 {
-                    updateOrder.OrderDate = Order.OrderDate;
                     updateOrder.OrderState = Order.OrderState;
                     updateOrder.PaymentMethod = Order.PaymentMethod;
                     updateOrder.IsPaid = Order.IsPaid;
