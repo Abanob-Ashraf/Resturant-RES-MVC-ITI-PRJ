@@ -1,14 +1,14 @@
 using Resturant_RES_MVC_ITI_PRJ.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Resturant_RES_MVC_ITI_PRJ.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client;
 using Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Management;
-using System.Configuration;
 using Resturant_RES_MVC_ITI_PRJ.Services;
+using Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Analysis;
 
 namespace Resturant_RES_MVC_ITI_PRJ
 {
@@ -19,14 +19,9 @@ namespace Resturant_RES_MVC_ITI_PRJ
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
-
-
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddDbContext<ResturantDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            //builder.Services.Configure<MinDateOptions>(builder.Configuration.GetSection("MinimumDate"));
-
 
             builder.Services.AddAuthentication()
              .AddGoogle("google", opt =>
@@ -37,7 +32,7 @@ namespace Resturant_RES_MVC_ITI_PRJ
                  opt.SignInScheme = IdentityConstants.ExternalScheme;
              });
 
-            //identity
+            // Identity
             builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>
             {
                 opt.Password.RequiredLength = 8;
@@ -47,17 +42,15 @@ namespace Resturant_RES_MVC_ITI_PRJ
                // opt.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<ResturantDbContext>().AddDefaultTokenProviders();
 
-            builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
-   opt.TokenLifespan = TimeSpan.FromHours(2));
+            builder.Services.Configure<DataProtectionTokenProviderOptions>(opt => opt.TokenLifespan = TimeSpan.FromHours(2));
 
-            var emailConfig = builder.Configuration.GetSection("EmailConfiguration")
-  .Get<EmailConfiguration>();
+            var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
 
             builder.Services.AddSingleton(emailConfig);
             builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 
-            //Client
+            // Client
             builder.Services.AddScoped<ICustomerRepository, CustomerRepoService>();
             builder.Services.AddScoped<ICustomerAdderssesRepository, CustomerAdderssesRepoService>();
             builder.Services.AddScoped<IDishRepository, DishRepoService>();
@@ -71,11 +64,14 @@ namespace Resturant_RES_MVC_ITI_PRJ
             builder.Services.AddScoped<ITableRepository, TableRepoService>();
             builder.Services.AddScoped<ITestimonialsRepository, TestimonialsRepoService>();
 
-            //Management
+            // Management
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepoService>();
             builder.Services.AddScoped<IEmployeeAddressRepository, EmployeeAddressRepoService>();
             builder.Services.AddScoped<IEmployeesCategoriesRepository, EmployeesCategoriesRepoService>();
             builder.Services.AddScoped<IFranchiseRepository, FranchiseRepoService>();
+
+            // Analysis
+            builder.Services.AddScoped<IOrderAnalysis, OrderAnalysis>();
 
             var app = builder.Build();
 
@@ -87,15 +83,12 @@ namespace Resturant_RES_MVC_ITI_PRJ
                 app.UseHsts();
             }
 
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
-
 
             app.MapAreaControllerRoute(
               name: "ClientArea",
@@ -110,8 +103,6 @@ namespace Resturant_RES_MVC_ITI_PRJ
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
-           
 
             app.Run();
         }
