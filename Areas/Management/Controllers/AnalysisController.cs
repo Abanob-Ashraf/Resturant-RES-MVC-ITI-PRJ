@@ -15,6 +15,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
 
         public IActionResult orderAnalysis()
         {
+            ViewBag.MostDishesOrdered = OrderAnalysis.GetMostOrderedDishes();
             ViewBag.NoCustomerOrdered = OrderAnalysis.GetNoCustomerOrdered();
             //ViewBag.GetOrderByType = OrderAnalysis.GetOrderByType();
             

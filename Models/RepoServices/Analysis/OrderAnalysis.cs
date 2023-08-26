@@ -1,4 +1,5 @@
-﻿using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Analysis;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis
@@ -18,6 +19,45 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis
             Console.WriteLine(NoCustomerOrdered);
             return NoCustomerOrdered;
         }
+        public List<Dish> LeastOrderedDishes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Customer> GetMostCustomersOrderedMoreOne()
+        {
+            var MostCustomers = Ctx.Orders
+                .GroupBy(c => c.CustomerId)
+                .Where(c => c.Count() > 1)
+                .Select(c => c.First().Customer).ToList();
+            return MostCustomers;
+        }
+
+        public Dictionary<Dish, int> GetMostOrderedDishes()
+        {
+            var MostDishes = Ctx.OrderesDishesRels
+                .GroupBy(c => c.DishId)
+                .Select(c => new
+                {
+                    Dish = Ctx.Dishes.FirstOrDefault(v => v.DishId == c.Key),
+                    Quantity = c.Sum(v => v.Quantity),
+                }).ToDictionary(b => b.Dish, b => b.Quantity);
+                return MostDishes;
+        }
+
+        //public List<Dish> LeastOrderedDishes()
+        //{
+        //    var data;
+        //    return data;
+        //}
+        //public List<Customer> GetCustomersOrdered()
+        //{
+        //    var MostCustomers = Ctx.Orders
+        //        .GroupBy(c => c.CustomerId)
+        //        .Where(c => c.Count() > 1)
+        //        .Select(c => c.First().Customer).ToList();
+        //    return MostCustomers;
+        //}
 
         public Dictionary<string, List<Order>> GetOrderByType()
         {

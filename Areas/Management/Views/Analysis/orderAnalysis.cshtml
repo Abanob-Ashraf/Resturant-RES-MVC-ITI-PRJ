@@ -1,1 +1,27 @@
-﻿<p>Number of customers who have placed an order today: @ViewBag.NoCustomerOrdered</p>
+﻿@using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+<p>Number of customers who have placed an order today: @ViewBag.NoCustomerOrdered</p>
+@{
+    Dictionary<Dish, int> DQ = ViewBag.MostDishesOrdered; 
+}
+
+    <table class="table table-striped">
+    <tr>
+        <td>
+            Dish Name
+        </td>
+        <td>
+            Quantity
+        </td>
+    </tr>
+    @foreach (var KVP in DQ)
+    {
+        <tr>
+            <td>
+                @KVP.Key.DishName
+                
+            </td>
+            <td>
+                @KVP.Value
+            </td>
+        </tr>
+    }
