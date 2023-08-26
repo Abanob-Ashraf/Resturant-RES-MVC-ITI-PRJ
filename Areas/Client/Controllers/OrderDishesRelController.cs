@@ -10,7 +10,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
     [Area("Client")]
     //[Route("OrderDishesRel")]
-
     public class OrderDishesRelController : Controller
     {
 
