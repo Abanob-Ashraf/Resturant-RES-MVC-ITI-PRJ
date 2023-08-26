@@ -1,8 +1,16 @@
 ﻿@using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
-<p>Number of customers who have placed an order today: @ViewBag.NoCustomerOrdered</p>
+
 @{
-    Dictionary<Dish, int> DQ = ViewBag.MostDishesOrdered; 
+    Dictionary<Dish, int> DQ = ViewBag.MostDishesOrdered;
+
+    List<Dish> DI = ViewBag.LeastOrderedDishes;
+
+    Dictionary<string, List<Order>> OT = ViewBag.GetOrderByType;
+
+    List<Customer> CU = ViewBag.MostCustomersOrdered;
 }
+
+<p>Number of customers who have placed an order today: @ViewBag.NoCustomerOrdered</p>
 
     <table class="table table-striped">
     <tr>
@@ -25,3 +33,67 @@
             </td>
         </tr>
     }
+    </table>
+
+
+<table>
+    <tr>
+        <td class="col-sm-2">Customer ID</td>
+        <td class ="col-sm-2">Customer Name</td>
+        <td class="col-sm-2">Customer Phone</td>
+        <td class="col-sm-2">Customer Addersses</td>
+
+    </tr>
+    @foreach (var customer in CU)
+    {
+        <tr>
+            <td class="col-sm-2">@customer.CustEmail</td>
+            <td class="col-sm-2">@customer.CustName</td>
+            <td class="col-sm-2">@customer.CustPhone</td>
+            <td class="col-sm-2">
+                @if (customer.CustomerAddersses != null)
+                {
+                    @customer.CustomerAddersses.Where(c => customer.CustID == c.CustomerID).Select(c => c.CustAddressCity)
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+<table>
+    <tr>
+        <th>Order Type</th>
+        <th>Orders</th>
+    </tr>
+    @foreach (var kvp in OT)
+    {
+        <tr>
+            <td>@kvp.Key</td>
+            <td>
+                <ul>
+                    <li>@kvp.Value.Count() </li>
+                    @*@foreach (var order in kvp.Value)
+                    {
+                        <li>@order.Customer.CustName</li>
+                    }*@
+                </ul>
+            </td>
+        </tr>
+    }
+</table>
+
+<table>
+    <tr>
+        <th>Dish Name</th>
+        <th>cust Name</th>
+
+    </tr>
+    @foreach (var dish in DI)
+    {
+        <tr>
+            <td>@dish.DishName</td>
+            <td>@dish.</td>
+
+        </tr>
+    }
+</table>
