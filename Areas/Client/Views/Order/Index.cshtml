@@ -16,6 +16,9 @@
                 @Html.DisplayNameFor(model => model.OrderState)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.PaymentMethod)
             </th>
             <th>
@@ -38,6 +41,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.OrderState)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PaymentMethod)
