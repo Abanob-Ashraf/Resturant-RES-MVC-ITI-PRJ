@@ -55,6 +55,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             {
                 try
                 {
+                    updatedDish.DishName = dish.DishName;
                     updatedDish.DishPrice = dish.DishPrice;
                     updatedDish.DishImageName = dish.DishImageName;
                     updatedDish.DishCategoryId = dish.DishCategoryId;
