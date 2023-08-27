@@ -74,6 +74,10 @@ namespace Resturant_RES_MVC_ITI_PRJ
             // Analysis
             builder.Services.AddScoped<IOrderAnalysis, OrderAnalysis>();
 
+
+            //Payment stripe
+            builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

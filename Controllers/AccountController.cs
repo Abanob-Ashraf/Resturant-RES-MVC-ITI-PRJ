@@ -11,7 +11,7 @@ using Resturant_RES_MVC_ITI_PRJ.Services;
 using Message = Resturant_RES_MVC_ITI_PRJ.Services.Message;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace WebAppday8.Controllers
+namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 {
     public class AccountController : Controller
     {

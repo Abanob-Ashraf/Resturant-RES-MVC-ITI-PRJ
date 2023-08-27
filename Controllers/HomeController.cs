@@ -10,11 +10,13 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
         private readonly ILogger<HomeController> _logger;
 
         public RoleManager<IdentityRole> RoleManager { get; }
+        public UserManager<AppUser> UserManager { get; }
 
-        public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager)
+        public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager)
         {
             _logger = logger;
             RoleManager = roleManager;
+            UserManager = userManager;
         }
 
         public async Task<IActionResult> Index()
@@ -28,7 +30,25 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
              await RoleManager.CreateAsync(role1);
             await RoleManager.CreateAsync(role2);
 
-            return View();
+            string userPWD = "Admin$123";
+
+            var user = new AppUser
+            {
+                Email = "ZmanAdmin@Zman",
+                UserName = "ZmanAdmin",
+                FirstName = "admin",
+                LastName = "admin",
+                EmailConfirmed = true,
+                PasswordHash=userPWD
+            };
+            var chkUser = await UserManager.CreateAsync(user, userPWD);
+
+            //Add default User to Role Admin    
+            if (chkUser.Succeeded)
+            {
+                var result1 = await UserManager.AddToRoleAsync(user, "Admin");
+            }
+                return View();
         }
 
         public IActionResult Privacy()
