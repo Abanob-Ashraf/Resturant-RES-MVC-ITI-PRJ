@@ -45,7 +45,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             if (ModelState.IsValid)
             {
                 AppUser user = new AppUser();
-                user.UserName = registerUserVM.UserName;
+                user.UserName = registerUserVM.Email;
                 user.Email = registerUserVM.Email;
                 user.PhoneNumber = registerUserVM.Phone;
                 user.PasswordHash = registerUserVM.Password;
@@ -131,9 +131,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
         public async Task<IActionResult> Login(LoginUserVM userVM)
         {
 
-            var routeValues = new RouteValueDictionary(new { area = "Client" });
-
-            AppUser userFromDB = await userManager.FindByNameAsync(userVM.UserName);
+            AppUser userFromDB = await userManager.FindByEmailAsync(userVM.Email);
 
             if (userFromDB != null)
             {
@@ -146,7 +144,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                     if (exist == true)
                     {
                         await signInManager.SignInAsync(userFromDB, userVM.RemeberMe);
-                        return RedirectToAction("Index", "Order", routeValues);
+                        return RedirectToAction("Index", "home");
                     }
                 }
                 else
@@ -204,7 +202,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                 var user = new AppUser
                 {
                     Email = info.Principal.FindFirstValue(ClaimTypes.Email),
-                    UserName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
+                    UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
                     FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
                     LastName = info.Principal.FindFirstValue(ClaimTypes.Surname),
                     EmailConfirmed = true
@@ -230,7 +228,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
-            var routeValues = new RouteValueDictionary(new { area = "Client" });
 
             if (Url.IsLocalUrl(returnUrl))
             {
@@ -238,7 +235,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Order" ,routeValues);
+                return RedirectToAction("Index", "home");
             }
         }
 

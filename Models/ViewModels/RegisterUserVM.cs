@@ -5,8 +5,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.ViewModels
 {
     public class RegisterUserVM
     {
-        [Required]
-        public string UserName { get; set; }
+       
 
         [Required]
         [DataType(DataType.EmailAddress)]
@@ -27,6 +26,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.ViewModels
         public string ConfirmPassword { get; set; }
 
         [Required]
+        [RegularExpression(@"^(010|011|012|015)\d{8}$", ErrorMessage = "start with 010 | 011 | 012 | 015 and max 11 Diget")]
+        [MaxLength(11)]
         public string  Phone { get; set; }
     }
 }

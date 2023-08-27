@@ -46,6 +46,14 @@
                         else
                         {
                             <li class="nav-item">
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                    <a class="nav-link text-Black" asp-action="adminindex" asp-controller="home" asp-area=""> Staff Only </a>
+
+                            }
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-Dark"> Welcom @User.Identity.Name </a>
                             </li>
                             <li class="nav-item">

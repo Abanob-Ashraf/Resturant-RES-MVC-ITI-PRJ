@@ -19,8 +19,21 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             UserManager = userManager;
         }
 
+        public async Task<IActionResult> AdminIndex()
+        {
+            if (User.IsInRole("Admin"))
+            {
+                return View("DBindex");
+            }
+
+            return View("Index");
+
+
+        }
         public async Task<IActionResult> Index()
         {
+
+
             IdentityRole role1 = new IdentityRole();
             role1.Name = "Customer";
             IdentityRole role2 = new IdentityRole();
@@ -48,7 +61,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             {
                 var result1 = await UserManager.AddToRoleAsync(user, "Admin");
             }
-                return View();
+
+           
+
+
+            return View();
         }
 
         public IActionResult Privacy()
