@@ -41,21 +41,14 @@
         <td class="col-sm-2">Customer ID</td>
         <td class ="col-sm-2">Customer Name</td>
         <td class="col-sm-2">Customer Phone</td>
-        <td class="col-sm-2">Customer Addersses</td>
 
     </tr>
     @foreach (var customer in CU)
     {
         <tr>
             <td class="col-sm-2">@customer.CustEmail</td>
-            <td class="col-sm-2">@customer.CustName</td>
+            <td class="col-sm-2">@customer.FirstName @customer.LastName</td>
             <td class="col-sm-2">@customer.CustPhone</td>
-            <td class="col-sm-2">
-                @if (customer.CustomerAddersses != null)
-                {
-                    @customer.CustomerAddersses.Where(c => customer.CustID == c.CustomerID).Select(c => c.CustAddressCity)
-                }
-            </td>
         </tr>
     }
 </table>
@@ -74,7 +67,7 @@
                     <li>@kvp.Value.Count() </li>
                     @*@foreach (var order in kvp.Value)
                     {
-                        <li>@order.Customer.CustName</li>
+                        <li>@order.Customer.FirstName</li>
                     }*@
                 </ul>
             </td>
@@ -85,15 +78,15 @@
 <table>
     <tr>
         <th>Dish Name</th>
-        <th>cust Name</th>
+        <th>Dish Price</th>
 
     </tr>
     @foreach (var dish in DI)
     {
         <tr>
             <td>@dish.DishName</td>
-            <td>@dish.</td>
-
+            <td>@dish.DishPrice</td>
+            <td>@dish</td>
         </tr>
     }
 </table>

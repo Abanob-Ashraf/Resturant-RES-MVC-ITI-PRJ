@@ -34,7 +34,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         //[Route("CreateFranchise")]
         public ActionResult Create()
         {
-            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
+            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpFirstName");
             return View();
         }
 
@@ -43,8 +43,12 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Franchise franchise)
         {
-            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
+            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpFirstName");
 
+            if(franchise.ManagerId == 0)
+            {
+                ModelState.AddModelError("ManagerId", "This Franchise should have a manager");
+            }
             if (ModelState.IsValid)
             {
                 FranchiseRepository.InsertFranchise(franchise);
@@ -57,7 +61,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         //[Route("UpdateEmployee")]
         public ActionResult Edit(int id)
         {
-            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
+            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpFirstName");
 
             return View(FranchiseRepository.GetFranchiseById(id));
         }
@@ -67,7 +71,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Franchise franchise)
         {
-            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
+            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpFirstName");
 
             if (ModelState.IsValid)
             {

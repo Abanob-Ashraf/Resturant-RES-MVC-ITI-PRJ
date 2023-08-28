@@ -37,7 +37,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         // GET: ReservationController/Create
         public ActionResult Create()
         {
-            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
             ViewBag.TableList = new SelectList(TableRepository.GetAllTables(), "TableID", "TableNumber");
 
             return View();
@@ -48,7 +48,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Reservation reservation)
         {
-            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
             ViewBag.TableList = new SelectList(TableRepository.GetAllTables(), "TableID", "TableNumber");
 
             if (ModelState.IsValid)
@@ -62,7 +62,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         // GET: ReservationController/Edit/5
         public ActionResult Edit(int id)
         {
-            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
             ViewBag.TableList = new SelectList(TableRepository.GetAllTables(), "TableID", "TableNumber");
 
             return View(ReservationRepository.GetReservationById(id));
@@ -74,7 +74,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         public ActionResult Edit(int id, Reservation reservation)
         {
 
-            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
             ViewBag.TableList = new SelectList(TableRepository.GetAllTables(), "TableIDTableID", "TableNumber");
 
             if (ModelState.IsValid)

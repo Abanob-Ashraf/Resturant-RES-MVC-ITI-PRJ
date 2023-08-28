@@ -35,7 +35,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         //[Route("CreateEmployeeAddress")]
         public ActionResult Create()
         {
-            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
+            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpFirstName");
             return View();
         }
 
@@ -44,7 +44,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(EmployeeAddress employeeAddress)
         {
-            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
+            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpFirstName");
 
             if (ModelState.IsValid)
             {
@@ -58,7 +58,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         //[Route("UpdateEmployeeAddress/{id:int}")]
         public ActionResult Edit(int id)
         {
-            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
+            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpFirstName");
             return View(EmployeeAddressRepository.GetEmployeeAddressById(id));
         }
 
@@ -67,7 +67,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, EmployeeAddress employeeAddress)
         {
-            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpName");
+            ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpFirstName");
 
             if (ModelState.IsValid)
             {

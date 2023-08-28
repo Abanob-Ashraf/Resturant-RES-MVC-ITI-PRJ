@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
+using Resturant_RES_MVC_ITI_PRJ.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
@@ -13,9 +15,12 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
     {
         public ICustomerRepository CustomerRepository { get; }
 
-        public CustomerController(ICustomerRepository customerRepository)
+        public UserManager<AppUser> UserManager { get; }
+
+        public CustomerController(ICustomerRepository customerRepository, UserManager<AppUser> userManager)
         {
             CustomerRepository = customerRepository;
+            UserManager = userManager;
         }
 
         //[Route("GetAllCustomers")]
@@ -57,11 +62,23 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Customer customer)
+        public async Task<ActionResult> Edit(Customer customer)
         {
             if (ModelState.IsValid)
             {
                 CustomerRepository.UpdateCustomer(customer);
+                var user = await UserManager.FindByNameAsync(customer.CustEmail);
+                if (user != null)
+                {
+                    user.FirstName = customer.FirstName;
+                    user.LastName = customer.LastName;
+                    user.PhoneNumber = customer.CustPhone;
+
+                    var newPasswordHash = UserManager.PasswordHasher.HashPassword(user, customer.CustPassword);
+                    user.PasswordHash = newPasswordHash;
+
+                    var result = await UserManager.UpdateAsync(user);
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View();

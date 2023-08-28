@@ -62,7 +62,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
             {
                 try
                 {
-                    updatedEmployee.EmpName = employee.EmpName;
+                    updatedEmployee.EmpFirstName = employee.EmpFirstName;
+                    updatedEmployee.EmpLastName = employee.EmpLastName;
                     updatedEmployee.EmpEmail = employee.EmpEmail;
                     updatedEmployee.EmpPhone = employee.EmpPhone;
                     updatedEmployee.EmpNationalId = employee.EmpNationalId;

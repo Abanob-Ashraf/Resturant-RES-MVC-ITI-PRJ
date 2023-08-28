@@ -14,20 +14,25 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         [Key]
         public int CustID { get; set; }
 
-        [Required(ErrorMessage = "You Must Enter Customer Name")]
+        [Required(ErrorMessage = "You Must Enter Name")]
         [StringLength(50)]
-        [DisplayName("Customer Name")]
-        public string CustName { get; set; }
+        [DisplayName("First Name")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "You Must Enter Name")]
+        [StringLength(50)]
+        [DisplayName("Last Name")]
+        public string LastName { get; set; }
 
         [Required(ErrorMessage = "You Must Enter Email")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Invalid Email Address")]
         [DisplayName("Email")]
         public string CustEmail { get; set; }
 
-        [Required(ErrorMessage = "You Must Enter Password")]
+        //[Required(ErrorMessage = "You Must Enter Password")]
         [DataType(DataType.Password)]
         //[RegularExpression("\"^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$\"\r\n", ErrorMessage = "Enter a strong passwor")]
-        public string CustPassword { get; set; }
+        public string? CustPassword { get; set; }
 
         [RegularExpression(@"^(010|011|012|015)\d{8}$", ErrorMessage = "start with 010 | 011 | 012 | 015 and max 11 Diget")]
         [MaxLength(11)]

@@ -20,7 +20,7 @@
             @Html.DisplayNameFor(model => model.Customer)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Customer.CustName)
+            @Html.DisplayFor(model => new  {model.Customer.FirstName, model.Customer.LastName})
         </dd>
     </dl>
 </div>

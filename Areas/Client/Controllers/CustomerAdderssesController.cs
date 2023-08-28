@@ -35,7 +35,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         //[Route("CreateCustomerAdderss")]
         public ActionResult Create()
         {
-            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
             return View();
         }
 
@@ -44,7 +44,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CustomerAddersses customerAddersses)
         {
-            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
 
             if (ModelState.IsValid)
             {
@@ -57,7 +57,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         //[Route("UpdateCustomerAdderss/{id:int}")]
         public ActionResult Edit(int id)
         {
-            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
 
             return View(CustomerAdderssesRepository.GetCustomerAdderssById(id));
         }
@@ -67,7 +67,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, CustomerAddersses customerAddersses)
         {
-            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "CustName");
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
 
             if (ModelState.IsValid)
             {

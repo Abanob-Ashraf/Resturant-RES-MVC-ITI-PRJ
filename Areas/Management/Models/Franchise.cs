@@ -20,7 +20,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
         public string Country { get; set; }
 
         [ForeignKey("Manager")]
-        public int ManagerId { get; set; }
+        public int? ManagerId { get; set; }
         public Employee? Manager { get; set; }
 
         [InverseProperty("Franchise")]
