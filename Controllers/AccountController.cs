@@ -144,7 +144,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                     if (exist == true)
                     {
                         await signInManager.SignInAsync(userFromDB, userVM.RemeberMe);
-                        return RedirectToAction("Index", "home");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 else
@@ -169,7 +169,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
         public IActionResult Logout() 
         {
             signInManager.SignOutAsync();
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Index", "Home");
         }
 
 
@@ -294,7 +294,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                 return View(resetPasswordModel);
             var user = await userManager.FindByEmailAsync(resetPasswordModel.Email);
             if (user == null)
-                RedirectToAction(nameof(ResetPasswordConfirmation));
+                return View();
             var resetPassResult = await userManager.ResetPasswordAsync(user, resetPasswordModel.Token, resetPasswordModel.Password);
             if (!resetPassResult.Succeeded)
             {
@@ -304,7 +304,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                 }
                 return View();
             }
-            return RedirectToAction(nameof(ResetPasswordConfirmation));
+            return RedirectToAction("Login","Account");
         }
 
         [HttpGet]
