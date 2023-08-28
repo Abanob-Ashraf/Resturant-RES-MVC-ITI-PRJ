@@ -10,6 +10,8 @@ using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Resturant_RES_MVC_ITI_PRJ.Services;
 using Message = Resturant_RES_MVC_ITI_PRJ.Services.Message;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 {
@@ -18,13 +20,14 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
         private readonly UserManager<AppUser> userManager;
         private readonly SignInManager<AppUser> signInManager;
         private readonly IEmailSender emailSender;
-        //public ITraineerepo Traineerepo { get; }
+        private readonly ICustomerRepository customerRepository;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IEmailSender emailSender)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IEmailSender emailSender, ICustomerRepository customerRepository)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.emailSender = emailSender;
+            this.customerRepository = customerRepository;
             //this.Traineerepo = traineerepo;
         }
 
@@ -36,7 +39,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                 return View();
             }
             return RedirectToAction("Index", "Home");
-
         }
 
         [HttpPost]
@@ -45,36 +47,33 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             if (ModelState.IsValid)
             {
                 AppUser user = new AppUser();
+                user.FirstName = registerUserVM.FirstName;
+                user.LastName = registerUserVM.LastName;
                 user.UserName = registerUserVM.Email;
                 user.Email = registerUserVM.Email;
                 user.PhoneNumber = registerUserVM.Phone;
                 user.PasswordHash = registerUserVM.Password;
                 IdentityResult result = await userManager.CreateAsync(user, registerUserVM.Password);
 
-                //Trainee trainee = new Trainee() {
-                //    Name=registerUserVM.UserName,
-                //    Email=registerUserVM.Email,
-                //    Gender=Gender.Male,
-                //    MobileNo= registerUserVM.Phone
-                //    ,Birthdate =DateTime.Now,
-                //    TrackID=2
-                //};
+                Customer customer = new Customer()
+                {
+                    FirstName = registerUserVM.FirstName,
+                    LastName = registerUserVM.LastName,
+                    CustEmail = registerUserVM.Email,
+                    CustPassword = registerUserVM.Password,
+                    CustPhone = registerUserVM.Phone,
+                };
 
                 var routeValues = new RouteValueDictionary(new { area = "Client" });
 
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, "Customer");
-                    
-
-                    //Traineerepo.Insert(trainee);
-
-
                     var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email,username=user.UserName }, Request.Scheme);
+                    var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email, username = user.UserName }, Request.Scheme);
                     var message = new Message(new string[] { user.Email }, "Confirmation email link", confirmationLink, null);
                     await emailSender.SendEmailAsync(message);
-
+                    customerRepository.InsertCustomer(customer);
                     return RedirectToAction(nameof(SuccessRegistration));
                 }
                 else
@@ -90,7 +89,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 
 
         //ConfirmEmail
-
         [HttpGet]
         public async Task<IActionResult> ConfirmEmail(string token, string email, string username)
         {
@@ -102,6 +100,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             var result = await userManager.ConfirmEmailAsync(user, token);
             return View(result.Succeeded ? nameof(ConfirmEmail) : "Error");
         }
+
         [HttpGet]
         public IActionResult Error()
         {
@@ -116,7 +115,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 
 
         //Login
-
         [HttpGet]
         public IActionResult Login()
         {
@@ -124,20 +122,19 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             {
                 return View();
             }
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginUserVM userVM)
         {
-
             AppUser userFromDB = await userManager.FindByEmailAsync(userVM.Email);
 
             if (userFromDB != null)
             {
-               bool result= await userManager.IsEmailConfirmedAsync(userFromDB);
+                bool result = await userManager.IsEmailConfirmedAsync(userFromDB);
 
-                if (result==true)
+                if (result == true)
                 {
                     bool exist = await userManager.CheckPasswordAsync(userFromDB, userVM.Password);
 
@@ -152,21 +149,14 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                     ModelState.AddModelError("", "Invalid Login Attempt Please confirm your email");
                     return View();
                 }
-
-
-
-               
             }
-
-
             ModelState.AddModelError("error", "Not Correct UserName Or Password Try again");
             return View(userVM);
-
         }
 
 
         [HttpGet]
-        public IActionResult Logout() 
+        public IActionResult Logout()
         {
             signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
@@ -205,20 +195,29 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                     UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
                     FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
                     LastName = info.Principal.FindFirstValue(ClaimTypes.Surname),
+                    PhoneNumber = info.Principal.FindFirstValue(ClaimTypes.MobilePhone),
                     EmailConfirmed = true
-                    
-                
                 };
+
+                Customer customer = new Customer()
+                {
+                    FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
+                    LastName = info.Principal.FindFirstValue(ClaimTypes.Surname),
+                    CustEmail = info.Principal.FindFirstValue(ClaimTypes.Email),
+                    CustPhone = info.Principal.FindFirstValue(ClaimTypes.MobilePhone),
+                };
+
                 var createResult = await userManager.CreateAsync(user);
                 if (createResult.Succeeded)
                 {
-                    
-
                     await userManager.AddToRoleAsync(user, "Customer");
                     await userManager.AddLoginAsync(user, info);
                     await signInManager.SignInAsync(user, isPersistent: false);
                     var message = new Message(new string[] { user.Email }, "Welcome to ZMAN Resturant", null, null);
                     await emailSender.SendEmailAsync(message);
+                    customerRepository.InsertCustomer(customer);
+
+
                     return RedirectToLocal(returnUrl);
                 }
 
@@ -266,7 +265,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             if (user == null)
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
-         
+
             var callback = Url.Action(nameof(ResetPassword), "Account", new { token, email = user.Email }, Request.Scheme);
 
             var message = new Message(new string[] { user.Email }, "Reset your password at ZMAN Restaurants", callback, null);
@@ -304,13 +303,20 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                 }
                 return View();
             }
-            return RedirectToAction("Login","Account");
+            return RedirectToAction("Login", "Account");
         }
 
         [HttpGet]
         public IActionResult ResetPasswordConfirmation()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            var UserData = userManager.Users.FirstOrDefault(e => e.UserName == User.Identity.Name);
+            return View(UserData);
         }
     }
 }
