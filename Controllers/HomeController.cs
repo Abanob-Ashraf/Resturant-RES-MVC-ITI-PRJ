@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 using System.Diagnostics;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Controllers
@@ -11,12 +14,27 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 
         public RoleManager<IdentityRole> RoleManager { get; }
         public UserManager<AppUser> UserManager { get; }
+        public IDishRepository DishRepository { get; }
+        public IEmployeeRepository EmployeeRepository { get; }
+        public IFranchiseRepository FranchiseRepository { get; }
+        public IEmployeesCategoriesRepository EmployeesCategoriesRepository { get; }
 
-        public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager)
+        public HomeController(
+            ILogger<HomeController> logger, 
+            RoleManager<IdentityRole> roleManager, 
+            UserManager<AppUser> userManager, 
+            IDishRepository dishRepository, 
+            IEmployeeRepository employeeRepository, 
+            IFranchiseRepository franchiseRepository,
+            IEmployeesCategoriesRepository employeesCategoriesRepository)
         {
             _logger = logger;
             RoleManager = roleManager;
             UserManager = userManager;
+            DishRepository = dishRepository;
+            EmployeeRepository = employeeRepository;
+            FranchiseRepository = franchiseRepository;
+            EmployeesCategoriesRepository = employeesCategoriesRepository;
         }
 
         public async Task<IActionResult> AdminIndex()
@@ -25,15 +43,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             {
                 return View("DBindex");
             }
-
             return View("Index");
-
-
         }
         public async Task<IActionResult> Index()
         {
-
-
             IdentityRole role1 = new IdentityRole();
             role1.Name = "Customer";
             IdentityRole role2 = new IdentityRole();
@@ -47,12 +60,13 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 
             var user = new AppUser
             {
-                Email = "ZmanAdmin@Zman",
-                UserName = "ZmanAdmin",
-                FirstName = "admin",
-                LastName = "admin",
+                Email = "zmanrest@gmail.com",
+                UserName = "zmanrest@gmail.com",
+                FirstName = "Zman",
+                LastName = "Rest",
+                PhoneNumber = "01142601607",
                 EmailConfirmed = true,
-                PasswordHash=userPWD
+                PasswordHash = userPWD
             };
             var chkUser = await UserManager.CreateAsync(user, userPWD);
 
@@ -60,10 +74,41 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             if (chkUser.Succeeded)
             {
                 var result1 = await UserManager.AddToRoleAsync(user, "Admin");
+
+                var Category = new EmployeeCategory()
+                {
+                    CategoryName = "HeadManager"
+                };
+                EmployeesCategoriesRepository.InsertEmployeesCategory(Category);
+
+                var Franchise = new Franchise()
+                {
+                    Street = "9st",
+                    City = "Maadi",
+                    Country = "Egypt"
+                };
+                FranchiseRepository.InsertFranchise(Franchise);
+
+                var HeadManager = new Employee()
+                {
+                    EmpFirstName = user.FirstName,
+                    EmpLastName = user.LastName,
+                    EmpEmail = user.Email,
+                    EmpPassword = userPWD,
+                    EmpPhone = user.PhoneNumber,
+                    EmpHiringDate = DateTime.Now,
+                    EmpNationalId = "29810310101193",
+                    EmpSalary = 10000.0,
+                    EmpCategoryId = 1,
+                    FranchiseId = 1,
+                };
+                EmployeeRepository.InsertEmployee(HeadManager);
+
+                var test = FranchiseRepository.GetFranchiseById(1);
+                test.ManagerId = 1;
+                FranchiseRepository.UpdateFranchise(1, test);
             }
-
-           
-
+            ViewBag.Menu = DishRepository.GetAllDishes();
 
             return View();
         }
