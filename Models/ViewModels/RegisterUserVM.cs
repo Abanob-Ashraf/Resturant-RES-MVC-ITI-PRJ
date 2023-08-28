@@ -5,7 +5,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.ViewModels
 {
     public class RegisterUserVM
     {
-       
+        [Required]
+        public string FirstName { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
 
         [Required]
         [DataType(DataType.EmailAddress)]
