@@ -195,7 +195,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                     UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
                     FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
                     LastName = info.Principal.FindFirstValue(ClaimTypes.Surname),
-                    PhoneNumber = info.Principal.FindFirstValue(ClaimTypes.MobilePhone),
                     EmailConfirmed = true
                 };
 
@@ -204,7 +203,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                     FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
                     LastName = info.Principal.FindFirstValue(ClaimTypes.Surname),
                     CustEmail = info.Principal.FindFirstValue(ClaimTypes.Email),
-                    CustPhone = info.Principal.FindFirstValue(ClaimTypes.MobilePhone),
                 };
 
                 var createResult = await userManager.CreateAsync(user);

@@ -37,7 +37,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         [RegularExpression(@"^(010|011|012|015)\d{8}$", ErrorMessage = "start with 010 | 011 | 012 | 015 and max 11 Diget")]
         [MaxLength(11)]
         [DisplayName("Phone Number")]
-        public string CustPhone { get; set; }
+        public string? CustPhone { get; set; }
 
         [InverseProperty("Customer")]
         public ICollection<CustomerAddersses>? CustomerAddersses { get; set; }
