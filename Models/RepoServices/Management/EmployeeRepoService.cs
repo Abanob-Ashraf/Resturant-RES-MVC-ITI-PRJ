@@ -70,6 +70,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
                     updatedEmployee.EmpHiringDate = employee.EmpHiringDate;
                     updatedEmployee.EmpCategoryId = employee.EmpCategoryId;
                     updatedEmployee.FranchiseId = employee.FranchiseId;
+                    updatedEmployee.EmpSalary = employee.EmpSalary;
+                    updatedEmployee.EmpPassword = employee.EmpPassword;
+
+
                     Ctx.SaveChanges();
                 }
                 catch (Exception ex)
