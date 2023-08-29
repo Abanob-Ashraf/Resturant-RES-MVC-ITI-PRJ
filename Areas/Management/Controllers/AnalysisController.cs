@@ -7,23 +7,34 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
     public class AnalysisController : Controller
     {
         public IOrderAnalysis OrderAnalysis { get; }
+        public ICustomerAnalysis CustomerAnalysis { get; }
 
-        public AnalysisController(IOrderAnalysis orderAnalysis)
+        public AnalysisController(IOrderAnalysis orderAnalysis, ICustomerAnalysis customerAnalysis)
         {
             OrderAnalysis = orderAnalysis;
+            CustomerAnalysis = customerAnalysis;
         }
 
         public IActionResult orderAnalysis()
         {
             ViewBag.MostDishesOrdered = OrderAnalysis.GetMostOrderedDishes();
-            
-            ViewBag.NoCustomerOrdered = OrderAnalysis.GetNoCustomerOrdered();
-            
-            ViewBag.MostCustomersOrdered = OrderAnalysis.GetMostCustomersOrderedMoreOne();
-
+             
             ViewBag.GetOrderByType = OrderAnalysis.GetOrderByType();
 
             ViewBag.LeastOrderedDishes = OrderAnalysis.LeastOrderedDishes();
+
+            return View();
+        }
+
+        public IActionResult customerAnalysis()
+        {
+            ViewBag.NoCustomerOrdered = CustomerAnalysis.GetNoCustomerOrdered();
+
+            ViewBag.MostCustomersOrdered = CustomerAnalysis.GetMostCustomersOrderedMoreOne();
+
+            ViewBag.NoOfRegisteredCustomers = CustomerAnalysis.NoOfRegisteredCustomers();
+
+            ViewBag.LeastCustomersSignUps = CustomerAnalysis.LeastCustomersSignUps();
 
             return View();
         }
