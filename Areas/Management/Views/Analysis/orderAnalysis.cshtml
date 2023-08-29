@@ -6,52 +6,32 @@
     List<Dish> DI = ViewBag.LeastOrderedDishes;
 
     Dictionary<string, List<Order>> OT = ViewBag.GetOrderByType;
-
-    List<Customer> CU = ViewBag.MostCustomersOrdered;
 }
 
-<p>Number of customers who have placed an order today: @ViewBag.NoCustomerOrdered</p>
 
-    <table class="table table-striped">
+<table class="table table-striped">
+<tr>
+    <td>
+        Dish Name
+    </td>
+    <td>
+        Quantity
+    </td>
+</tr>
+@foreach (var KVP in DQ)
+{
     <tr>
         <td>
-            Dish Name
-        </td>
-        <td>
-            Quantity
-        </td>
-    </tr>
-    @foreach (var KVP in DQ)
-    {
-        <tr>
-            <td>
-                @KVP.Key.DishName
+            @KVP.Key.DishName
                 
-            </td>
-            <td>
-                @KVP.Value
-            </td>
-        </tr>
-    }
-    </table>
-
-
-<table>
-    <tr>
-        <td class="col-sm-2">Customer ID</td>
-        <td class ="col-sm-2">Customer Name</td>
-        <td class="col-sm-2">Customer Phone</td>
-
+        </td>
+        <td>
+            @KVP.Value
+        </td>
     </tr>
-    @foreach (var customer in CU)
-    {
-        <tr>
-            <td class="col-sm-2">@customer.CustEmail</td>
-            <td class="col-sm-2">@customer.FirstName @customer.LastName</td>
-            <td class="col-sm-2">@customer.CustPhone</td>
-        </tr>
-    }
+}
 </table>
+
 
 <table>
     <tr>
@@ -79,14 +59,14 @@
     <tr>
         <th>Dish Name</th>
         <th>Dish Price</th>
-
+        <th>Dish Category</th>
     </tr>
     @foreach (var dish in DI)
     {
         <tr>
             <td>@dish.DishName</td>
             <td>@dish.DishPrice</td>
-            <td>@dish</td>
+            <td>@dish.DishCategory.DishCategoryName</td>
         </tr>
     }
 </table>

@@ -14,28 +14,14 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis
         }
 
         //done
-        public int GetNoCustomerOrdered()
-        {
-            var NoCustomerOrdered = Ctx.Orders.Where(c => c.OrderDate == DateTime.Today).Select(c => c.CustomerId).Count();
-            Console.WriteLine(NoCustomerOrdered);
-            return NoCustomerOrdered;
-        }
-
-
         public List<Dish> LeastOrderedDishes()
         {
-            var data = Ctx.OrderesDishesRels.OrderByDescending(c => c.Order.OrderDate >= DateTime.Today).Select(c => c.Dish).ToList();
+            var data = Ctx.OrderesDishesRels
+                .Include(c => c.Dish)
+                .ThenInclude(c => c.DishCategory)
+                .OrderByDescending(c => c.Order.OrderDate >= DateTime.Today)
+                .Select(c => c.Dish).ToList();
             return data;
-        }
-
-        //done
-        public List<Customer> GetMostCustomersOrderedMoreOne()
-        {
-            var MostCustomers = Ctx.Orders
-                .GroupBy(c => c.CustomerId)
-                .Where(c => c.Count() > 1).OrderByDescending(c => c.Count())
-                .Select(c => c.First().Customer).ToList();
-            return MostCustomers;
         }
 
         //done

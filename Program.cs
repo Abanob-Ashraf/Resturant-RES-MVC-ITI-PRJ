@@ -73,6 +73,7 @@ namespace Resturant_RES_MVC_ITI_PRJ
 
             // Analysis
             builder.Services.AddScoped<IOrderAnalysis, OrderAnalysis>();
+            builder.Services.AddScoped<ICustomerAnalysis, CustomerAnalysis>();
 
 
             //Payment stripe
