@@ -7,6 +7,7 @@ using Resturant_RES_MVC_ITI_PRJ.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
+
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
     [Area("Client")]
@@ -84,9 +85,17 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View();
         }
 
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
+            var cust = CustomerRepository.GetCustomerById(id);
+            var user = await UserManager.FindByNameAsync(cust.CustEmail);
+            if (user != null)
+            {
+                var result = await UserManager.DeleteAsync(user);
+            }
+
             CustomerRepository.DeleteCustomer(id);
+
             return RedirectToAction(nameof(Index));
         }
 
