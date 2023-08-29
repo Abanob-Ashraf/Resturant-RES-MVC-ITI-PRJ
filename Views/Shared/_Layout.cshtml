@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+@inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client.ICustomerRepository CustomerRepository
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -56,6 +58,17 @@
                             <li class="nav-item">
                                 <a class="nav-link text-Dark"> Welcom @User.Identity.Name </a>
                             </li>
+                            @if (User.IsInRole("Customer"))
+                            {
+                                var curemail = User.FindFirst(ClaimTypes.Name)?.Value;
+                                var customer = CustomerRepository.GetAllCustomers().SingleOrDefault(c => c.CustEmail == curemail);
+
+                                <li>
+                                    <a class="nav-link text-Black" asp-action="Edit" asp-controller="Customer" asp-area="Client" asp-route-id="@customer.CustID"> Profile </a>
+
+                            </li>
+                            }
+
                             <li class="nav-item">
                                 <a class="nav-link text-Dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
                             </li>
