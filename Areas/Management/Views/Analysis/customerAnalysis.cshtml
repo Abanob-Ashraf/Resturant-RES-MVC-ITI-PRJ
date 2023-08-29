@@ -1,0 +1,47 @@
+﻿@using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+
+@{
+    List<Customer> CU = ViewBag.MostCustomersOrdered;
+    List<Customer> LC = ViewBag.LeastCustomersSignUps;
+}
+
+<p>Number of customers who have placed an order today: @ViewBag.NoCustomerOrdered</p>
+<p>Number of customers who have placed an order today: @ViewBag.NoOfRegisteredCustomers</p>
+
+<table>
+    <tr>
+        <td class="col-sm-2">Customer Email</td>
+        <td class="col-sm-2">Customer Name</td>
+        <td class="col-sm-2">Customer Phone</td>
+        <td class="col-sm-2">Customer Address</td>
+
+    </tr>
+    @foreach (var customer in CU)
+    {
+        <tr>
+            <td class="col-sm-2">@customer.CustEmail</td>
+            <td class="col-sm-2">@customer.FirstName @customer.LastName</td>
+            <td class="col-sm-2">@customer.CustPhone</td>
+            <td class="col-sm-2">@customer.CustomerAddersses.Where(c => customer.CustID == c.CustomerID).Select(c => c.CustAddressCity).SingleOrDefault()</td>
+        </tr>
+    }
+</table>
+
+<table>
+    <tr>
+        <td class="col-sm-2">Customer Email</td>
+        <td class="col-sm-2">Customer Name</td>
+        <td class="col-sm-2">Customer Phone</td>
+        <td class="col-sm-2">Customer Address</td>
+
+    </tr>
+    @foreach (var customer in LC)
+    {
+        <tr>
+            <td class="col-sm-2">@customer.CustEmail</td>
+            <td class="col-sm-2">@customer.FirstName @customer.LastName</td>
+            <td class="col-sm-2">@customer.CustPhone</td>
+            <td class="col-sm-2">@customer.CustomerAddersses.Where(c => customer.CustID == c.CustomerID).Select(c => c.CustAddressCity).SingleOrDefault()</td>
+        </tr>
+    }
+</table>
