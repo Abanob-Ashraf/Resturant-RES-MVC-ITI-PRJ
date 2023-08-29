@@ -64,9 +64,13 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                     CustPhone = registerUserVM.Phone,
                 };
 
-                var routeValues = new RouteValueDictionary(new { area = "Client" });
+                // Create a new claim to add to the user
+                var claim = new Claim(ClaimTypes.Name, user.Email); // Replace with your own claim type and value
 
-                if (result.Succeeded)
+                // Use UserManager to add the claim to the user
+                var result2 = await userManager.AddClaimAsync(user, claim);
+
+                if (result.Succeeded&&result2.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, "Customer");
                     var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -205,8 +209,19 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                     CustEmail = info.Principal.FindFirstValue(ClaimTypes.Email),
                 };
 
+
+
                 var createResult = await userManager.CreateAsync(user);
-                if (createResult.Succeeded)
+
+                // Create a new claim to add to the user
+                var claim = new Claim(ClaimTypes.Name, user.Email); // Replace with your own claim type and value
+
+                // Use UserManager to add the claim to the user
+                var result2 = await userManager.AddClaimAsync(user, claim);
+
+               
+                   
+                if (createResult.Succeeded&& result2.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, "Customer");
                     await userManager.AddLoginAsync(user, info);
