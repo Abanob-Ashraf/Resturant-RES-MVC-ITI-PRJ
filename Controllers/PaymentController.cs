@@ -7,6 +7,8 @@ using Stripe.Checkout;
 using Resturant_RES_MVC_ITI_PRJ.Models;
 using System.Diagnostics;
 using Resturant_RES_MVC_ITI_PRJ.Services;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 {
@@ -16,11 +18,13 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
         private readonly StripeSettings _stripeSettings;
 
         public IEmailSender EmailSender { get; }
+        public IOrderRepository OrderRepository { get; }
 
-        public PaymentController(IOptions<StripeSettings> stripeSettings, IEmailSender emailSender)
+        public PaymentController(IOptions<StripeSettings> stripeSettings, IEmailSender emailSender, IOrderRepository orderRepository)
         {
             _stripeSettings = stripeSettings.Value;
             EmailSender = emailSender;
+            OrderRepository = orderRepository;
         }
 
         public IActionResult Index()
@@ -29,12 +33,27 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
         }
 
 
-        public IActionResult CreateCheckoutSession(string amount)
+        public IActionResult CreateCheckoutSession(string amount, string desc, string orderName)
         {
 
+            int id = 0;
+            Order o = new Order()
+            {
+                OrderDate = DateTime.Now,
+                OrderState = "OUT",
+                PaymentMethod = Order.PaymentMethods.Cash,
+                IsPaid = false,
+                OrderTypeId = 1,
+                CustomerId = 1,
+                FranchiseId = 1,
+
+            };
+
+            OrderRepository.InsertOrder(o, ref id);
+
             var currency = "usd"; // Currency code
-            var successUrl = "https://localhost:7014/Payment/success";
-            var cancelUrl = "https://localhost:7014/Payment/cancel";
+            var successUrl = $"https://localhost:7014/Payment/success?OrderID={id}";
+            var cancelUrl = $"https://localhost:7014/Payment/cancel?OrderID={id}";
             StripeConfiguration.ApiKey = _stripeSettings.SecretKey;
 
             var options = new SessionCreateOptions
@@ -50,11 +69,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                         PriceData = new SessionLineItemPriceDataOptions
                         {
                             Currency = currency,
-                            UnitAmount = Convert.ToInt32(amount) * 100,  // Amount in smallest currency unit (e.g., cents)
+                            UnitAmount = Convert.ToInt32(amount) * 100,
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
-                                Name = "Order 2",
-                                Description = "1 'fish' Dish  2 'hawawshy' dishes"
+                                Name = orderName,
+                                Description = desc,
                             }
                         },
                         Quantity = 1
@@ -67,7 +86,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 
             var service = new SessionService();
             var session = service.Create(options);
-
 
             return Redirect(session.Url);
         }
