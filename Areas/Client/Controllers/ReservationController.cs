@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
@@ -13,13 +14,13 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 
         public IReservationRepository ReservationRepository { get; }
         public ICustomerRepository CustomerRepository { get; }
-        public ITableRepository TableRepository { get; }
+        public IFranchiseRepository FranchiseRepository { get; }
 
-        public ReservationController(IReservationRepository reservationrepository,ICustomerRepository customerRepository,ITableRepository tableRepository)
+        public ReservationController(IReservationRepository reservationrepository,ICustomerRepository customerRepository, IFranchiseRepository franchiseRepository)
         {
             ReservationRepository = reservationrepository;
             CustomerRepository = customerRepository;
-            TableRepository = tableRepository;
+            FranchiseRepository = franchiseRepository;
         }
       
         public ActionResult Index()
@@ -38,7 +39,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         public ActionResult Create()
         {
             ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
-            ViewBag.TableList = new SelectList(TableRepository.GetAllTables(), "TableID", "TableNumber");
+            ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
 
             return View();
         }
@@ -49,7 +50,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         public ActionResult Create(Reservation reservation)
         {
             ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
-            ViewBag.TableList = new SelectList(TableRepository.GetAllTables(), "TableID", "TableNumber");
+            ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
+
 
             if (ModelState.IsValid)
             {
@@ -62,8 +64,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         // GET: ReservationController/Edit/5
         public ActionResult Edit(int id)
         {
-            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
-            ViewBag.TableList = new SelectList(TableRepository.GetAllTables(), "TableID", "TableNumber");
+            ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName"); 
+            ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
 
             return View(ReservationRepository.GetReservationById(id));
         }
@@ -73,9 +75,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Reservation reservation)
         {
-
             ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
-            ViewBag.TableList = new SelectList(TableRepository.GetAllTables(), "TableIDTableID", "TableNumber");
+            ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
 
             if (ModelState.IsValid)
             {
@@ -88,7 +89,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         // GET: ReservationController/Delete/5
         public ActionResult Delete(int id)
         {
-
             ReservationRepository.DeleteReservation(id);
             return RedirectToAction(nameof(Index));
         }

@@ -1,4 +1,5 @@
-﻿using Resturant_RES_MVC_ITI_PRJ.Models;
+﻿using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
+using Resturant_RES_MVC_ITI_PRJ.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.DataAnnotation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -23,10 +24,13 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime ReservarionDate { get; set; }
 
-        [ForeignKey("Table")]
-        public int TableID { get; set; }
-        public Table? Table { get; set; }
+        [Required]
+        [RegularExpression(@"^([1-6])\d{0}$", ErrorMessage = "Max is 6 Guestes")]
+        [MaxLength(1)]
+        public int NoOfGuests { get; set; }
 
-
+        [ForeignKey("Franchise")]
+        public int FranchiseID { get; set; }
+        public Franchise? Franchise { get; set; }
     }
 }

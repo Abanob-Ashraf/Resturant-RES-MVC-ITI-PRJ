@@ -23,7 +23,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models
         public DbSet<OrderDishesRel> OrderesDishesRels { get; set; }
         public DbSet<OrderType> OrderTypes { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
-        public DbSet<Table> Tables { get; set; }
         public DbSet<Testimonials> Testimonials { get; set; }
 
         //Management

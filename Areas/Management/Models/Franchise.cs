@@ -25,7 +25,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
 
         [InverseProperty("Franchise")]
         public ICollection<Employee>? Employees { get; set; }
-
         public ICollection<Order>? Orders { get; set; }
+        public ICollection<Reservation>? Reservations { get; set; }
     }
 }

@@ -23,16 +23,22 @@
             @Html.DisplayFor(model => model.Customer.FirstName)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NoOfGuests)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NoOfGuests)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ReservarionDate)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ReservarionDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Table)
+            @Html.DisplayNameFor(model => model.Franchise)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Table.TableNumber)
+            @Html.DisplayFor(model => model.Franchise.City)
         </dd>
     </dl>
 </div>

@@ -17,7 +17,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         {
             return Ctx.Reservations
                   .Include(Res => Res.Customer)
-                  .Include(Res => Res.Table)
+                  .Include(Res => Res.Franchise)
                   .ToList();
         }
 
@@ -29,7 +29,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             }
             return Ctx.Reservations
                    .Include(Res => Res.Customer)
-                   .Include(Res => Res.Table)
+                   .Include(Res => Res.Franchise)
                    .Where(Res => Res.ReservationID == id).SingleOrDefault();
         }
 
@@ -56,9 +56,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             {
                 try
                 {
-                    updatedReservation.TableID = Reservation.TableID;
+                    updatedReservation.FranchiseID = Reservation.FranchiseID;
                     updatedReservation.Notes = Reservation.Notes;
                     updatedReservation.CustomerID = Reservation.CustomerID;
+                    updatedReservation.NoOfGuests = Reservation.NoOfGuests;
                     updatedReservation.ReservarionDate = Reservation.ReservarionDate;
                     Ctx.SaveChanges();
                 }

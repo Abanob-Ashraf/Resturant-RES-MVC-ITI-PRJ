@@ -62,7 +62,6 @@ namespace Resturant_RES_MVC_ITI_PRJ
             builder.Services.AddScoped<IOrderTypesRepository, OrderTypesRepoService>();
             builder.Services.AddScoped<IOrdersDishesRelRepository, OrdersDishesRelRepoService>();
             builder.Services.AddScoped<IReservationRepository, ReservationRepoService>();
-            builder.Services.AddScoped<ITableRepository, TableRepoService>();
             builder.Services.AddScoped<ITestimonialsRepository, TestimonialsRepoService>();
 
             // Management
