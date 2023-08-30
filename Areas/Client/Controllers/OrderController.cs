@@ -18,19 +18,31 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         public IOrderTypesRepository OrderTypeRepository { get; }
         public ICustomerRepository CustomerRepository { get; }
         public IFranchiseRepository FranchiseRepository { get; }
+        public IDishRepository DishRepository { get; }
 
-
-        public OrderController(IOrderRepository orderRepository,IOrderTypesRepository orderTypesRepository,ICustomerRepository customerRepository, IFranchiseRepository franchiseRepository)
+        public OrderController(IOrderRepository orderRepository,
+            IOrderTypesRepository orderTypesRepository,
+            ICustomerRepository customerRepository,
+            IFranchiseRepository franchiseRepository,
+            IDishRepository dishRepository
+            )
         {
             OrderRepository = orderRepository;
             OrderTypeRepository = orderTypesRepository;
             CustomerRepository = customerRepository;
             FranchiseRepository = franchiseRepository;
+            DishRepository = dishRepository;
         }
+
         //[Route("/GetAllTables")]
         public ActionResult Index()
         {
             return View("Index", OrderRepository.GetAllOrders());
+        }
+
+        public ActionResult Cart()
+        {
+            return View(DishRepository.GetAllDishes());
         }
 
         //[Route("GetOrderById/{id:int}")]
