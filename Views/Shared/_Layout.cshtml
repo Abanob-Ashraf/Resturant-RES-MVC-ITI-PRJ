@@ -64,7 +64,7 @@
                                 var customer = CustomerRepository.GetAllCustomers().SingleOrDefault(c => c.CustEmail == curemail);
 
                                 <li>
-                                    <a class="nav-link text-Black" asp-action="Edit" asp-controller="Customer" asp-area="Client" asp-route-id="@customer.CustID"> Profile </a>
+                                    <a class="nav-link text-Black" asp-action="Details" asp-controller="Customer" asp-area="Client" asp-route-id="@customer.CustID"> Profile </a>
 
                             </li>
                             }
