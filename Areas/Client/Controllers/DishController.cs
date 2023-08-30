@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
@@ -23,6 +25,23 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         public ActionResult Index()
         {
             return View("Index", DishRepository.GetAllDishes());
+        }
+
+        [HttpGet]
+        public ActionResult DishApi(int id)
+        {
+            var dish = DishRepository.GetDishById(id);
+            var jsonOptions = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            };
+            var serializedDish = JsonSerializer.Serialize(dish, jsonOptions);
+
+            return new ContentResult
+            {
+                Content = serializedDish,
+                ContentType = "application/json"
+            };
         }
 
         public ActionResult Details(int id)
