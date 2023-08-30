@@ -54,6 +54,23 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             }
         }
 
+        public void InsertOrder(Order Order, ref int x)
+        {
+            if (Order != null)
+            {
+                try
+                {
+                    Ctx.Orders.Add(Order);
+                    Ctx.SaveChanges();
+                    x = Order.OrderId;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+        }
+
         public void UpdateOrder(int id, Order Order)
         {
             var updateOrder = GetOrderById(id);
