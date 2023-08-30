@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
@@ -18,6 +19,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
         public IEmployeeRepository EmployeeRepository { get; }
         public IFranchiseRepository FranchiseRepository { get; }
         public IEmployeesCategoriesRepository EmployeesCategoriesRepository { get; }
+        public IOrderTypesRepository OrderTypesRepository { get; }
 
         public HomeController(
             ILogger<HomeController> logger, 
@@ -26,7 +28,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             IDishRepository dishRepository, 
             IEmployeeRepository employeeRepository, 
             IFranchiseRepository franchiseRepository,
-            IEmployeesCategoriesRepository employeesCategoriesRepository)
+            IEmployeesCategoriesRepository employeesCategoriesRepository,
+            IOrderTypesRepository orderTypesRepository)
         {
             _logger = logger;
             RoleManager = roleManager;
@@ -35,6 +38,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             EmployeeRepository = employeeRepository;
             FranchiseRepository = franchiseRepository;
             EmployeesCategoriesRepository = employeesCategoriesRepository;
+            OrderTypesRepository = orderTypesRepository;
         }
 
         public async Task<IActionResult> AdminIndex()
@@ -107,6 +111,25 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                 var test = FranchiseRepository.GetFranchiseById(1);
                 test.ManagerId = 1;
                 FranchiseRepository.UpdateFranchise(1, test);
+
+                var OrderType01 = new OrderType()
+                {
+                    OrderTypeName = "Delivery"
+                };
+                OrderTypesRepository.InsertOrderType(OrderType01);
+
+                var OrderType02 = new OrderType()
+                {
+                    OrderTypeName = "takeAway"
+                };
+                OrderTypesRepository.InsertOrderType(OrderType02);
+
+                var OrderType03 = new OrderType()
+                {
+                    OrderTypeName = "Dine in"
+                };
+                OrderTypesRepository.InsertOrderType(OrderType03);
+
             }
             ViewBag.Menu = DishRepository.GetAllDishes();
 
