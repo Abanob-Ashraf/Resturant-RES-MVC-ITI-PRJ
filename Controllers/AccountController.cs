@@ -70,7 +70,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                 // Use UserManager to add the claim to the user
                 var result2 = await userManager.AddClaimAsync(user, claim);
 
-                if (result.Succeeded&&result2.Succeeded)
+                if (result.Succeeded && result2.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, "Customer");
                     var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -163,14 +163,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
         public IActionResult Logout()
         {
             signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login");
         }
 
-
-
         //external login
-
-
         [HttpGet]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null)
         {

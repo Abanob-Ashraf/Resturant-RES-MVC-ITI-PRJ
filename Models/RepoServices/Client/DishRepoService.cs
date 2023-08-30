@@ -17,6 +17,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             return Ctx.Dishes
                 .Include(d => d.DishCategory)
                 .Include(d => d.DishIngredientRels)
+                .ThenInclude(dRel => dRel.Ingredtient)
                 .ToList();
         }
 
