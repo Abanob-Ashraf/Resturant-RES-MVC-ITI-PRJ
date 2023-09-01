@@ -24,8 +24,23 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.DishesLst = new SelectList(CategoryRepository.GetAllDishCategories(), "DishCategoryId", "DishCategoryName");
+
             return View("Index", DishRepository.GetAllDishes());
         }
+
+        [HttpPost]
+
+
+        public ActionResult Index(IFormCollection collection)
+        {
+            int DishID = int.Parse(collection["Dish"]);
+            ViewBag.DishesLst = new SelectList(CategoryRepository.GetAllDishCategories(), "DishCategoryId", "DishCategoryName");
+
+            return View(DishRepository.GetAllDishes().Where(d => d.DishCategoryId == DishID));
+        }
+
+
 
         [HttpGet]
         public ActionResult DishApi(int id)
@@ -98,19 +113,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // POST: DishController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+
     }
 }
+
