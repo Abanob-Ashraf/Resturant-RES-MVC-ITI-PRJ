@@ -24,6 +24,16 @@
             <th>
                 @Html.DisplayNameFor(model => model.CustPhone)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustAddressStreet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustAddressCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustAddressCounty)
+            </th>
+
             <th>Action</th>
         </tr>
     </thead>
@@ -42,6 +52,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CustPhone)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustAddressStreet)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustAddressCity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustAddressCounty)
+                </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.CustID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.CustID">Details</a> |

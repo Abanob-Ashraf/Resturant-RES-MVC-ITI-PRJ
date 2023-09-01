@@ -98,19 +98,5 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
     }
 }

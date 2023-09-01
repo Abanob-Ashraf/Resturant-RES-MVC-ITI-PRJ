@@ -21,7 +21,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
         public IEmployeesCategoriesRepository EmployeesCategoriesRepository { get; }
         public IOrderTypesRepository OrderTypesRepository { get; }
         public ICustomerRepository CustomerRepository { get; }
-        public ICustomerAdderssesRepository CustomerAdderssesRepository { get; }
 
         public HomeController(
             ILogger<HomeController> logger,
@@ -32,8 +31,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             IFranchiseRepository franchiseRepository,
             IEmployeesCategoriesRepository employeesCategoriesRepository,
             IOrderTypesRepository orderTypesRepository,
-            ICustomerRepository customerRepository,
-            ICustomerAdderssesRepository customerAdderssesRepository)
+            ICustomerRepository customerRepository)
         {
             _logger = logger;
             RoleManager = roleManager;
@@ -44,7 +42,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             EmployeesCategoriesRepository = employeesCategoriesRepository;
             OrderTypesRepository = orderTypesRepository;
             CustomerRepository = customerRepository;
-            CustomerAdderssesRepository = customerAdderssesRepository;
         }
 
         public async Task<IActionResult> AdminIndex()
@@ -184,6 +181,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                     CustEmail = DineINCust.Email,
                     CustPassword = DineINCustPWD,
                     CustPhone = DineINCust.PhoneNumber,
+                    CustAddressStreet = "9th",
+                    CustAddressCity = "Maadi",
+                    CustAddressCounty = "Egypt"
                 };
                 CustomerRepository.InsertCustomer(DineIN);
             }

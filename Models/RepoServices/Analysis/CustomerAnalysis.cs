@@ -23,7 +23,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis
         //done
         public List<Customer> LeastCustomersSignUps()
         {
-            var LeastCustomers = Ctx.Customers.Include(c => c.CustomerAddersses).OrderByDescending(c => c.CustID).Take(10).ToList();
+            var LeastCustomers = Ctx.Customers.OrderByDescending(c => c.CustID).Take(10).ToList();
             return LeastCustomers;
         }
 
@@ -38,7 +38,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis
         //done
         public List<Customer> GetMostCustomersOrderedMoreOne()
         {
-            var MostCustomers = Ctx.Orders.Include(c => c.Customer).ThenInclude(c => c.CustomerAddersses)
+            var MostCustomers = Ctx.Orders.Include(c => c.Customer)
                 .GroupBy(c => c.CustomerId)
                 .Where(c => c.Count() > 1).OrderByDescending(c => c.Count())
                 .Select(c => c.First().Customer).ToList();

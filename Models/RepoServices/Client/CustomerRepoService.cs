@@ -17,7 +17,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             return Ctx.Customers
                  .Include(cs => cs.Testimonials)
                  .Include(cs => cs.Reservations)
-                 .Include(cs => cs.CustomerAddersses)
                  .Include(cs => cs.Orders).ToList();
         }
 
@@ -30,7 +29,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
             return Ctx.Customers
                 .Include(cs => cs.Testimonials)
                 .Include(cs => cs.Reservations)
-                .Include(cs => cs.CustomerAddersses)
                 .Include(cs => cs.Orders)
                 .Where(cs => cs.CustID == id).SingleOrDefault();
         }

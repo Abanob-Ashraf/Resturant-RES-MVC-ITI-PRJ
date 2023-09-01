@@ -14,7 +14,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models
 
         //Client
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<CustomerAddersses> CustomersAddersses { get; set; }
         public DbSet<Dish> Dishes { get; set; }
         public DbSet<DishCategory> DishesCategories { get; set; }
         public DbSet<DishIngredientRel> DishIngredientRels { get; set; }
@@ -27,7 +26,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models
 
         //Management
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<EmployeeAddress> EmployeesAddresses { get; set; }
         public DbSet<EmployeeCategory> EmployeeCategories { get; set; }
         public DbSet<Franchise> Franchises { get; set; }
 

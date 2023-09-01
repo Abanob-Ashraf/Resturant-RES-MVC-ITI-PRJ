@@ -39,8 +39,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         [DisplayName("Phone Number")]
         public string? CustPhone { get; set; }
 
-        [InverseProperty("Customer")]
-        public ICollection<CustomerAddersses>? CustomerAddersses { get; set; }
+        public string? CustAddressStreet { get; set; }
+        public string? CustAddressCity { get; set; }
+        public string? CustAddressCounty { get; set; }
 
         [InverseProperty("Customer")]
         public ICollection<Testimonials>? Testimonials { get; set; }

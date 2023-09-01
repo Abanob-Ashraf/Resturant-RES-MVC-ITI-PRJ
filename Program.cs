@@ -3,12 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client;
 using Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management;
-using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
-using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Management;
 using Resturant_RES_MVC_ITI_PRJ.Services;
 using Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Analysis;
+using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 
 namespace Resturant_RES_MVC_ITI_PRJ
 {
@@ -53,7 +52,6 @@ namespace Resturant_RES_MVC_ITI_PRJ
 
             // Client
             builder.Services.AddScoped<ICustomerRepository, CustomerRepoService>();
-            builder.Services.AddScoped<ICustomerAdderssesRepository, CustomerAdderssesRepoService>();
             builder.Services.AddScoped<IDishRepository, DishRepoService>();
             builder.Services.AddScoped<IDishCategoryRepository, DishCategoryRepoService>();
             builder.Services.AddScoped<IDishIngredientRelRepository, DishIngredientsRelRepoService>();
@@ -66,7 +64,6 @@ namespace Resturant_RES_MVC_ITI_PRJ
 
             // Management
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepoService>();
-            builder.Services.AddScoped<IEmployeeAddressRepository, EmployeeAddressRepoService>();
             builder.Services.AddScoped<IEmployeesCategoriesRepository, EmployeesCategoriesRepoService>();
             builder.Services.AddScoped<IFranchiseRepository, FranchiseRepoService>();
 

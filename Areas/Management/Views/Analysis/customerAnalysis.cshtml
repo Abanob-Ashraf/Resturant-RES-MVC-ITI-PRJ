@@ -14,7 +14,7 @@
         <td class="col-sm-2">Customer Email</td>
         <td class="col-sm-2">Customer Name</td>
         <td class="col-sm-2">Customer Phone</td>
-        <td class="col-sm-2">Customer Address</td>
+        <td class="col-sm-2">Customer City</td>
 
     </tr>
     @foreach (var customer in CU)
@@ -23,7 +23,7 @@
             <td class="col-sm-2">@customer.CustEmail</td>
             <td class="col-sm-2">@customer.FirstName @customer.LastName</td>
             <td class="col-sm-2">@customer.CustPhone</td>
-            <td class="col-sm-2">@customer.CustomerAddersses.Where(c => customer.CustID == c.CustomerID).Select(c => c.CustAddressCity).SingleOrDefault()</td>
+            <td class="col-sm-2">@customer.CustAddressCity</td>
         </tr>
     }
 </table>
@@ -37,8 +37,7 @@
         <td class="col-sm-2">Customer Email</td>
         <td class="col-sm-2">Customer Name</td>
         <td class="col-sm-2">Customer Phone</td>
-        <td class="col-sm-2">Customer Address</td>
-
+        <td class="col-sm-2">Customer City</td>
     </tr>
     @foreach (var customer in LC)
     {
@@ -46,7 +45,7 @@
             <td class="col-sm-2">@customer.CustEmail</td>
             <td class="col-sm-2">@customer.FirstName @customer.LastName</td>
             <td class="col-sm-2">@customer.CustPhone</td>
-            <td class="col-sm-2">@customer.CustomerAddersses.Where(c => customer.CustID == c.CustomerID).Select(c => c.CustAddressCity).SingleOrDefault()</td>
+            <td class="col-sm-2">@customer.CustAddressCity</td>
         </tr>
     }
 </table>
