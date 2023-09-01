@@ -47,6 +47,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Customer customer)
         {
+            if (customer.CustPassword == null)
+            {
+                ModelState.AddModelError("password", "You must enter a password");
+            }
             if (ModelState.IsValid)
             {
                 CustomerRepository.InsertCustomer(customer);
@@ -65,6 +69,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Customer customer)
         {
+            if (customer.CustPassword == null)
+            {
+                ModelState.AddModelError("password", "You must enter a password");
+            }
             if (ModelState.IsValid)
             {
                 CustomerRepository.UpdateCustomer(customer);
