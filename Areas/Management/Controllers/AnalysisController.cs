@@ -27,6 +27,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
 
             ViewBag.OrdersPerMonth = OrderAnalysis.OrdersPerMonth();
 
+            ViewBag.BusiestDays = OrderAnalysis.BusiestDays();
+
             return View();
         }
 
