@@ -147,6 +147,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                     EmpPhone = Manager.PhoneNumber,
                     EmpHiringDate = DateTime.Now,
                     EmpNationalId = "29810310101193",
+                    City = "Maadi",
+                    Country = "Egypt",
                     EmpSalary = 10000.0,
                     EmpCategoryId = 1,
                     FranchiseId = 1,
@@ -184,15 +186,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                     CustPhone = DineINCust.PhoneNumber,
                 };
                 CustomerRepository.InsertCustomer(DineIN);
-
-                var CustomerAddersses = new CustomerAddersses()
-                {
-                    CustAddressStreet = "9st",
-                    CustAddressCity = "Maadi",
-                    CustAddressCounty = "Egypt",
-                    CustomerID = 1
-                };
-                CustomerAdderssesRepository.InsertCustomerAdderss(CustomerAddersses);
             }
         }
     }

@@ -52,6 +52,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
         [MaxLength(14)]
         public string EmpNationalId { get; set; }
 
+        [Required]
+        public string City { get; set; }
+
+        [Required]
+        public string Country { get; set; }
 
         [Required, DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
@@ -75,6 +80,5 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
 
         [InverseProperty("Manager")]
         public ICollection<Franchise>? Franchises { get; set; }
-        public ICollection<EmployeeAddress>? EmployeeAddress { get; set; }
     }
 }

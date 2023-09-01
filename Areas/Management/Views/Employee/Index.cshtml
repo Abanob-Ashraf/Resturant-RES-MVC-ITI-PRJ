@@ -14,7 +14,8 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.EmpFirstName)
-            </th><th>
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.EmpLastName)
             </th>
             <th>
@@ -25,6 +26,12 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EmpNationalId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EmpHiringDate)
@@ -59,6 +66,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EmpNationalId)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EmpHiringDate)
             </td>

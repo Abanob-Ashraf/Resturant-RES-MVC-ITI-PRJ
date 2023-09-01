@@ -111,8 +111,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
                     user.Email = employee.EmpEmail;
                     user.PhoneNumber = employee.EmpPhone;
 
-                  
-
                     var result = await UserManager.UpdateAsync(user);
                 }
                 return RedirectToAction(nameof(Index));

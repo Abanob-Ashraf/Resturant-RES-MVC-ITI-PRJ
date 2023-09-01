@@ -17,11 +17,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
         public List<Employee> GetAllEmployees()
         {
             return Ctx.Employees
-                .Include(emp => emp.EmployeeAddress)
                 .Include(emp => emp.EmployeeCategory)
                 .Include(emp => emp.Franchise)
                 .Include(emp => emp.Franchises).ToList();
-                
         }
 
         public Employee GetEmployeeById(int id)
@@ -31,7 +29,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
                 throw new ArgumentException($"Can't Find That Employee with Id: {id}");
             }
             return Ctx.Employees
-                .Include (emp => emp.EmployeeAddress)
                 .Include (emp => emp.EmployeeCategory)
                 .Include (emp => emp.Franchise)
                 .Include (emp => emp.Franchises)
@@ -67,12 +64,13 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
                     updatedEmployee.EmpEmail = employee.EmpEmail;
                     updatedEmployee.EmpPhone = employee.EmpPhone;
                     updatedEmployee.EmpNationalId = employee.EmpNationalId;
+                    updatedEmployee.City = employee.City;
+                    updatedEmployee.Country = employee.Country;
                     updatedEmployee.EmpHiringDate = employee.EmpHiringDate;
                     updatedEmployee.EmpCategoryId = employee.EmpCategoryId;
                     updatedEmployee.FranchiseId = employee.FranchiseId;
                     updatedEmployee.EmpSalary = employee.EmpSalary;
                     updatedEmployee.EmpPassword = employee.EmpPassword;
-
 
                     Ctx.SaveChanges();
                 }
@@ -80,7 +78,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
                 {
                     Console.WriteLine(ex.ToString());
                 }
-
             }
         }
 
@@ -98,10 +95,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
                 {
                     Console.WriteLine(ex.ToString());
                 }
-                
             }
-
-            
         }
     }
 }
