@@ -22,7 +22,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
         private readonly IEmailSender emailSender;
         private readonly ICustomerRepository customerRepository;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IEmailSender emailSender, ICustomerRepository customerRepository)
+        public AccountController(UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager,
+            IEmailSender emailSender,
+            ICustomerRepository customerRepository
+          )
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -215,9 +219,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                 // Use UserManager to add the claim to the user
                 var result2 = await userManager.AddClaimAsync(user, claim);
 
-               
-                   
-                if (createResult.Succeeded&& result2.Succeeded)
+
+
+                if (createResult.Succeeded && result2.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, "Customer");
                     await userManager.AddLoginAsync(user, info);
@@ -325,7 +329,12 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
         public IActionResult Profile()
         {
             var UserData = userManager.Users.FirstOrDefault(e => e.UserName == User.Identity.Name);
-            return View(UserData);
+            if (User.IsInRole("Customer"))
+            {
+                return View(UserData);
+            }
+            return View("EmployeeProfile", UserData);
         }
+
     }
 }
