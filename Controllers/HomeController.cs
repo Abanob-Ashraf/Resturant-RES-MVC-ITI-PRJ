@@ -20,16 +20,20 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
         public IFranchiseRepository FranchiseRepository { get; }
         public IEmployeesCategoriesRepository EmployeesCategoriesRepository { get; }
         public IOrderTypesRepository OrderTypesRepository { get; }
+        public ICustomerRepository CustomerRepository { get; }
+        public ICustomerAdderssesRepository CustomerAdderssesRepository { get; }
 
         public HomeController(
-            ILogger<HomeController> logger, 
-            RoleManager<IdentityRole> roleManager, 
-            UserManager<AppUser> userManager, 
-            IDishRepository dishRepository, 
-            IEmployeeRepository employeeRepository, 
+            ILogger<HomeController> logger,
+            RoleManager<IdentityRole> roleManager,
+            UserManager<AppUser> userManager,
+            IDishRepository dishRepository,
+            IEmployeeRepository employeeRepository,
             IFranchiseRepository franchiseRepository,
             IEmployeesCategoriesRepository employeesCategoriesRepository,
-            IOrderTypesRepository orderTypesRepository)
+            IOrderTypesRepository orderTypesRepository,
+            ICustomerRepository customerRepository,
+            ICustomerAdderssesRepository customerAdderssesRepository)
         {
             _logger = logger;
             RoleManager = roleManager;
@@ -39,6 +43,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             FranchiseRepository = franchiseRepository;
             EmployeesCategoriesRepository = employeesCategoriesRepository;
             OrderTypesRepository = orderTypesRepository;
+            CustomerRepository = customerRepository;
+            CustomerAdderssesRepository = customerAdderssesRepository;
         }
 
         public async Task<IActionResult> AdminIndex()
@@ -51,18 +57,41 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            await Initialize_Data();
+
+            ViewBag.Menu = DishRepository.GetAllDishes();
+
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        protected async Task Initialize_Data()
+        {
             IdentityRole role1 = new IdentityRole();
             role1.Name = "Customer";
             IdentityRole role2 = new IdentityRole();
             role2.Name = "Admin";
+            IdentityRole role3 = new IdentityRole();
+            role3.Name = "Employee";
 
             //Save Role to DB
-             await RoleManager.CreateAsync(role1);
+            await RoleManager.CreateAsync(role1);
             await RoleManager.CreateAsync(role2);
+            await RoleManager.CreateAsync(role3);
 
-            string userPWD = "Admin$123";
+            string ManagerPWD = "Admin$123";
 
-            var user = new AppUser
+            var Manager = new AppUser
             {
                 Email = "zmanrest@gmail.com",
                 UserName = "zmanrest@gmail.com",
@@ -70,14 +99,30 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                 LastName = "Rest",
                 PhoneNumber = "01142601607",
                 EmailConfirmed = true,
-                PasswordHash = userPWD
+                PasswordHash = ManagerPWD
             };
-            var chkUser = await UserManager.CreateAsync(user, userPWD);
+            var ManagerUser = await UserManager.CreateAsync(Manager, ManagerPWD);
+
+            var DineINCustPWD = "Customer$123";
+
+            var DineINCust = new AppUser
+            {
+                Email = "DineIn@ZmanRest.com",
+                UserName = "DineIn@ZmanRest.com",
+                FirstName = "Dine",
+                LastName = "In",
+                PhoneNumber = "01099412326",
+                EmailConfirmed = true,
+                PasswordHash = DineINCustPWD
+            };
+            var DineINEmpUser = await UserManager.CreateAsync(DineINCust, DineINCustPWD);
 
             //Add default User to Role Admin    
-            if (chkUser.Succeeded)
+            if (ManagerUser.Succeeded && DineINEmpUser.Succeeded)
             {
-                var result1 = await UserManager.AddToRoleAsync(user, "Admin");
+                await UserManager.AddToRoleAsync(Manager, "Admin");
+
+                await UserManager.AddToRoleAsync(DineINCust, "Customer");
 
                 var Category = new EmployeeCategory()
                 {
@@ -95,11 +140,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 
                 var HeadManager = new Employee()
                 {
-                    EmpFirstName = user.FirstName,
-                    EmpLastName = user.LastName,
-                    EmpEmail = user.Email,
-                    EmpPassword = userPWD,
-                    EmpPhone = user.PhoneNumber,
+                    EmpFirstName = Manager.FirstName,
+                    EmpLastName = Manager.LastName,
+                    EmpEmail = Manager.Email,
+                    EmpPassword = ManagerPWD,
+                    EmpPhone = Manager.PhoneNumber,
                     EmpHiringDate = DateTime.Now,
                     EmpNationalId = "29810310101193",
                     EmpSalary = 10000.0,
@@ -120,7 +165,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 
                 var OrderType02 = new OrderType()
                 {
-                    OrderTypeName = "takeAway"
+                    OrderTypeName = "TakeAway"
                 };
                 OrderTypesRepository.InsertOrderType(OrderType02);
 
@@ -130,21 +175,25 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                 };
                 OrderTypesRepository.InsertOrderType(OrderType03);
 
+                var DineIN = new Customer()
+                {
+                    FirstName = DineINCust.FirstName,
+                    LastName = DineINCust.LastName,
+                    CustEmail = DineINCust.Email,
+                    CustPassword = DineINCustPWD,
+                    CustPhone = DineINCust.PhoneNumber,
+                };
+                CustomerRepository.InsertCustomer(DineIN);
+
+                var CustomerAddersses = new CustomerAddersses()
+                {
+                    CustAddressStreet = "9st",
+                    CustAddressCity = "Maadi",
+                    CustAddressCounty = "Egypt",
+                    CustomerID = 1
+                };
+                CustomerAdderssesRepository.InsertCustomerAdderss(CustomerAddersses);
             }
-            ViewBag.Menu = DishRepository.GetAllDishes();
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

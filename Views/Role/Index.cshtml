@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Resturant_RES_MVC_ITI_PRJ.Models.ViewModels.roleVM>
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<IdentityRole>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,13 +8,13 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="NewRole">Create New Model</a>
+    <a asp-action="NewRole">Create New Role</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RoleName)
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th></th>
         </tr>
@@ -22,13 +23,9 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.RoleName)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item">Delete</a>
-            </td>
+           
         </tr>
 }
     </tbody>

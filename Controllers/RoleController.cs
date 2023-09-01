@@ -15,7 +15,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            
+            return View(roleManager.Roles.ToList());
         }
 
         [HttpGet]
@@ -51,6 +52,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             }
             return View(roleViewModel);
         }
+
+      
 
     }
 }

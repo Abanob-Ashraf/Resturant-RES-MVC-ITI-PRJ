@@ -62,6 +62,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models
         [Range(1400.0, 50000.0, ErrorMessage = "Salary must be between {1} and {2}")]
         public double EmpSalary { get; set; } = 1400.0;
 
+        [NotMapped]
+        public string RoleName { get; set; } 
 
         [ForeignKey("EmployeeCategory")]
         public int EmpCategoryId { get; set; }

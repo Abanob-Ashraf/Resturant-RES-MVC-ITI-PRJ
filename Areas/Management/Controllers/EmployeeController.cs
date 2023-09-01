@@ -18,13 +18,15 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         public IEmployeesCategoriesRepository EmployeesCategoriesRepository { get; }
         public IFranchiseRepository FranchiseRepository { get; }
         public UserManager<AppUser> UserManager { get; }
+        public RoleManager<IdentityRole> RoleManager { get; }
 
-        public EmployeeController(IEmployeeRepository employeeRepository, IEmployeesCategoriesRepository employeesCategoriesRepository, IFranchiseRepository franchiseRepository, UserManager<AppUser> userManager)
+        public EmployeeController(IEmployeeRepository employeeRepository, IEmployeesCategoriesRepository employeesCategoriesRepository, IFranchiseRepository franchiseRepository, UserManager<AppUser> userManager,RoleManager<IdentityRole> roleManager)
         {
             EmployeeRepository = employeeRepository;
             EmployeesCategoriesRepository = employeesCategoriesRepository;
             FranchiseRepository = franchiseRepository;
             UserManager = userManager;
+            RoleManager = roleManager;
         }
 
         //[Route("GetAllEmployees")]
@@ -44,6 +46,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         {
             ViewBag.CategoryList = new SelectList(EmployeesCategoriesRepository.GetAllEmployeesCategories(), "EmployeeCategoryId", "CategoryName");
             ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
+            ViewBag.RoleList = new SelectList(RoleManager.Roles.Select(r => r.Name).ToList(),"Name");
             return View();
         }
 
@@ -54,12 +57,13 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         {
             ViewBag.CategoryList = new SelectList(EmployeesCategoriesRepository.GetAllEmployeesCategories(), "EmployeeCategoryId", "CategoryName");
             ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
+            ViewBag.RoleList = new SelectList(RoleManager.Roles.Select(r=>r.Name).ToList(),"Name");
 
-            
             if (ModelState.IsValid)
             {
 
                 EmployeeRepository.InsertEmployee(employee);
+                 
                 AppUser user = new AppUser();
                 user.FirstName = employee.EmpFirstName;
                 user.LastName = employee.EmpLastName;
@@ -68,8 +72,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
                 user.PhoneNumber = employee.EmpPhone;
                 user.PasswordHash = employee.EmpPassword;
                 user.EmailConfirmed = true;
+                
                 IdentityResult result = await UserManager.CreateAsync(user, employee.EmpPassword);
-                await UserManager.AddToRoleAsync(user, "Admin");
+                await UserManager.AddToRoleAsync(user, employee.RoleName);
                 return RedirectToAction(nameof(Index));
             }
             return View();
