@@ -85,6 +85,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         {
             ViewBag.CategoryList = new SelectList(EmployeesCategoriesRepository.GetAllEmployeesCategories(), "EmployeeCategoryId", "CategoryName");
             ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
+            ViewBag.RoleList = new SelectList(RoleManager.Roles.Select(r=>r.Name).ToList(),"Name");
+
             return View(EmployeeRepository.GetEmployeeById(id));
         }
 
@@ -95,6 +97,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         {
             ViewBag.CategoryList = new SelectList(EmployeesCategoriesRepository.GetAllEmployeesCategories(), "EmployeeCategoryId", "CategoryName");
             ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
+            ViewBag.RoleList = new SelectList(RoleManager.Roles.Select(r => r.Name).ToList(), "Name");
 
             if (ModelState.IsValid)
             {
