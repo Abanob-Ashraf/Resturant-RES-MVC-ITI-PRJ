@@ -12,7 +12,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Analysis
 
         public Dictionary<DateTime, List<Order>> OrdersPerDay();
 
-        public Dictionary<DateTime, List<Order>> OrdersPerMonth();
+        public Dictionary<int, List<Order>> OrdersPerMonth();
 
         public Dictionary<DateTime, int> BusiestDays();
     }
