@@ -1,6 +1,6 @@
 ﻿using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
 
-namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Management
+namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories
 {
     public interface IEmployeeRepository
     {
