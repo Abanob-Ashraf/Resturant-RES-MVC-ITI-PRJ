@@ -34,6 +34,9 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CustPhone)
         </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CustAddressStreet)
+        </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CustAddressStreet)
         </dd>
@@ -42,6 +45,12 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CustAddressCity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CustAddressCounty)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CustAddressCounty)
         </dd>
     </dl>
 </div>

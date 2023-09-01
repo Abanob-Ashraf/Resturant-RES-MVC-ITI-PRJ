@@ -23,6 +23,12 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
 
             ViewBag.LeastOrderedDishes = OrderAnalysis.LeastOrderedDishes();
 
+            ViewBag.OrdersPerDay = OrderAnalysis.OrdersPerDay();
+
+            ViewBag.OrdersPerMonth = OrderAnalysis.OrdersPerMonth();
+
+            ViewBag.BusiestDays = OrderAnalysis.BusiestDays();
+
             return View();
         }
 

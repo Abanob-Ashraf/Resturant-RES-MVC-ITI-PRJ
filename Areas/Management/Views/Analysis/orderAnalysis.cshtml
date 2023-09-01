@@ -1,14 +1,20 @@
 ﻿@using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 
 @{
-    Dictionary<Dish, int> DQ = ViewBag.MostDishesOrdered;
+    Dictionary<Dish, int> MostDishesOrdered = ViewBag.MostDishesOrdered;
 
-    List<Dish> DI = ViewBag.LeastOrderedDishes;
+    List<Dish> LeastOrderedDishes = ViewBag.LeastOrderedDishes;
 
-    Dictionary<string, List<Order>> OT = ViewBag.GetOrderByType;
+    Dictionary<string, List<Order>> GetOrderByType = ViewBag.GetOrderByType;
+
+    Dictionary<DateTime, List<Order>> OrdersPerDay = ViewBag.OrdersPerDay;
+
+    Dictionary<int, List<Order>> OrdersPerMonth = ViewBag.OrdersPerMonth;
+
+    Dictionary<DateTime, int> BusiestDays = ViewBag.BusiestDays;
 }
 
-
+<p>Most Dishes Ordered</p>
 <table class="table table-striped">
 <tr>
     <td>
@@ -18,7 +24,7 @@
         Quantity
     </td>
 </tr>
-@foreach (var KVP in DQ)
+@foreach (var KVP in MostDishesOrdered)
 {
     <tr>
         <td>
@@ -32,13 +38,13 @@
 }
 </table>
 
-
+<p>Get Order By Type</p>
 <table>
     <tr>
         <th>Order Type</th>
         <th>Orders</th>
     </tr>
-    @foreach (var kvp in OT)
+    @foreach (var kvp in GetOrderByType)
     {
         <tr>
             <td>@kvp.Key</td>
@@ -55,13 +61,80 @@
     }
 </table>
 
+<p>Orders Per Day</p>
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Orders</th>
+    </tr>
+    @foreach (var kvp in OrdersPerDay)
+    {
+        <tr>
+            <td>@kvp.Key</td>
+            <td>
+                <ul>
+                    @foreach (var order in kvp.Value)
+                    {
+                        <li>@order.PaymentMethod</li>
+                    }
+                </ul>
+            </td>
+        </tr>
+    }
+</table>
+
+<p>Orders Per Month</p>
+<table>
+    <tr>
+        <th>Month</th>
+        <th>Orders</th>
+    </tr>
+    @foreach (var kvp in OrdersPerMonth)
+    {
+        <tr>
+            <td>@kvp.Key</td>
+            <td>
+                <ul>
+                    @foreach (var order in kvp.Value)
+                    {
+                        <li>@kvp.Value.Count() </li>
+                    }
+                </ul>
+            </td>
+        </tr>
+    }
+</table>
+
+<p>Busiest Days</p>
+<table>
+    <tr>
+        <th>Day</th>
+        <th>No of Orders</th>
+    </tr>
+    @foreach (var kvp in OrdersPerMonth)
+    {
+        <tr>
+            <td>@kvp.Key</td>
+            <td>
+                <ul>
+                    @foreach (var order in kvp.Value)
+                    {
+                        <li>@order.PaymentMethod</li>
+                    }
+                </ul>
+            </td>
+        </tr>
+    }
+</table>
+
+<p>Least Ordered Dishes</p>
 <table>
     <tr>
         <th>Dish Name</th>
         <th>Dish Price</th>
         <th>Dish Category</th>
     </tr>
-    @foreach (var dish in DI)
+    @foreach (var dish in LeastOrderedDishes)
     {
         <tr>
             <td>@dish.DishName</td>
