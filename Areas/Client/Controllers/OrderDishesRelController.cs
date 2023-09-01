@@ -5,6 +5,8 @@ using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
@@ -27,6 +29,21 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         public ActionResult Index()
         {
             return View("Index", OrderDishesRelRepository.GetAllOrderDishesRels());
+        }
+        public ActionResult OrderDishesApi(int id)
+        {
+            var dishs = OrderDishesRelRepository.GetAllOrderDishesRels().Where(e => e.OrderId == id).Select(o => new { orderid = o.OrderId, dishes = o.Dish, quantity = o.Quantity });
+            var jsonOptions = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            };
+            var serializedDishes = JsonSerializer.Serialize(dishs, jsonOptions);
+
+            return new ContentResult
+            {
+                Content = serializedDishes,
+                ContentType = "application/json"
+            };
         }
         //[Route("GetOrderDishesRelById/{id:int}")]
         public ActionResult Details(int id)
@@ -90,6 +107,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-       
+
     }
 }
