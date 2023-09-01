@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Analysis;
+using System.Linq;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis
 {
@@ -44,6 +45,30 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis
                 .GroupBy(c => c.OrderType.OrderTypeName)
                 .ToDictionary(c => c.Key, c => c.ToList());
             return OrderByType;
+        }
+
+        public Dictionary<DateTime, List<Order>> OrdersPerDay()
+        {
+            var OrdersPerDay = Ctx.Orders
+                .GroupBy(c => c.OrderDate)
+                .ToDictionary(c => c.Key, c => c.ToList());
+            return OrdersPerDay;
+        }
+
+        public Dictionary<int, List<Order>> OrdersPerMonth()
+        {
+            var OrdersPerDay = Ctx.Orders
+                .GroupBy(c => c.OrderDate.Month)
+                .ToDictionary(c => c.Key, c => c.ToList());
+            return OrdersPerDay;
+        }
+
+        public Dictionary<DateTime, int> BusiestDays()
+        {
+            var OrdersPerDay = Ctx.Orders
+                .GroupBy(c => c.OrderDate)
+                .ToDictionary(c => c.Key, c => c.Count());
+            return OrdersPerDay;
         }
     }
 }

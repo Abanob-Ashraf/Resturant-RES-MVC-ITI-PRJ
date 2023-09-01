@@ -6,6 +6,10 @@
     List<Dish> DI = ViewBag.LeastOrderedDishes;
 
     Dictionary<string, List<Order>> OT = ViewBag.GetOrderByType;
+
+    Dictionary<DateTime, List<Order>> DO = ViewBag.OrdersPerDay;
+
+    Dictionary<int, List<Order>> MT = ViewBag.OrdersPerMonth;
 }
 
 
@@ -49,6 +53,50 @@
                     {
                         <li>@order.Customer.FirstName</li>
                     }*@
+                </ul>
+            </td>
+        </tr>
+    }
+</table>
+
+<p>Orders Per Day</p>
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Orders</th>
+    </tr>
+    @foreach (var kvp in DO)
+    {
+        <tr>
+            <td>@kvp.Key</td>
+            <td>
+                <ul>
+                    @foreach (var order in kvp.Value)
+                    {
+                        <li>@order.PaymentMethod</li>
+                    }
+                </ul>
+            </td>
+        </tr>
+    }
+</table>
+
+<p>Orders Per Month</p>
+<table>
+    <tr>
+        <th>Month</th>
+        <th>Orders</th>
+    </tr>
+    @foreach (var kvp in MT)
+    {
+        <tr>
+            <td>@kvp.Key</td>
+            <td>
+                <ul>
+                    @foreach (var order in kvp.Value)
+                    {
+                        <li>@order.PaymentMethod</li>
+                    }
                 </ul>
             </td>
         </tr>
