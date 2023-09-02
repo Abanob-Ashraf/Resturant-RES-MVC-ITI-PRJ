@@ -115,7 +115,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             var DineINEmpUser = await UserManager.CreateAsync(DineINCust, DineINCustPWD);
 
             //Add default User to Role Admin    
-            if (ManagerUser.Succeeded && DineINEmpUser.Succeeded)
+            if (ManagerUser.Succeeded)
             {
                 await UserManager.AddToRoleAsync(Manager, "Admin");
 
@@ -174,6 +174,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                 };
                 OrderTypesRepository.InsertOrderType(OrderType03);
 
+                
+            }
+            if (DineINEmpUser.Succeeded)
+            {
                 var DineIN = new Customer()
                 {
                     FirstName = DineINCust.FirstName,
