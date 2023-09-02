@@ -14,12 +14,12 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         public ITestimonialsRepository TestimonialsRepository { get; }
         public ICustomerRepository CustomerRepository { get; }
 
-        public TestimonialsController(ITestimonialsRepository testimonialsRepository,ICustomerRepository customerRepository)
+        public TestimonialsController(ITestimonialsRepository testimonialsRepository, ICustomerRepository customerRepository)
         {
             TestimonialsRepository = testimonialsRepository;
             CustomerRepository = customerRepository;
         }
-      
+
         public ActionResult Index()
         {
             return View("Index", TestimonialsRepository.GetAllTestimonials());
@@ -28,7 +28,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         // GET: TestimonialsController/Details/5
         public ActionResult Details(int id)
         {
-            return View("Details",TestimonialsRepository.GetTestimonialsById(id));
+            return View("Details", TestimonialsRepository.GetTestimonialsById(id));
         }
 
         // GET: TestimonialsController/Create
@@ -44,15 +44,16 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Testimonials testimonial)
         {
+            var routeValues = new RouteValueDictionary(new { area = "" });
+
             ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
 
             if (ModelState.IsValid)
-                {
-                    TestimonialsRepository.InsertTestimonials(testimonial);
-                    return RedirectToAction(nameof(Index));
-                }
-                return View();
-                       
+            {
+                TestimonialsRepository.InsertTestimonials(testimonial);
+                return RedirectToAction("Index", "Home", routeValues);
+            }
+            return RedirectToAction("Index", "Home", routeValues);
         }
 
         // GET: TestimonialsController/Edit/5
@@ -71,12 +72,12 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
 
             if (ModelState.IsValid)
-                {
-                    TestimonialsRepository.UpdateTestimonials(id,testimonial);
-                    return RedirectToAction(nameof(Index));
-                }
-                return View();
-           
+            {
+                TestimonialsRepository.UpdateTestimonials(id, testimonial);
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+
         }
 
         // GET: TestimonialsController/Delete/5
@@ -86,19 +87,5 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // POST: TestimonialsController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
     }
 }
