@@ -3,143 +3,117 @@
 @{
     Dictionary<Dish, int> MostDishesOrdered = ViewBag.MostDishesOrdered;
 
-    List<Dish> LeastOrderedDishes = ViewBag.LeastOrderedDishes;
 
     Dictionary<string, List<Order>> GetOrderByType = ViewBag.GetOrderByType;
 
-    Dictionary<DateTime, List<Order>> OrdersPerDay = ViewBag.OrdersPerDay;
 
-    Dictionary<int, List<Order>> OrdersPerMonth = ViewBag.OrdersPerMonth;
-
-    Dictionary<DateTime, int> BusiestDays = ViewBag.BusiestDays;
 }
 
-<p>Most Dishes Ordered</p>
-<table class="table table-striped">
-<tr>
-    <td>
-        Dish Name
-    </td>
-    <td>
-        Quantity
-    </td>
-</tr>
-@foreach (var KVP in MostDishesOrdered)
-{
-    <tr>
-        <td>
-            @KVP.Key.DishName
-                
-        </td>
-        <td>
-            @KVP.Value
-        </td>
-    </tr>
-}
-</table>
+<div id="kt_app_toolbar_container" class="app-container container p-3 d-flex flex-stack">
+    <!--begin::Page title-->
+    <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+        <!--begin::Title-->
+        <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Orders Analysis</h1>
+        <!--end::Title-->
+        <!--begin::Breadcrumb-->
+        <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+            <!--begin::Item-->
+            <li class="breadcrumb-item text-muted">
+                <a asp-action="Index" asp-controller="Home" asp-area="" class="text-muted text-hover-primary">Home</a>
+            </li>
+            <!--end::Item-->
+            <!--begin::Item-->
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-400 w-5px h-2px"></span>
+            </li>
+            <!--end::Item-->
+            <!--begin::Item-->
+            <li class="breadcrumb-item text-muted">Orders Analysis</li>
+            <!--end::Item-->
+        </ul>
+        <!--end::Breadcrumb-->
+    </div>
+    <!--end::Page title-->
 
-<p>Get Order By Type</p>
-<table>
-    <tr>
-        <th>Order Type</th>
-        <th>Orders</th>
-    </tr>
-    @foreach (var kvp in GetOrderByType)
-    {
-        <tr>
-            <td>@kvp.Key</td>
-            <td>
-                <ul>
-                    <li>@kvp.Value.Count() </li>
-                    @*@foreach (var order in kvp.Value)
-                    {
+</div>
+
+
+<div id="kt_app_content" class="app-content container m-auto flex-column-fluid m-5 p-5">
+
+    <p class="fw-bold fs-4">Most Dishes Ordered</p>
+    <table class="table table-warning table-striped" id="TableData01">
+        <thead>
+            <tr class="align-middle text-center">
+                <th class="text-center">
+                    Dish Name
+                </th>
+                <th class="text-center">
+                    Quantity
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var KVP in MostDishesOrdered)
+            {
+                <tr class="align-middle text-center">
+                    <td>
+                        @KVP.Key.DishName
+
+                    </td>
+                    <td>
+                        @KVP.Value
+                    </td>
+                </tr>
+            }
+        </tbody>
+       
+    </table>
+
+    <hr/>
+
+
+    <p class="fw-bold fs-4">Count of orders per type</p>
+    <table class="table table-warning table-striped" id="TableData02">
+       <thead>
+            <tr class="align-middle text-center">
+                <th  class="text-center">Order Type</th>
+                <th  class="text-center">Orders</th>
+            </tr>
+       </thead>
+      <tbody>
+            @foreach (var kvp in GetOrderByType)
+            {
+                <tr class="align-middle text-center">
+                    <td>@kvp.Key</td>
+                    <td>
+                      
+                           @kvp.Value.Count() 
+                            @*@foreach (var order in kvp.Value)
+                        {
                         <li>@order.Customer.FirstName</li>
-                    }*@
-                </ul>
-            </td>
-        </tr>
-    }
-</table>
+                        }*@
+                    
+                    </td>
+                </tr>
+            }
+      </tbody>
+ 
+    </table>
+    <hr />
 
-<p>Orders Per Day</p>
-<table>
-    <tr>
-        <th>Date</th>
-        <th>Orders</th>
-    </tr>
-    @foreach (var kvp in OrdersPerDay)
-    {
-        <tr>
-            <td>@kvp.Key</td>
-            <td>
-                <ul>
-                    @foreach (var order in kvp.Value)
-                    {
-                        <li>@order.PaymentMethod</li>
-                    }
-                </ul>
-            </td>
-        </tr>
-    }
-</table>
 
-<p>Orders Per Month</p>
-<table>
-    <tr>
-        <th>Month</th>
-        <th>Orders</th>
-    </tr>
-    @foreach (var kvp in OrdersPerMonth)
-    {
-        <tr>
-            <td>@kvp.Key</td>
-            <td>
-                <ul>
-                    @foreach (var order in kvp.Value)
-                    {
-                        <li>@kvp.Value.Count() </li>
-                    }
-                </ul>
-            </td>
-        </tr>
-    }
-</table>
 
-<p>Busiest Days</p>
-<table>
-    <tr>
-        <th>Day</th>
-        <th>No of Orders</th>
-    </tr>
-    @foreach (var kvp in OrdersPerMonth)
-    {
-        <tr>
-            <td>@kvp.Key</td>
-            <td>
-                <ul>
-                    @foreach (var order in kvp.Value)
-                    {
-                        <li>@order.PaymentMethod</li>
-                    }
-                </ul>
-            </td>
-        </tr>
-    }
-</table>
+</div>
 
-<p>Least Ordered Dishes</p>
-<table>
-    <tr>
-        <th>Dish Name</th>
-        <th>Dish Price</th>
-        <th>Dish Category</th>
-    </tr>
-    @foreach (var dish in LeastOrderedDishes)
-    {
-        <tr>
-            <td>@dish.DishName</td>
-            <td>@dish.DishPrice</td>
-            <td>@dish.DishCategory.DishCategoryName</td>
-        </tr>
-    }
-</table>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#TableData01').DataTable();
+    });
+        $(document).ready(function () {
+        $('#TableData02').DataTable();
+    });
+
+
+</script>

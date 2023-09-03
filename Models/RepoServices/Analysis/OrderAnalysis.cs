@@ -20,8 +20,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis
             var data = Ctx.OrderesDishesRels
                 .Include(c => c.Dish)
                 .ThenInclude(c => c.DishCategory)
+                .Where(c => c.Order.OrderDate >= DateTime.Today)
                 .OrderByDescending(c => c.Order.OrderDate >= DateTime.Today)
-                .Select(c => c.Dish).ToList();
+                .Select(c => c.Dish).Distinct().ToList();
             return data;
         }
 
