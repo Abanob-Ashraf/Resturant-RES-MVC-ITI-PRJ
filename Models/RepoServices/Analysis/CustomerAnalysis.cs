@@ -30,8 +30,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis
         //done
         public int GetNoCustomerOrdered()
         {
-            var NoCustomerOrdered = Ctx.Orders.Where(c => c.OrderDate == DateTime.Today).Select(c => c.CustomerId).Count();
-            Console.WriteLine(NoCustomerOrdered);
+            var NoCustomerOrdered = Ctx.Orders.Where(c => c.OrderDate == DateTime.Today).Select(c => c.CustomerId).Distinct().Count();
+
             return NoCustomerOrdered;
         }
 
