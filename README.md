@@ -6,6 +6,9 @@ Restaurant Reservation
 
 This simple MVC Core web app allows users to order meals online. The user can also view all orders made by the clients and modify them
 
+Admin User Name = zmanrest@gmail.com
+Admin Password = Admin$123
+
 ## How to build and start the application
 
 - Make sure from the configuration in the **AppSettings.json** file that meets the application features (**Google** for External Login, **Stripe** for online payment & **Email** Configuration Service)
