@@ -1,8 +1,14 @@
 ﻿@model Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models.Dish
+@inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client.IDishIngredientRelRepository DishIngRepository
+@inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client.IIngerdientRepository IngredientsRepo
 
 @{
     ViewData["Title"] = "Details";
+    var DishIng = DishIngRepository.GetAllDishIngredientRels().Where(rel => rel.DishId == Model.DishId);
+    var IngList = new SelectList(IngredientsRepo.GetAllIngerdients(), "IngerdientId", "IngName");
 }
+  
+
 
 <div id="kt_app_toolbar_container" class="app-container container p-3 d-flex flex-stack">
     <!--begin::Page title-->
@@ -84,9 +90,44 @@
         </div>
     </div>
 </div>
+<hr/>
+
+<div id="kt_app_content" class="app-content container-fluid m-auto flex-column-fluid m-5 p-5">
+
+    <p>
+
+        <a data-bs-target="#AddRelationModal" data-bs-toggle="modal" class="btn btn-success">Add Ingredient</a>
+    </p>
+ 
+        <table class="table table-light table-striped border " id="TableData2">
+        <thead>
+            <tr>
+                <th class="align-middle text-center">
+                    Name
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in DishIng)
+            {
+                <tr class="align-middle text-center">
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ingredtient.IngName)
+                    </td>
+                    <td>
+                        <a data-bs-target="#RelationModal" data-bs-toggle="modal" data-id="@item.DishIngredientRelId" class="btn btn-danger open-DeleteIngDialog">Delete <i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
 
 
-<!-- Modal -->
+<!-- Modal 1-->
 <div class="modal fade" id="DishModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -100,8 +141,50 @@
             <input type="hidden" />
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <a id="DishId" href="" class="btn btn-danger">Delete</a>
+                <a id="DishId" class="btn btn-danger">Delete</a>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 2-->
+<div class="modal fade" id="RelationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete ingredient form dish Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are You Sure you want to Delete ingredient form this Dish?
+            </div>
+            <input type="hidden" />
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a id="DishIngRel" href="" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal 3-->
+<div class="modal fade" id="AddRelationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add ingredient to dish Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="Create" asp-controller="DishIngredientsRel" >
+                <div class="modal-body">
+                    <h3>Ingredients </h3>
+                    <select name="IngerdientId" class="form-control" asp-items="IngList"></select>
+                </div>
+                <input readonly type="hidden" name="DishId" value="@Model.DishId" />
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button id="AddDishIngRel" type="submit" class="btn btn-danger">Add</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -115,8 +198,17 @@
         $('#TableData').DataTable();
     });
 
+      $(document).ready(function () {
+        $('#TableData2').DataTable();
+    });
+
     $(document).on("click", ".open-AddDeleteDialog", function () {
-        var myDishId = "Client/Dish/Delete/" + $(this).data('id');
+        var myDishId = "/Client/Dish/Delete/" + $(this).data('id');
         $("#DishId").attr('href', myDishId);
+    });
+
+    $(document).on("click", ".open-DeleteIngDialog", function () {
+        var myDishIngRelId = "/Client/DishIngredientsRel/Delete/" + $(this).data('id'); + + "?DishId=" + @Model.DishId
+        $("#DishIngRel").attr('href', myDishIngRelId);
     });
 </script>
