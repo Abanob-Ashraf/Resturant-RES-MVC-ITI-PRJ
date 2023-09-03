@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
 {
+    [Authorize(Roles = "Admin,Employee")]
+
     [Area("Management")]
     //[Route("EmployeesCategory")]
     public class EmployeesCategoriesController : Controller

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
@@ -6,6 +7,8 @@ using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
 {
+    [Authorize(Roles = "Admin,Employee")]
+
     [Area("Management")]
     //[Route("Franchise")]
     public class FranchiseController : Controller
@@ -13,7 +16,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         public IEmployeeRepository EmployeeRepository { get; }
         public IFranchiseRepository FranchiseRepository { get; }
 
-        public FranchiseController(IEmployeeRepository employeeRepository,  IFranchiseRepository franchiseRepository)
+        public FranchiseController(IEmployeeRepository employeeRepository, IFranchiseRepository franchiseRepository)
         {
             EmployeeRepository = employeeRepository;
             FranchiseRepository = franchiseRepository;
@@ -45,7 +48,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         {
             ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpFirstName");
 
-            if(franchise.ManagerId == 0)
+            if (franchise.ManagerId == 0)
             {
                 ModelState.AddModelError("ManagerId", "This Franchise should have a manager");
             }

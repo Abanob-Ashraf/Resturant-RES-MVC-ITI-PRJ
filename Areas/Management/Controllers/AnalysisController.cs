@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Analysis;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
 {
+    [Authorize(Roles = "Admin,Employee")]
     [Area("Management")]
     public class AnalysisController : Controller
     {
@@ -18,7 +20,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         public IActionResult orderAnalysis()
         {
             ViewBag.MostDishesOrdered = OrderAnalysis.GetMostOrderedDishes();
-             
+
             ViewBag.GetOrderByType = OrderAnalysis.GetOrderByType();
 
             ViewBag.LeastOrderedDishes = OrderAnalysis.LeastOrderedDishes();
