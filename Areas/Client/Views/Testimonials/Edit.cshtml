@@ -36,29 +36,36 @@
     <div class="">
         <div class="">
             <form asp-action="Edit" class="w-100">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="TestimonialsID" />
-            <div class="form-group">
-                <label asp-for="TestimonialsText" class="control-label"></label>
-                <input asp-for="TestimonialsText" class="form-control" />
-                <span asp-validation-for="TestimonialsText" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CustomerID" class="control-label"></label>
-                <select asp-for="CustomerID" class="form-control" asp-items="ViewBag.CustomerList"></select>
-                <span asp-validation-for="CustomerID" class="text-danger"></span>
-            </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="TestimonialsID" />
+                <div class="form-group">
+                    <label asp-for="TestimonialsText" class="control-label"></label>
+                    <input asp-for="TestimonialsText" class="form-control" />
+                    <span asp-validation-for="TestimonialsText" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CustomerID" class="control-label"></label>
+                    <select asp-for="CustomerID" class="form-control" asp-items="ViewBag.CustomerList"></select>
+                    <span asp-validation-for="CustomerID" class="text-danger"></span>
+                </div>
+                <div class="form-group my-5">
+                    <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ShownInWebsite" /> @Html.DisplayNameFor(model => model.ShownInWebsite)
+                    </label>
+                </div>
                 <div class="form-group my-5">
                     <input type="submit" value="Save" class="btn btn-primary" /> |
                     <a class="btn btn-warning" asp-action="Index" asp-area="Client">Back to List</a>
                 </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 
 
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -44,6 +44,9 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Customer)
                     </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ShownInWebsite)
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -55,6 +58,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => Model.Customer.CustEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.ShownInWebsite)
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@Model.TestimonialsID" class="btn btn-warning">Edit <i class="fa-solid fa-pen-to-square"></i></a> |
