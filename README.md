@@ -1,22 +1,22 @@
 ﻿# Resturant-RES-MVC-ITI-PRJ
 
-Resturant Reservation
+Restaurant Reservation
 
 ## About the application
 
-This is a simple MVC Core web app that allows users to order meals online. The user can also view all oredrs made by the clients and and modify them
+This simple MVC Core web app allows users to order meals online. The user can also view all orders made by the clients and modify them
 
 ## How to build and start the application
 
-- Make sure from the configuration in appsettings file that met the application features (**Google** for External Login , **Stripe** for online payment & **Email** Configuration Service)
+- Make sure from the configuration in the **AppSettings.json** file that meets the application features (**Google** for External Login, **Stripe** for online payment & **Email** Configuration Service)
 
 ### Email Configuration Section
 
 ```json
-EmailConfiguration": {
+"EmailConfiguration": {
     "From": "",
     "SmtpServer": "",
-    "Port": ,
+    "Port": "",
     "Username": "",
     "Password": ""
   }
@@ -48,13 +48,13 @@ EmailConfiguration": {
 add-migration init
 ```
 
-- write another command to update database
+- Write another command to update the database
 
 ```cmd
 update-database
 ```
 
-- Change the connection string (Sql Server, username & password )
+- Change the connection string (SQL Server, username & password )
 
 ```json
  "ConnectionStrings": {
@@ -63,27 +63,27 @@ update-database
 ```
 
 - database with name **ResturantReservationProject** should be created in your SqlServer
-- run the application through Visual Studio
+- Run the application through Visual Studio
 
 the application will run on route 'https://localhost:7014'
 
-#### Applictation Featues
+#### Application Features
 
-- 2 UIs Created one for Client and Admin panal
-- Applied Design patterns (Dependecy Injection, Repository)
+- 2 UIs Created one for the Client and Admin panel
+- Applied Design patterns (Dependency Injection, Repository)
 - Applied All DataAnnotations (Custom DataAnnotations)
 - Enabled Validation (Both: Client-Side & Server-Side)
-- Identity has been implemented in ASP.Net Core (Users, Roles, Confirm Email, ForgetPassword)
+- Identity has been implemented in ASP.Net Core (Users, Roles, Confirm Email, forgot password)
 - Use External-Logins in your project
 - online payment using "Stripe
 - Email Service Configured to send an email on registration
-- you can pay in 2 ways in cash or online
-- regeistered client can Submit his own feedback
+- You can pay in 2 ways in cash or online
+- Registered clients can Submit their own feedback
 - Cart view to checkout the order
 
 #### Refrences
 
 - [ASP .NET CORE MVC](https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-7.0).
-- 
+  
 
 
