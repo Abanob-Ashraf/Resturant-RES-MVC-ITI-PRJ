@@ -5,6 +5,7 @@
 
 
     Dictionary<string, List<Order>> GetOrderByType = ViewBag.GetOrderByType;
+    List<Order> OrdersPer2Day = ViewBag.OrdersPer2Day;
 
 
 }
@@ -39,7 +40,18 @@
 
 
 <div id="kt_app_content" class="app-content container m-auto flex-column-fluid m-5 p-5">
+    <div class="d-flex align-items-center justify-content-evenly mx-3">
 
+        <div class="card text-bg-danger mb-3" style="max-width: 18rem;height:150px;">
+            <div class="card-body">
+                <h5 class="card-title"> Number of orders per 2day</h5>
+                <p class="card-text fs-1 text-light fw-bold"> @ViewBag.OrdersPer2Day.Count</p>
+            </div>
+        </div>
+    </div>
+
+
+    <hr />
     <p class="fw-bold fs-4">Most Dishes Ordered</p>
     <table class="table table-warning table-striped" id="TableData01">
         <thead>

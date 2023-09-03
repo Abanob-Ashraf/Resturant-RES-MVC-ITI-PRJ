@@ -23,6 +23,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
 
             ViewBag.GetOrderByType = OrderAnalysis.GetOrderByType();
 
+            ViewBag.OrdersPer2Day = OrderAnalysis.OrdersPer2Day();
+
 
 
             return View();

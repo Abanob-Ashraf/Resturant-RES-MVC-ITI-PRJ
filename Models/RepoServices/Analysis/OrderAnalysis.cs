@@ -48,28 +48,14 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis
             return OrderByType;
         }
 
-        public Dictionary<DateTime, List<Order>> OrdersPerDay()
-        {
-            var OrdersPerDay = Ctx.Orders
-                .GroupBy(c => c.OrderDate)
-                .ToDictionary(c => c.Key, c => c.ToList());
-            return OrdersPerDay;
-        }
 
-        public Dictionary<int, List<Order>> OrdersPerMonth()
-        {
-            var OrdersPerDay = Ctx.Orders
-                .GroupBy(c => c.OrderDate.Month)
-                .ToDictionary(c => c.Key, c => c.ToList());
-            return OrdersPerDay;
-        }
 
-        public Dictionary<DateTime, int> BusiestDays()
+        public List<Order> OrdersPer2Day()
         {
-            var OrdersPerDay = Ctx.Orders
-                .GroupBy(c => c.OrderDate)
-                .ToDictionary(c => c.Key, c => c.Count());
-            return OrdersPerDay;
+            var OrdersPer2Day = Ctx.Orders
+               .Where(c => c.OrderDate == DateTime.Today).ToList();
+
+            return OrdersPer2Day;
         }
     }
 }
