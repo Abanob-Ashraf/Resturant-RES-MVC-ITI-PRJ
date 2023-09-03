@@ -12,9 +12,11 @@ using Message = Resturant_RES_MVC_ITI_PRJ.Services.Message;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly UserManager<AppUser> userManager;
@@ -48,6 +50,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterUserVM registerUserVM)
         {
+            var phones = userManager.Users.Select(u => u.PhoneNumber).ToList();
+            if (phones.Contains(registerUserVM.Phone))
+            {
+                ModelState.AddModelError("Phone", "Already Exist Phone Number");
+            }
             if (ModelState.IsValid)
             {
                 AppUser user = new AppUser();
@@ -66,6 +73,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                     CustEmail = registerUserVM.Email,
                     CustPassword = registerUserVM.Password,
                     CustPhone = registerUserVM.Phone,
+                    CustAddressStreet = registerUserVM.CustAddressStreet,
+                    CustAddressCity = registerUserVM.CustAddressCity,
+                    CustAddressCounty = registerUserVM.CustAddressCounty,
                 };
 
                 // Create a new claim to add to the user

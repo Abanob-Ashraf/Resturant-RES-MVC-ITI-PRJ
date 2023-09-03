@@ -17,7 +17,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         public List<Testimonials> GetAllTestimonials()
         {
             return Ctx.Testimonials
-                  .Include(tst=>tst.Customer)
+                  .Include(tst => tst.Customer)
                   .ToList();
         }
 
@@ -32,13 +32,13 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
                   .Where(tst => tst.TestimonialsID == id).SingleOrDefault();
         }
 
-        public void InsertTestimonials(Testimonials Testimonials)
+        public void InsertTestimonials(Testimonials testimonials)
         {
-            if (Testimonials != null)
+            if (testimonials != null)
             {
                 try
                 {
-                    Ctx.Testimonials.Add(Testimonials);
+                    Ctx.Testimonials.Add(testimonials);
                     Ctx.SaveChanges();
                 }
                 catch (Exception ex)
@@ -57,6 +57,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
                 {
                     updatedTestimonials.CustomerID = Testimonials.CustomerID;
                     updatedTestimonials.TestimonialsText = Testimonials.TestimonialsText;
+                    updatedTestimonials.ShownInWebsite = Testimonials.ShownInWebsite;
                     Ctx.SaveChanges();
                 }
                 catch (Exception ex)

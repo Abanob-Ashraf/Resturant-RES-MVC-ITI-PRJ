@@ -8,6 +8,7 @@ using Resturant_RES_MVC_ITI_PRJ.Services;
 using Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Analysis;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Resturant_RES_MVC_ITI_PRJ
 {
@@ -41,6 +42,14 @@ namespace Resturant_RES_MVC_ITI_PRJ
                 //opt.User.RequireUniqueEmail = true;
                 opt.SignIn.RequireConfirmedEmail = true;
             }).AddEntityFrameworkStores<ResturantDbContext>().AddDefaultTokenProviders();
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+            });
+
 
             builder.Services.Configure<DataProtectionTokenProviderOptions>(opt => opt.TokenLifespan = TimeSpan.FromHours(2));
 
