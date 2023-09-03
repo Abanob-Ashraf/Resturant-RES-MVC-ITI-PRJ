@@ -1,0 +1,349 @@
+﻿
+* {
+    box-sizing: border-box;
+}
+
+tr {
+    vertical-align: middle;
+}
+
+body {
+    width: 100%;
+    margin: 0;
+    background: #DAECF7;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container-x {
+    position: relative;
+    min-height: 90vh;
+}
+
+main {
+    min-height: 90vh;
+}
+
+.shopping-cart {
+    width: 750px;
+    background: #FFFFFF;
+    box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    height: 60px;
+    border-bottom: 1px solid #E1E8EE;
+    padding: 20px 30px;
+    color: #5E6977;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+td:not(:first-child) {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.image {
+    width: 5% !important;
+}
+
+.item {
+    padding: 20px 30px;
+    height: 120px;
+    display: flex;
+    border-top: 1px solid #E1E8EE;
+    border-bottom: 1px solid #E1E8EE;
+}
+
+
+
+.buttons {
+    position: relative;
+    padding-top: 30px;
+    margin-right: 60px;
+}
+
+.delete-btn,
+.like-btn {
+    display: inline-block;
+    Cursor: pointer;
+}
+
+.like-btn {
+    position: absolute;
+    top: 9px;
+    left: 15px;
+    background: url('twitter-heart.png');
+    width: 60px;
+    height: 60px;
+    background-size: 2900%;
+    background-repeat: no-repeat;
+}
+
+.is-active {
+    animation-name: animate;
+    animation-duration: .8s;
+    animation-iteration-count: 1;
+    animation-timing-function: steps(28);
+    animation-fill-mode: forwards;
+}
+
+@keyframes animate {
+    0% {
+        background-position: left;
+    }
+
+    50% {
+        background-position: right;
+    }
+
+    100% {
+        background-position: right;
+    }
+}
+
+.image {
+    margin-right: 50px;
+}
+
+    .image img {
+        width: 85px;
+    }
+
+Let’s add some basic style to product name and description.
+.description {
+    padding-top: 10px;
+    margin-right: 60px;
+    width: 115px;
+}
+
+.description span {
+    display: block;
+    font-size: 14px;
+    color: #43484D;
+    font-weight: 400;
+}
+
+    .description span:first-child {
+        margin-bottom: 5px;
+    }
+
+    .description span:last-child {
+        font-weight: 300;
+        margin-top: 8px;
+        color: #86939E;
+    }
+
+
+
+.quantity {
+    padding-top: 20px;
+    margin-right: 60px;
+    display: flex;
+    align-items: center;
+}
+
+    .quantity input {
+        border: none;
+        text-align: center;
+        width: 32px;
+        font-size: 16px;
+        color: #43484D;
+        font-weight: 300;
+    }
+
+button[class*=btn] {
+    width: fit-content;
+    height: fit-content;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.minus-btn svg {
+    margin-bottom: 3px;
+}
+
+.plus-btn svg {
+    margin-top: 2px;
+}
+
+button:focus,
+input:focus {
+    outline: 0;
+}
+
+.total-price {
+    width: 83px;
+    padding-top: 27px;
+    text-align: center;
+    font-size: 16px;
+    color: #43484D;
+    font-weight: 300;
+}
+
+
+@media (max-width: 800px) {
+    .shopping-cart {
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+    }
+
+    .item {
+        height: auto;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .image img {
+        width: 50%;
+    }
+
+    .image,
+    .quantity,
+    .description {
+        width: 100%;
+        text-align: center;
+        margin: 6px 0;
+    }
+
+    .buttons {
+        margin-right: 20px;
+    }
+}
+
+
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+
+
+h1 {
+    font-size: 1em;
+    font-family: "Montserrat";
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #b6d0e0;
+    position: relative;
+    margin-top: -15px;
+    line-height: 15px;
+}
+
+.center {
+    margin: auto;
+}
+
+.wrapper {
+    width: 700px;
+    flex-shrink: 0;
+    background: white;
+    overflow: hidden;
+    height: 364px;
+    border-radius: 8px;
+    box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+}
+
+.card-wrap {
+    width: 260px;
+    float: right;
+    background: #665aa7;
+    padding: 50px;
+    transform: scale(1.5) rotate(20deg);
+}
+
+.card {
+    transform: scale(0.75) rotate(-20deg);
+    overflow: inherit;
+    background-color: inherit;
+    border: none;
+}
+
+svg {
+    width: 150%;
+    position: relative;
+    right: 130px;
+    top: 10px;
+    overflow: visible;
+}
+
+    svg:not(:root) {
+        overflow: visible;
+    }
+
+#sunglasses {
+    transition: transform 0.15s;
+}
+
+.PayForm:hover ~ .card-wrap #sunglasses {
+    transform: translateY(-40px);
+}
+
+#right_eye_wink {
+    display: none;
+}
+
+.PayForm:active ~ .card-wrap #right_eye {
+    display: none;
+}
+
+.PayForm:active ~ .card-wrap #right_eye_wink {
+    display: block;
+}
+
+#mouth {
+    transition: transform 0.15s;
+}
+
+.PayForm:hover ~ .card-wrap #mouth {
+    transform: translateY(-10px);
+}
+
+#front_hand, #back_hand {
+    transition: transform 0.03s;
+}
+
+.PayForm:has(.checkout:active) ~ .card-wrap #front_hand, .PayForm:has(.checkout:active) ~ .card-wrap #back_hand {
+    transform: translateX(10px);
+}
+
+.PayForm {
+    position: relative;
+    top: 50%;
+    left: 15%;
+    transform: translateY(-50%);
+}
+
+.checkout {
+    outline: none;
+    background: #665aa7;
+    border: 0;
+    color: white;
+    cursor: pointer;
+    padding: 12px 16px;
+    font-family: "Montserrat";
+    text-transform: uppercase;
+    font-size: 1.1em;
+    letter-spacing: 0.1em;
+    border-radius: 4px;
+    transition: all 0.1s ease-out;
+    box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+}
+
+    .checkout:hover:not(:active) {
+        background: #857bb9;
+    }

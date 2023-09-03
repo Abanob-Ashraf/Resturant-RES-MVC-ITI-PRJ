@@ -4,29 +4,55 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<div id="kt_app_toolbar_container" class="app-container container p-3 d-flex flex-stack">
+    <!--begin::Page title-->
+    <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+        <!--begin::Title-->
+        <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Create Dish Category</h1>
+        <!--end::Title-->
+        <!--begin::Breadcrumb-->
+        <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+            <!--begin::Item-->
+            <li class="breadcrumb-item text-muted">
+                <a asp-action="Index" asp-controller="Home" asp-area="" class="text-muted text-hover-primary">Home</a>
+            </li>
+            <!--end::Item-->
+            <!--begin::Item-->
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-400 w-5px h-2px"></span>
+            </li>
+            <!--end::Item-->
+            <!--begin::Item-->
+            <li class="breadcrumb-item text-muted">Create Dish Category</li>
+            <!--end::Item-->
+        </ul>
+        <!--end::Breadcrumb-->
+    </div>
+    <!--end::Page title-->
 
-<h4>DishCategory</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+</div>
+<div id="kt_app_content" class="app-content container m-auto w-75 m-5 p-5">
+
+    <div class="">
+        <div class="">
+            <form asp-action="Create" class="w-100">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="DishCategoryName" class="control-label"></label>
                 <input asp-for="DishCategoryName" class="form-control" />
                 <span asp-validation-for="DishCategoryName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+                    <div class="form-group my-5">
+
+                        <input type="submit" value="Create" class="btn btn-primary" /> |
+                        <a class="btn btn-warning" asp-action="Index" asp-area="Client">Back to List</a>
+                    </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

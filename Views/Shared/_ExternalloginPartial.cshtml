@@ -1,10 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Resturant_RES_MVC_ITI_PRJ.Models
 @inject SignInManager<AppUser> SignInManager
-<div class="col-md-4 offset-2">
+<div class="position-absolute exlogin m-auto w-100">
     <section>
-        <h4>Use different service for log in:</h4>
-        <hr />
         @{
             var providers = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (!providers.Any())
@@ -18,13 +16,16 @@
             else
             {
                 <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-                    <div>
-                        <p>
+                    <div class="w-100">
+
                             @foreach (var provider in providers)
                             {
-                                <input type="submit" class="btn btn-info" value="@provider.Name" name="provider" />
+                                <label for="provider" class="bg-transparent rememberMe m-auto">
+                                    <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" alt="Google Login">
+                                </label>
+                                <input id="provider" value="@provider.Name" name="provider" type="submit" class="d-none">
                             }
-                        </p>
+
                     </div>
                 </form>
             }

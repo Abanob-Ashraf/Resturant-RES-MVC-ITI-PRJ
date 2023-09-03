@@ -4,39 +4,115 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div id="kt_app_toolbar_container" class="app-container container p-3 d-flex flex-stack">
+    <!--begin::Page title-->
+    <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+        <!--begin::Title-->
+        <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Franchises Details </h1>
+        <!--end::Title-->
+        <!--begin::Breadcrumb-->
+        <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+            <!--begin::Item-->
+            <li class="breadcrumb-item text-muted">
+                <a asp-action="Index" asp-controller="Home" asp-area="" class="text-muted text-hover-primary">Home</a>
+            </li>
+            <!--end::Item-->
+            <!--begin::Item-->
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-400 w-5px h-2px"></span>
+            </li>
+            <!--end::Item-->
+            <!--begin::Item-->
+            <li class="breadcrumb-item text-muted">Franchises Details</li>
+            <!--end::Item-->
+        </ul>
+        <!--end::Breadcrumb-->
+    </div>
+    <!--end::Page title-->
 
-<div>
-    <h4>Franchise</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Street)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Street)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.City)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Country)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Country)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Manager)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Manager.EmpFirstName)
-        </dd>
-    </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.FranchiseId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div id="kt_app_content" class="app-content container-fluid m-auto flex-column-fluid m-5 p-5">
+
+    <div>
+        <table class="table table-info table-striped" id="TableData">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Street)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.City)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Country)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Manager)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr class="align-middle text-center">
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Street)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Country)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Manager.EmpFirstName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@Model.FranchiseId" class="btn btn-warning">Edit <i class="fa-solid fa-pen-to-square"></i> </a> |
+                        <a data-bs-target="#FranchiseModal" data-bs-toggle="modal" data-id="@Model.FranchiseId" class="btn btn-danger open-AddDeleteDialog">Delete <i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <div>
+            <a class="btn btn-warning" asp-action="Index" asp-area="Management">Back to List</a>
+        </div>
+
+    </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="EmpCateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Employee Category Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are You Sure you want to Delete Employee Category?
+            </div>
+            <input type="hidden" />
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a id="EmpCateId" href="" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#TableData').DataTable();
+    });
+
+    $(document).on("click", ".open-AddDeleteDialog", function () {
+        var myEmpCateId = "Client/EmployeesCategories/Delete/" + $(this).data('id');
+        $("#EmpCateId").attr('href', myEmpCateId);
+    });
+</script>

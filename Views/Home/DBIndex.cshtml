@@ -2,6 +2,22 @@
     ViewData["Title"] = "Home Page";
 }
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Lumanosimo&display=swap" rel="stylesheet">
+
+<style>
+    .welcome {
+        font-family: 'Dancing Script', cursive;
+        font-family: 'Lumanosimo', cursive;
+    }
+
+
+
+    
+</style>
+
 <div class="text-center">
-    <h1 class="display-4 ">************************Welcome to dashbord *****************************</h1>
+    <img src="~/assets/media/logos/1.png" class="rounded-pill" />
+    <p class="my-5 fs-1 fw-bold welcome">Welcome @User.Identity.Name</p>
 </div>

@@ -1,0 +1,213 @@
+﻿@using System.Security.Claims;
+@inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client.ICustomerRepository CustomerRepository
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="~/lib/font-awesome/css/brands.min.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
+    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.rtl.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@@400;500;600;700&display=swap" rel="stylesheet">
+
+
+    <title>ZMAN - Restaurant </title>
+    <!--
+
+    TemplateMo 558 Klassy Cafe
+
+    https://templatemo.com/tm-558-klassy-cafe
+
+    -->
+    <!-- Additional CSS Files -->
+
+    <link rel="stylesheet" href="~/css/templatemoklassycafe.css">
+
+    <link rel="stylesheet" href="~/css/owl-carousel.css">
+
+    <link rel="stylesheet" href="~/css/lightbox.css">
+
+</head>
+
+<body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a asp-action="index" asp-controller="Home" asp-area="" class="logo">
+                            <img src="~/assets/media/logos/LogoZA.png" class="rounded-circle" align="klassy cafe html template">
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a asp-action="index" asp-controller="Home" asp-area="" class="active">Home</a></li>
+                            <li class="scroll-to-section"><a href="#about">About</a></li>
+
+                            <!--
+                                <li class="submenu">
+                                    <a href="javascript:;">Drop Down</a>
+                                    <ul>
+                                        <li><a href="#">Drop Down Page 1</a></li>
+                                        <li><a href="#">Drop Down Page 2</a></li>
+                                        <li><a href="#">Drop Down Page 3</a></li>
+                                    </ul>
+                                </li>
+                            -->
+            
+                            <li class="scroll-to-section"><a asp-action="index" asp-controller="Home" asp-area="" asp-fragment="menu">Menu</a></li>
+                            <li class="scroll-to-section"><a asp-action="index" asp-controller="Home" asp-area="" asp-fragment="chefs">Chefs</a></li>
+                            <!--
+                            <li class="submenu">
+                                <a href="javascript:;">Features</a>
+                                <ul>
+                                    <li><a href="#">Features Page 1</a></li>
+                                    <li><a href="#">Features Page 2</a></li>
+                                    <li><a href="#">Features Page 3</a></li>
+                                    <li><a href="#">Features Page 4</a></li>
+                                </ul>
+                            </li>
+                                  -->
+                            <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
+                            <li class="scroll-to-section"><a asp-action="index" asp-controller="Home" asp-area="" asp-fragment="reservation">Contact Us</a></li>
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <li class="">
+                                    <a class="" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                                </li>
+                                <li class="">
+                                    <a class="" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                                </li>
+                            }
+                            else
+                            {
+
+                                @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+                                {
+                                    <li class="">
+
+                                        <a class="" asp-action="adminindex" asp-controller="home" asp-area=""> Staff Only </a>
+                                    </li>
+                                }
+                                else if (User.IsInRole("Customer"))
+                                {
+                                    var curemail = User.FindFirst(ClaimTypes.Name)?.Value;
+                                    var customerId = CustomerRepository.GetAllCustomers().SingleOrDefault(c => c.CustEmail == curemail).CustID  ;
+                                    <li class="">
+                                        <a asp-action="Profile" asp-route-id="customerId" asp-controller="Account" asp-area="" class=""><i class="fa-solid fa-user"></i></a>
+                                    </li>
+                                    <li class="">
+                                        <a class="" asp-area="Client" asp-controller="Order" asp-action="Cart"> <i class="fa-solid fa-cart-shopping"></i></a>
+                                    </li>
+                                }
+
+                       
+                                <li class="">
+                                    <a class="" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                                </li>
+                            }
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class=" d-fixed w-100 m-0 bottom-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-xs-12">
+                    <div class="right-text-content">
+                        <ul class="social-icons">
+                            <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="logo">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="~/assets/js/jquery3.6.0.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/js/popper.js"></script>
+
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+    <!-- Plugins -->
+    <script src="~/js/owl-carousel.js"></script>
+    <script src="~/js/accordions.js"></script>
+    <script src="~/js/datepicker.js"></script>
+    <script src="~/js/scrollreveal.min.js"></script>
+    <script src="~/js/waypoints.min.js"></script>
+    <script src="~/js/jquery.counterup.min.js"></script>
+    <script src="~/js/imgfix.min.js"></script>
+    <script src="~/js/slick.js"></script>
+    <script src="~/js/lightbox.js"></script>
+    <script src="~/js/isotope.js"></script>
+
+    <!-- Global Init -->
+    <script src="~/js/custom.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $(document).on("click", "p", function () {
+                var selectedClass = $(this).attr("data-rel");
+                $("#portfolio").fadeTo(50, 0.1);
+
+                $("#portfolio div").not("." + selectedClass).fadeOut();
+                setTimeout(function () {
+                    $("." + selectedClass).fadeIn();
+                    $("#portfolio").fadeTo(50, 1);
+                }, 500);
+            });
+        });
+
+
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

@@ -1,8 +1,656 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+@using System.Security.Claims;
+@{
+    Layout = "_ClientLayout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@{
+    List<Dish> Menu = ViewBag.Menu;
+}
+@inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client.ITestimonialsRepository TestimonialsRepository
+@inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client.ICustomerRepository CustomerRepository
+@inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client.IDishRepository DishRepository
+
+@{
+    IEnumerable<Testimonials> Testmonials = TestimonialsRepository.GetAllTestimonials().Where(t => t.ShownInWebsite == true);
+}
+
+<!-- ***** Main Banner Area Start ***** -->
+<div id="top">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4">
+
+                <div class="left-content d-flex flex-column align-items-center justify-content-center ">
+                    <img class="img-fluid my-5" src="assets/images/hero.png" alt="">
+                    <div class="inner-content">
+                        <h4>ZMAN</h4>
+                        <h6>THE BEST EXPERIENCE</h6>
+                        <div class="main-white-button scroll-to-section">
+                            <a href="#reservation">Make A Reservation</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="main-banner header-text">
+                    <div class="Modern-Slider">
+                        <!-- Item -->
+                        <div class="item">
+                            <div class="img-fill">
+                                <img src="~/assets/images/slide-01.jpg" alt="">
+                            </div>
+                        </div>
+                        <!-- // Item -->
+                        <!-- Item -->
+                        <div class="item">
+                            <div class="img-fill">
+                                <img src="~/assets/images/slide-02.jpg" alt="">
+                            </div>
+                        </div>
+                        <!-- // Item -->
+                        <!-- Item -->
+                        <div class="item">
+                            <div class="img-fill">
+                                <img src="~/assets/images/slide-03.jpg" alt="">
+                            </div>
+                        </div>
+                        <!-- // Item -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- ***** Main Banner Area End ***** -->
+<!-- ***** About Area Starts ***** -->
+<section class="section" id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="left-text-content">
+                    <div class="section-heading">
+                        <h6>About Us</h6>
+                        <h2>We Leave A Delicious Memory For You</h2>
+                    </div>
+                    <p>ZMAN is one of the best <a asp-action="index" asp-controller="home" target="_blank" rel="sponsored">restaurant HTML templates</a> with Bootstrap v4.5.2 CSS framework. You can download and feel free to use this website template layout for your restaurant business. You are allowed to use this template for commercial purposes. <br><br>You are NOT allowed to redistribute the template ZIP file on any template donwnload website. Please contact us for more information.</p>
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="~/assets/images/about-thumb-01.jpg" alt="">
+                        </div>
+                        <div class="col-4">
+                            <img src="~/assets/images/about-thumb-02.jpg" alt="">
+                        </div>
+                        <div class="col-4">
+                            <img src="~/assets/images/about-thumb-03.jpg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="right-content">
+                    <div class="thumb">
+                        <a rel="nofollow" href="http://youtube.com"><i class="fa fa-play"></i></a>
+                        <img src="~/assets/images/about-video-bg.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ***** About Area Ends ***** -->
+<!-- ***** Menu Area Starts ***** -->
+<section class="section" id="menu">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="section-heading">
+                    <h6>Our Menu</h6>
+                    <h2>Our selection of dishes with quality taste</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-item-carousel">
+        <div class="col-lg-12">
+            <div class="owl-menu-item owl-carousel">
+                @foreach (var dish in DishRepository.GetAllDishes())
+                {
+                    var dishImgname = dish.DishImageName + ".png";
+                    <div class="item">
+                        <div class='card' style="background-image:url('/assets/Images/Sandwitches/@dishImgname');">
+                            <div class="price"><h6>$@dish.DishPrice</h6></div>
+                            <div class='info'>
+                                <h1 class='title'>@dish.DishName</h1>
+                                <p class='description'>
+                                    @if (dish.DishIngredientRels != null)
+                                    {
+                                        var ingredients = string.Join(" + ", dish.DishIngredientRels.Select(rel => rel.Ingredtient?.IngName));
+                                        @ingredients
+                                    }
+                                </p>
+                                <div class="main-text-button">
+                                    <div class="scroll-to-section">
+                    
+                                        <a class="btn btn-warning add-to-cart-btn" data-dish-id="@dish.DishId">Add To Cart <i class="fa-solid fa-cart-shopping"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ***** Menu Area Ends ***** -->
+<!-- ***** Chefs Area Starts ***** -->
+<section class="section" id="chefs">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 offset-lg-4 text-center">
+                <div class="section-heading">
+                    <h6>Our Chefs</h6>
+                    <h2>We offer the best ingredients for you</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="chef-item">
+                    <div class="thumb">
+                        <div class="overlay"></div>
+                        <ul class="social-icons">
+                            <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                        </ul>
+                        <img src="assets/images/chefs-01.jpg" alt="Chef #1">
+                    </div>
+                    <div class="down-content">
+                        <h4>Nader Sayed</h4>
+                        <span>Pastry Chef</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="chef-item">
+                    <div class="thumb">
+                        <div class="overlay"></div>
+                        <ul class="social-icons">
+                            <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                        </ul>
+                        <img src="assets/images/chefs-02.jpg" alt="Chef #1">
+                    </div>
+                    <div class="down-content">
+                        <h4>Abanob Asharf</h4>
+                        <span>Pastry Chef</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="chef-item">
+                    <div class="thumb">
+                        <div class="overlay"></div>
+                        <ul class="social-icons">
+                            <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-behance"></i></i></a></li>
+                        </ul>
+                        <img src="assets/images/chefs-03.jpg" alt="Chef #2">
+                    </div>
+                    <div class="down-content">
+                        <h4>Ziad Ossama</h4>
+                        <span>Cookie Chef</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="chef-item">
+                    <div class="thumb">
+                        <div class="overlay"></div>
+                        <ul class="social-icons">
+                            <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-google"></i></a></li>
+                        </ul>
+                        <img src="assets/images/chefs-04.jpg" alt="Chef #3">
+                    </div>
+                    <div class="down-content">
+                        <h4>Mina Alpert</h4>
+                        <span>Pancake Chef</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ***** Chefs Area Ends ***** -->
+<!-- ***** contact Us Area Starts ***** -->
+<section class="section" id="reservation">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 align-self-center">
+                <div class="left-text-content">
+                    <div class="section-heading">
+                        <h6>Contact Us</h6>
+                        <h2>Here You Can Contact Us Or Just walkin to our cafe</h2>
+                    </div>
+                    <p>Donec pretium est orci, non vulputate arcu hendrerit a. Fusce a eleifend riqsie, namei sollicitudin urna diam, sed commodo purus porta ut.</p>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="phone">
+                                <i class="fa fa-phone"></i>
+                                <h4>Phone Numbers</h4>
+                                <span><a href="#">0111-327-9567</a></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="message">
+                                <i class="fa fa-envelope"></i>
+                                <h4>Emails</h4>
+                                <span><a href="mailto:Zmanrest@@gmail.com">Zmanrest@@gmail.com</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6  d-flex align-items-center justify-content-center  flex-column">
+                @{
+                    var curemail = User.FindFirst(ClaimTypes.Name)?.Value;
+                    var customer = CustomerRepository.GetAllCustomers().SingleOrDefault(c => c.CustEmail == curemail);
+                }
+                <div class="contact-form">
+                           @if (!User.Identity.IsAuthenticated)
+                                {
+                                    <fieldset>
+                                        <a class="bg-danger btn btn-danger" asp-action="Login" asp-controller="Account">Login To Submit Feed Back</a>
+                                    </fieldset>
+                                }else if(User.IsInRole("Customer"))
+                                {
+                        <form id="contact" asp-action="Create" asp-controller="Testimonials" asp-area="Client" method="post">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4>Contact US</h4>
+                            </div>
+                           
+                            <div class="col-lg-12">
+                                <fieldset>
+                                        <input type="hidden" name="CustomerID" value="@customer.CustID">
+                                        <textarea name="TestimonialsText" rows="6" id="message" placeholder="Message" required=""></textarea>
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-12">
+                         
+                                <fieldset>
+                                    <button type="submit" id="form-submit" class="main-button-icon">Submit</button>
+                                </fieldset>
+                             
+                            </div>
+                        </div>
+                    </form>
+                                }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ***** Reservation Area Ends ***** -->
+<!-- ***** Menu Area Starts ***** -->
+<section class="section" id="menu">
+    <div class="gtco-testimonials">
+        <h2>Testimonials</h2>
+        <div class="owl-carousel owl-carousel1 owl-theme">
+    @foreach (var item in Testmonials)
+    {
+          <div>
+                    <div class="card text-center d-flex align-items-center justify-content-center bg-dark">
+                        <div class="card-bodys">
+                            <h5 class="card-headers">
+                                @item.Customer.FirstName @item.Customer.LastName
+                            </h5>
+                            <p class="card-text text-danger fw-bold">
+                                “ @item.TestimonialsText ”
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+    }
+        </div>
+    </div>
+
+</section>
+<section class="section" id="offers">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 offset-lg-4 text-center">
+                <div class="section-heading">
+                    <h6>ZMAN Week</h6>
+                    <h2>This Week’s Special Meal Offers</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row" id="tabs">
+                    <div class="col-lg-12">
+                        <div class="heading-tabs">
+                            <div class="row">
+                                <div class="col-lg-6 offset-lg-3">
+                                    <ul>
+                                        <li><a href='#tabs-1'><img src="~/assets/images/tab-icon-01.png" alt="">Breakfast</a></li>
+                                        <li><a href='#tabs-2'><img src="~/assets/images/tab-icon-02.png" alt="">Lunch</a></a></li>
+                                        <li><a href='#tabs-3'><img src="~/assets/images/tab-icon-03.png" alt="">Dinner</a></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <section class='tabs-content'>
+                            <article id='tabs-1'>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="left-list">
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-01.png" alt="">
+                                                        <h4>Fresh Chicken Salad</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$10.50</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-02.png" alt="">
+                                                        <h4>Orange Juice</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$8.50</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-03.png" alt="">
+                                                        <h4>Fruit Salad</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$9.90</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="right-list">
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-04.png" alt="">
+                                                        <h4>Eggs Omelette</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$6.50</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-05.png" alt="">
+                                                        <h4>Dollma Pire</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$5.00</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-06.png" alt="">
+                                                        <h4>Omelette & Cheese</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$4.10</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                            <article id='tabs-2'>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="left-list">
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-04.png" alt="">
+                                                        <h4>Eggs Omelette</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$14</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-05.png" alt="">
+                                                        <h4>Dollma Pire</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$18</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-06.png" alt="">
+                                                        <h4>Omelette & Cheese</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$22</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="right-list">
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-01.png" alt="">
+                                                        <h4>Fresh Chicken Salad</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$10</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-02.png" alt="">
+                                                        <h4>Orange Juice</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$20</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-03.png" alt="">
+                                                        <h4>Fruit Salad</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$30</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                            <article id='tabs-3'>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="left-list">
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-05.png" alt="">
+                                                        <h4>Eggs Omelette</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$14</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-03.png" alt="">
+                                                        <h4>Orange Juice</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$18</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-02.png" alt="">
+                                                        <h4>Fruit Salad</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$10</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="right-list">
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-06.png" alt="">
+                                                        <h4>Fresh Chicken Salad</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$8.50</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-01.png" alt="">
+                                                        <h4>Dollma Pire</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$9</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="tab-item">
+                                                        <img src="~/assets/images/tab-item-04.png" alt="">
+                                                        <h4>Omelette & Cheese</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur koit adipiscing elit, sed do.</p>
+                                                        <div class="price">
+                                                            <h6>$11</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="~/assets/js/jquery3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script>
+    console.log(document.querySelector(".card-headers").textContent)
+    document.querySelectorAll(".card-headers").forEach(el=>{
+        el.innerText = el.innerText.toUpperCase()
+    document.addEventListener('DOMContentLoaded', function () {
+    })
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const dishId = this.getAttribute('data-dish-id');
+                addToCart(dishId);
+            });
+        });
+
+        function addToCart(dishId) {
+            let orders = localStorage.getItem('orders');
+            if (!orders) {
+                orders = [];
+            } else {
+                orders = JSON.parse(orders);
+            }
+
+            if (!orders.includes(dishId)) {
+                orders.push(dishId);
+                localStorage.setItem('orders', JSON.stringify(orders));
+            }
+        }
+    });
+
+    (function () {
+        "use strict";
+
+        var carousels = function () {
+            $(".owl-carousel1").owlCarousel({
+                loop: true,
+                center: true,
+                margin: 0,
+                responsiveClass: true,
+                nav: false,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: false
+                    },
+                    680: {
+                        items: 2,
+                        nav: false,
+                        loop: false
+                    },
+                    1000: {
+                        items: 3,
+                        nav: true
+                    }
+                }
+            });
+        };
+
+        (function ($) {
+            carousels();
+        })(jQuery);
+    })();
+
+</script>
+<!-- ***** Chefs Area Ends ***** -->
+<!-- ***** Footer Start ***** -->

@@ -1,47 +1,197 @@
-﻿@model Resturant_RES_MVC_ITI_PRJ.Models.ViewModels.LoginUserVM
-
+﻿@{
+    Layout = "_ClientLayout";
+}
+@model Resturant_RES_MVC_ITI_PRJ.Models.ViewModels.LoginUserVM
 @{
     ViewData["Title"] = "Login";
+
 }
 
-<h1>Login</h1>
+<style>
+    main{
+        height:90vh;
+    }
+</style>
+<link rel="stylesheet" href="~/css/loginRegFrom.css">
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Login">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" type="password" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            
-            <div class="form-group">
-                <label asp-for="RemeberMe" class="control-label"></label>
-                <input asp-for="RemeberMe" type="checkbox" />
-                <span asp-validation-for="RemeberMe" class="text-danger"></span>
+<div class="container-mainb">
+    <section id="formHolder">
+
+        <div class="row">
+
+            <!-- Brand Box -->
+            <div class="col-sm-6 brand">
+
+                <div class="heading">
+                    <h2>ZMAN</h2>
+                    <p>Your Right Choice</p>
+                </div>
+
+                <div class="success-msg">
+                    <p>Great! You are one of our members now</p>
+                    <a href="#" class="profile">Your Profile</a>
+                </div>
             </div>
 
-            <div class="form-group">
-                <input type="submit" value="Login" class="btn btn-primary" />
+
+            <!-- Form Box -->
+            <div class="col-sm-6 form">
+
+                <!-- Login Form -->
+                <div class="login form-peice">
+                    <form class="login-form" asp-action="Login" id="loginForm">
+                        <div class="form-group">
+                            <label asp-for="Email" class="control-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Password" class="control-label"></label>
+                            <input asp-for="Password" class="form-control" type="password"/>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="d-flex align-items-center justify-content-start ">
+                            <input asp-for="RemeberMe" type="checkbox" class="form-check" style="width:15px; display:inline" />&nbsp;&nbsp; Remember Me
+                            <span asp-validation-for="RemeberMe" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="CTA">
+                            <input type="submit" value="Login" id="loginSubmit" />
+                            <a asp-area="" asp-action="Register" class="switch">I'm New</a>
+
+                        </div>
+                        <a class="my-3" asp-action="ForgotPassword" asp-controller="Account">Forget Password</a>
+                    </form>
+                    <partial name="_ExternalloginPartial"></partial>
+
+                </div><!-- End Login Form -->
+                <!-- Signup Form -->
+
             </div>
-        </form>
-    </div>
+        </div>
+
+    </section>
+
+
 </div>
-<br />
-<div class="form-group">
-    <a asp-action="ForgotPassword">Forgot Password</a>
-</div>
+<script src="~/assets/js/jquery3.6.0.min.js"></script>
 
-<br />
-<br />
-<partial name="_ExternalloginPartial"></partial>
+<script>
+    localStorage.removeItem("orders")
+
+    /*global $, document, window, setTimeout, navigator, console, location*/
+    $(document).ready(function () {
+
+        'use strict';
+
+        var usernameError = true,
+            emailError = true,
+            passwordError = true,
+            passConfirm = true;
+
+        // Detect browser for css purpose
+        if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+            $('.form form label').addClass('fontSwitch');
+        }
+
+        // Label effect
+        $('input').focus(function () {
+
+            $(this).siblings('label').addClass('active');
+        });
+
+        // Form validation
+        $('input').blur(function () {
+
+            // User Name
+            if ($(this).hasClass('name')) {
+                if ($(this).val().length === 0) {
+                    $(this).siblings('span.error').text('Please type your full name').fadeIn().parent('.form-group').addClass('hasError');
+                    usernameError = true;
+                } else if ($(this).val().length > 1 && $(this).val().length <= 6) {
+                    $(this).siblings('span.error').text('Please type at least 6 characters').fadeIn().parent('.form-group').addClass('hasError');
+                    usernameError = true;
+                } else {
+                    $(this).siblings('.error').text('').fadeOut().parent('.form-group').removeClass('hasError');
+                    usernameError = false;
+                }
+            }
+            // Email
+            if ($(this).hasClass('email')) {
+                if ($(this).val().length == '') {
+                    $(this).siblings('span.error').text('Please type your email address').fadeIn().parent('.form-group').addClass('hasError');
+                    emailError = true;
+                } else {
+                    $(this).siblings('.error').text('').fadeOut().parent('.form-group').removeClass('hasError');
+                    emailError = false;
+                }
+            }
+
+            // PassWord
+            if ($(this).hasClass('pass')) {
+                if ($(this).val().length < 8) {
+                    $(this).siblings('span.error').text('Please type at least 8 charcters').fadeIn().parent('.form-group').addClass('hasError');
+                    passwordError = true;
+                } else {
+                    $(this).siblings('.error').text('').fadeOut().parent('.form-group').removeClass('hasError');
+                    passwordError = false;
+                }
+            }
+
+            // PassWord confirmation
+            if ($('.pass').val() !== $('.passConfirm').val()) {
+                $('.passConfirm').siblings('.error').text('Passwords don\'t match').fadeIn().parent('.form-group').addClass('hasError');
+                passConfirm = false;
+            } else {
+                $('.passConfirm').siblings('.error').text('').fadeOut().parent('.form-group').removeClass('hasError');
+                passConfirm = false;
+            }
+
+            // label effect
+            if ($(this).val().length > 0) {
+                $(this).siblings('label').addClass('active');
+            } else {
+                $(this).siblings('label').removeClass('active');
+            }
+        });
+
+
+        // form switch
+
+
+
+        // Form submit
+        $('form.signup-form').submit(function (event) {
+            event.preventDefault();
+
+            if (usernameError == true || emailError == true || passwordError == true || passConfirm == true) {
+                $('.name, .email, .pass, .passConfirm').blur();
+            } else {
+                $('.signup, .login').addClass('switched');
+
+                setTimeout(function () { $('.signup, .login').hide(); }, 700);
+                setTimeout(function () { $('.brand').addClass('active'); }, 300);
+                setTimeout(function () { $('.heading').addClass('active'); }, 600);
+                setTimeout(function () { $('.success-msg p').addClass('active'); }, 900);
+                setTimeout(function () { $('.success-msg a').addClass('active'); }, 1050);
+                setTimeout(function () { $('.form').hide(); }, 700);
+            }
+        });
+
+        // Reload page
+        $('a.profile').on('click', function () {
+            location.reload(true);
+        });
+
+
+    });
+
+</script>
+
 
 
 

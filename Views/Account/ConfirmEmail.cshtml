@@ -1,9 +1,64 @@
-﻿<h1>ConfirmEmail</h1>
-<div>
-    <p>
-        Thank you for confirming your email Please Login Again.
-    </p>
-    <li class="nav-item">
-        <a class="btn btn-primary" asp-area="" asp-controller="Account" asp-action="Login" >Login</a>
-    </li>
+﻿@{
+    Layout = "_ClientLayout";
+}
+<style>
+    body{
+        background-color:#eee;
+    }
+    .app {
+        height: 80vh;
+        display: flex;
+        align-items:center;
+        justify-content:space-evenly;
+    }
+</style>
+<div class="app font-sans min-w-screen min-h-screen bg-grey-lighter py-8 px-4 container animate__animated animate__zoomIn">
+
+    <div class="mail__wrapper max-w-md mx-auto ">
+
+        <div class="mail__content bg-white p-3 shadow-sm rounded rounded-5">
+             
+            <div class="content__header text-center tracking-wide border-b 5 bg-warning ">
+                <div class="text-danger  fw-bold">ZMAN</div>
+                <h1 class="text-3xl h-48 flex items-center justify-center">E-mail Confirmed</h1>
+            </div>
+
+            <div class="content__body anim p-4">
+                <p>
+                    Hey, <br><br>It looks like you just signed up for our website, that’s awesome! Your E-mail now confirmed
+                </p>
+                <div class="m-auto my-4">
+                    <a class="btn btn-success" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+
+                </div>
+                <p class="text-sm">
+                    Keep Rockin'!<br> Your ZMAN team
+                </p>
+            </div>
+
+            <div class="content__footer mt-8 text-center text-grey-darker 5 bg-warning ">
+                <h3 class="text-base sm:text-lg mb-4">Thanks for being one of US!</h3>
+                <p>www.theapp.io</p>
+            </div>
+
+        </div>
+
+        <div class="mail__meta text-center text-sm text-grey-darker mt-8">
+
+            <div class="meta__social flex justify-center my-4">
+                <a href="#" class="btn btn-primary"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="btn btn-danger"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="btn btn-info"><i class="fa-brands fa-twitter"></i></a>
+            </div>
+
+            <div class="meta__help">
+                <p class="leading-loose">
+                    Questions or concerns? <a href="#" class="text-grey-darkest">Zmanrest@gmail.com</a>
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>

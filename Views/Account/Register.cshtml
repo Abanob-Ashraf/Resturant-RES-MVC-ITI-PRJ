@@ -1,63 +1,223 @@
-﻿@model Resturant_RES_MVC_ITI_PRJ.Models.ViewModels.RegisterUserVM
+﻿@{
+    Layout = "_ClientLayout";
+}
+
+@model Resturant_RES_MVC_ITI_PRJ.Models.ViewModels.RegisterUserVM
 
 @{
     ViewData["Title"] = "Register";
 }
+<style>
+    main {
+        height: 120vh ;
+    }
+</style>
+<link rel="stylesheet" href="~/css/loginRegFrom.css">
+<div class="container-mainb">
+    <section id="formHolder">
 
-<h1>Register</h1>
+        <div class="row">
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Register">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+            <!-- Brand Box -->
+            <div class="col-sm-6 brand">
+
+                <div class="heading">
+                    <h2>ZMAN</h2>
+                    <p>Your Right Choice</p>
+                </div>
+
+                <div class="success-msg">
+                    <p>Great! You are one of our members now</p>
+                    <a href="#" class="profile">Your Profile</a>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control"  type="password"/>
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" type="password" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmEmail" class="control-label"></label>
-                <input asp-for="ConfirmEmail" class="form-control" />
-                <span asp-validation-for="ConfirmEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+
+
+            <!-- Form Box -->
+            <div class="col-sm-6 form">
+                <div class="row">
+                    <div class="col-md-4">
+                        <!-- Signup Form -->
+                        <div class="signup form-peice">
+                            <form class="signup-form" asp-action="Register" id="signupForm">
+                                <div asp-validation-summary="All" class="text-danger"></div>
+
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <div class="form-group">
+                                        <label asp-for="FirstName" class="control-label"></label>
+                                        <input asp-for="FirstName" class="form-control" />
+                                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="LastName" class="control-label"></label>
+                                        <input asp-for="LastName" class="form-control" />
+                                        <span asp-validation-for="LastName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Email" class="control-label"></label>
+                                    <input asp-for="Email" class="form-control mb-2" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="ConfirmEmail" class="control-label"></label>
+                                    <input asp-for="ConfirmEmail" class="form-control" />
+                                    <span asp-validation-for="ConfirmEmail" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Password" class="control-label"></label>
+                                    <input asp-for="Password" class="form-control" type="password" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ConfirmPassword" class="control-label"></label>
+                                    <input asp-for="ConfirmPassword" class="form-control" type="password" />
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                </div> 
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <div class="form-group">
+                                        <label asp-for="CustAddressStreet" class="control-label"></label>
+                                        <input asp-for="CustAddressStreet" class="form-control" type="text" />
+                                        <span asp-validation-for="CustAddressStreet" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="CustAddressCity" class="control-label"></label>
+                                        <input asp-for="CustAddressCity" class="form-control" type="text" />
+                                        <span asp-validation-for="CustAddressCity" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="CustAddressCounty" class="control-label"></label>
+                                        <input asp-for="CustAddressCounty" class="form-control" type="text" />
+                                        <span asp-validation-for="CustAddressCounty" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Phone" class="control-label"></label>
+                                    <input asp-for="Phone" class="form-control" />
+                                    <span asp-validation-for="Phone" class="text-danger"></span>
+                                </div>
+
+                                <div class="CTA">
+                                    <input type="submit" value="Signup Now" id="signupSubmit">
+                                    <a asp-action="Login" class="switch">I have an account</a>
+                                </div>
+                            </form>
+
+                            <partial  name="_ExternalloginPartial"></partial>
+
+                        </div><!-- End Login Form -->
+                        <!-- Signup Form -->
+
+                    </div>
+                </div>
+             </div>
+             </div>
+
+    </section>
+
+
 </div>
-<br />
-<br />
-<partial name="_ExternalloginPartial"></partial>
+<script src="~/assets/js/jquery3.6.0.min.js"></script>
+
+<script>
+    /*global $, document, window, setTimeout, navigator, console, location*/
+    $(document).ready(function () {
+
+        'use strict';
+
+        var usernameError = true,
+            emailError = true,
+            passwordError = true,
+            passConfirm = true;
+
+        // Detect browser for css purpose
+        if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+            $('.form form label').addClass('fontSwitch');
+        }
+
+        // Label effect
+        $('input').focus(function () {
+
+            $(this).siblings('label').addClass('active');
+        });
+
+        // Form validation
+        $('input').blur(function () {
+
+            // User Name
+            if ($(this).hasClass('name')) {
+                if ($(this).val().length === 0) {
+                    $(this).siblings('span.error').text('Please type your full name').fadeIn().parent('.form-group').addClass('hasError');
+                    usernameError = true;
+                } else if ($(this).val().length > 1 && $(this).val().length <= 6) {
+                    $(this).siblings('span.error').text('Please type at least 6 characters').fadeIn().parent('.form-group').addClass('hasError');
+                    usernameError = true;
+                } else {
+                    $(this).siblings('.error').text('').fadeOut().parent('.form-group').removeClass('hasError');
+                    usernameError = false;
+                }
+            }
+            // Email
+            if ($(this).hasClass('email')) {
+                if ($(this).val().length == '') {
+                    $(this).siblings('span.error').text('Please type your email address').fadeIn().parent('.form-group').addClass('hasError');
+                    emailError = true;
+                } else {
+                    $(this).siblings('.error').text('').fadeOut().parent('.form-group').removeClass('hasError');
+                    emailError = false;
+                }
+            }
+
+            // PassWord
+            if ($(this).hasClass('pass')) {
+                if ($(this).val().length < 8) {
+                    $(this).siblings('span.error').text('Please type at least 8 charcters').fadeIn().parent('.form-group').addClass('hasError');
+                    passwordError = true;
+                } else {
+                    $(this).siblings('.error').text('').fadeOut().parent('.form-group').removeClass('hasError');
+                    passwordError = false;
+                }
+            }
+
+            // PassWord confirmation
+            if ($('.pass').val() !== $('.passConfirm').val()) {
+                $('.passConfirm').siblings('.error').text('Passwords don\'t match').fadeIn().parent('.form-group').addClass('hasError');
+                passConfirm = false;
+            } else {
+                $('.passConfirm').siblings('.error').text('').fadeOut().parent('.form-group').removeClass('hasError');
+                passConfirm = false;
+            }
+
+            // label effect
+            if ($(this).val().length > 0) {
+                $(this).siblings('label').addClass('active');
+            } else {
+                $(this).siblings('label').removeClass('active');
+            }
+        });
+
+  
+
+        // Reload page
+        $('a.profile').on('click', function () {
+            location.reload(true);
+        });
+
+
+    });
+
+</script>
+
+
+
 
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -5,13 +5,37 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<div id="kt_app_toolbar_container" class="app-container container p-3 d-flex flex-stack">
+    <!--begin::Page title-->
+    <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+        <!--begin::Title-->
+        <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Edit Order</h1>
+        <!--end::Title-->
+        <!--begin::Breadcrumb-->
+        <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+            <!--begin::Item-->
+            <li class="breadcrumb-item text-muted">
+                <a asp-action="Index" asp-controller="Home" asp-area="" class="text-muted text-hover-primary">Home</a>
+            </li>
+            <!--end::Item-->
+            <!--begin::Item-->
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-400 w-5px h-2px"></span>
+            </li>
+            <!--end::Item-->
+            <!--begin::Item-->
+            <li class="breadcrumb-item text-muted">Edit Order</li>
+            <!--end::Item-->
+        </ul>
+        <!--end::Breadcrumb-->
+    </div>
+    <!--end::Page title-->
 
-<h4>Order</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+</div>
+<div id="kt_app_content" class="app-content container m-auto w-75 m-5 p-5">
+    <div class="">
+        <div class="">
+            <form asp-action="Edit" class="w-100">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="OrderId" />
             <div class="form-group">
@@ -29,7 +53,7 @@
                 <select asp-for="PaymentMethod" asp-items="@Html.GetEnumSelectList<PaymentMethods>()" class="form-control"></select>
                 <span asp-validation-for="PaymentMethod" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
+            <div class="form-group form-check my-3">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsPaid" /> @Html.DisplayNameFor(model => model.IsPaid)
                 </label>
@@ -49,16 +73,16 @@
                 <select asp-for="FranchiseId" class="form-control" asp-items="ViewBag.FranchiseList"></select>
                 <span asp-validation-for="FranchiseId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+                <div class="form-group my-5">
+                    <input type="submit" value="Save" class="btn btn-primary" /> |
+                    <a class="btn btn-warning" asp-action="Index" asp-area="Client">Back to List</a>
+                </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

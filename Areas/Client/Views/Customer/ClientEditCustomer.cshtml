@@ -1,0 +1,80 @@
+﻿@model Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models.Customer
+
+@{
+    Layout = "_ClientLayout";
+    ViewData["Title"] = "ClientEditCustomer";
+}
+<style>
+
+    main {
+        min-height:90vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        width:100%
+    }
+
+</style>
+<div class="container bg-light h-100 p-5" >
+
+    <h4>Customer</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" asp-for="CustID" />
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CustEmail" class="control-label"></label>
+                    <input asp-for="CustEmail" class="form-control" />
+                    <span asp-validation-for="CustEmail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CustPassword" class="control-label"></label>
+                    <input asp-for="CustPassword" class="form-control" />
+                    <span asp-validation-for="CustPassword" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CustPhone" class="control-label"></label>
+                    <input asp-for="CustPhone" class="form-control" />
+                    <span asp-validation-for="CustPhone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CustAddressStreet" class="control-label"></label>
+                    <input asp-for="CustAddressStreet" class="form-control" />
+                    <span asp-validation-for="CustAddressStreet" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CustAddressCity" class="control-label"></label>
+                    <input asp-for="CustAddressCity" class="form-control" />
+                    <span asp-validation-for="CustAddressCity" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CustAddressCounty" class="control-label"></label>
+                    <input asp-for="CustAddressCounty" class="form-control" />
+                    <span asp-validation-for="CustAddressCounty" class="text-danger"></span>
+                </div>
+                <div class="form-group my-5 w-100">
+                    <input type="submit" value="Save" class="btn btn-danger" /> |
+                    <a class="btn btn-warning" asp-action="Profile" asp-controller="Account" asp-area="">Back to profile</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

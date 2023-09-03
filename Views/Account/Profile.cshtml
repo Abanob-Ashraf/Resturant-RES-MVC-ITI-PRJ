@@ -1,0 +1,208 @@
+﻿@model Resturant_RES_MVC_ITI_PRJ.Models.AppUser
+@using System.Security.Claims;
+@using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
+@inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client.ICustomerRepository CustomerRepository
+@inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client.IOrderRepository OrderRepository
+@inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client.IDishRepository DishRepository
+@inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client.IOrdersDishesRelRepository OrderDishRelRepository
+@inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.IEmployeeRepository EmployeeRepository
+
+
+@{
+    Layout = "_ClientLayout";
+}
+@{
+
+
+    var curemail = User.FindFirst(ClaimTypes.Name)?.Value;
+    var customer = CustomerRepository.GetAllCustomers().SingleOrDefault(c => c.CustEmail == curemail);
+    var MostOrderedDishID = OrderRepository
+    .GetAllOrders()
+    .Where(o => o.CustomerId == customer.CustID)
+    .SelectMany(o => o.OrderesDishesRels.Where(s => s.OrderId == o.OrderId))
+    .GroupBy(rel => rel.DishId)
+    .Select(group => new { DishId = group.Key, OrderCount = group.Count() })
+    .OrderByDescending(d => d.OrderCount)
+    .FirstOrDefault() ;
+
+    string mostOrderedDishName = MostOrderedDishID != null
+    ? DishRepository.GetDishById(MostOrderedDishID.DishId)?.DishName
+    : "No Dish Found";
+}
+
+<link href="~/css/Profile.css" rel="stylesheet" />
+<div class="w-100 m-0">
+    <div class="profile-header bg-secondary">
+        <div class="profile-img">
+            <img src="~/assets/Images/profile.png" width="200" alt="Profile Image">
+        </div>
+        <div class="profile-nav-info">
+            <h3 class="user-name">@customer.FirstName @customer.LastName</h3>
+            <div class="address">
+            </div>
+
+        </div>
+        <div class="profile-option">
+            <div class="notification">
+                <a asp-action="Edit" asp-controller="Customer" asp-area="Client" asp-route-id="@customer.CustID">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-bd">
+        <div class="left-side">
+            <div class="profile-side">
+
+                <p class="text-dark"><i class="fa fa-phone  me-3"> @customer.CustPhone </i></p>
+                <p class="user-mail"><i class="fa fa-envelope"></i> @curemail </p>
+                <div class="user-bio">
+                    <h3>Details</h3>
+                    <p class="bio">
+                        <div>
+                            <span class="text-danger fw-bold">Orders No#: </span>
+                            <span>@OrderRepository.GetAllOrders().Where(o=>o.CustomerId == customer.CustID).Count()</span>
+                        </div>
+                        <div>
+                            <span class="text-danger fw-bold">Most Orderd: </span>
+                            <span>@mostOrderedDishName</span>
+                            <span class="text-into"> ( @MostOrderedDishID?.OrderCount  )</span>
+                        </div>
+                    </p>
+                </div>
+                <div class="profile-btn">
+                    <button class="chatbtn" id="chatBtn"><i class="fa fa-comment"></i> FeedBack</button>
+
+                    <a asp-action="index" asp-controller="Home" asp-area="" asp-fragment="menu" class="createbtn" id="Create-post"><i class="fa fa-plus"></i> Order</a>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="right-side">
+            <div class="accordion" id="Ordersaccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="text-danger fw-bold accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Orders
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#Ordersaccordion">
+                        <div class="accordion-body">
+                            <table class="table table-striped table-info">
+                                <thead>
+                                    <tr>
+                                        <th>Order Serial</th>
+                                        <th>Order Total Price</th>
+                                        <th>Order Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (Order ord in OrderRepository.GetAllOrders()?.Where(o => o.CustomerId == customer.CustID))
+                                    {
+                                        <tr>
+                                            <td>1000-@ord.OrderId</td>
+                                            <td>@OrderDishRelRepository.GetAllOrderDishesRels().Where(dc=> dc.OrderId == ord.OrderId).Sum(rel => DishRepository.GetDishById(rel.DishId)?.DishPrice ?? 0)</td>
+                                            <td class="text-danger"><a data-id="@ord.OrderId" class="openDialog btn btn-danger fs-6" data-bs-toggle="modal" data-bs-target="#OrderDetailsModal"><i class="fa-solid fa-circle-info "></i></a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="OrderDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Order Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="orderIDHolder" />
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Dish</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderDetailsTableBody">
+                    </tbody>
+                    <tfoot>
+                        <tr colspan="3" >
+                            <td>
+                                <p class="total-price-text">Total Price: <span class="text-danger" id="totalPrice"></span></p>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const orderButtons = document.querySelectorAll('.openDialog');
+        const orderIDHolder = document.getElementById('orderIDHolder');
+        const orderDetailsTableBody = document.getElementById('orderDetailsTableBody');
+        const totalPriceElement = document.getElementById('totalPrice');
+
+        orderButtons.forEach(button => {
+            button.addEventListener('click', async function () {
+                const orderID = this.getAttribute('data-id');
+                orderIDHolder.value = orderID;
+
+                const orderDishesData = await getOrderDishes(orderID);
+                const orderDishes = orderDishesData.$values;
+
+                orderDetailsTableBody.innerHTML = ''; // Clear previous rows
+
+                let totalOrderPrice = 0;
+
+                orderDishes.forEach(rel => {
+                    const dish = rel.dishes;
+
+                    const row = `
+                            <tr class="text-center">
+                               <td>${dish.DishName}</td>
+                                   <td>${rel.quantity}</td>
+                               <td>${dish.DishPrice}</td>
+                            </tr>
+                        `;
+                    orderDetailsTableBody.innerHTML += row;
+
+                    totalOrderPrice += (dish.DishPrice * rel.quantity);
+                });
+
+                totalPriceElement.textContent = totalOrderPrice;
+
+
+            });
+        });
+
+        async function getOrderDishes(orderID) {
+            const orderDishesResponse = await fetch(`/Client/OrderDishesRel/OrderDishesApi/${orderID}`);
+            const orderDishes = await orderDishesResponse.json();
+            console.log(orderDishes)
+            return orderDishes;
+        }
+    });
+
+
+</script>
