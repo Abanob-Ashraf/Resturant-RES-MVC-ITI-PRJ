@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
@@ -11,6 +12,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         public int DishCategoryId { get; set; }
 
         [Required]
+        [DisplayName("Category Name")]
         public string DishCategoryName { get; set; }
 
         public ICollection<Dish>? Dish { get; set; }
