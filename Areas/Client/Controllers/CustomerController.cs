@@ -6,6 +6,7 @@ using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
+using Resturant_RES_MVC_ITI_PRJ.Models.ViewModels;
 
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
@@ -47,6 +48,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Customer customer)
         {
+            var phones = CustomerRepository.GetAllCustomers().Select(u => u.CustPhone).ToList();
+            if (phones.Contains(customer.CustPhone))
+            {
+                ModelState.AddModelError("Phone", "Already Exist Phone Number");
+            }
             if (customer.CustPassword == null)
             {
                 ModelState.AddModelError("password", "You must enter a password");
@@ -62,6 +68,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         //[Route("EditCustomer")]
         public ActionResult Edit(int id)
         {
+            if (User.IsInRole("Customer"))
+            {
+                return View("ClientEditCustomer", CustomerRepository.GetCustomerById(id));
+            }
             return View(CustomerRepository.GetCustomerById(id));
         }
 
@@ -69,26 +79,49 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Customer customer)
         {
-            if (customer.CustPassword == null)
+            var phones = CustomerRepository.GetAllCustomers().Select(u => u.CustPhone).ToList();
+            var OldPhone = CustomerRepository.GetCustomerById(customer.CustID).CustPhone;
+            if (phones.Contains(customer.CustPhone) && customer.CustPhone != OldPhone)
             {
-                ModelState.AddModelError("password", "You must enter a password");
+                ModelState.AddModelError("Phone", "Already Exist Phone Number");
             }
+
             if (ModelState.IsValid)
             {
+                var oldPass = CustomerRepository.GetCustomerById(customer.CustID).CustPassword;
+                if (customer.CustPassword == null)
+                {
+
+                    customer.CustPassword = oldPass;
+                }
                 CustomerRepository.UpdateCustomer(customer);
                 var user = await UserManager.FindByNameAsync(customer.CustEmail);
+
                 if (user != null)
                 {
                     user.FirstName = customer.FirstName;
                     user.LastName = customer.LastName;
                     user.PhoneNumber = customer.CustPhone;
 
-                    var newPasswordHash = UserManager.PasswordHasher.HashPassword(user, customer.CustPassword);
-                    user.PasswordHash = newPasswordHash;
+
+                    if (customer.CustPassword != null)
+                    {
+                        var newPasswordHash = UserManager.PasswordHasher.HashPassword(user, customer.CustPassword);
+                        user.PasswordHash = newPasswordHash;
+
+                    }
+
 
                     var result = await UserManager.UpdateAsync(user);
                 }
-                return RedirectToAction(nameof(Index));
+                var routeValues = new RouteValueDictionary(new { area = "" });
+
+                return RedirectToAction("Profile", "Account", routeValues);
+            }
+            if (User.IsInRole("Customer"))
+            {
+
+                return View("ClientEditCustomer");
             }
             return View();
         }

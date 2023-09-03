@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,6 +11,8 @@ using Resturant_RES_MVC_ITI_PRJ.Models.ViewModels;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
 {
+    [Authorize(Roles = "Admin,Employee")]
+
     [Area("Management")]
     //[Route("Employees")]
     public class EmployeeController : Controller
@@ -20,7 +23,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         public UserManager<AppUser> UserManager { get; }
         public RoleManager<IdentityRole> RoleManager { get; }
 
-        public EmployeeController(IEmployeeRepository employeeRepository, IEmployeesCategoriesRepository employeesCategoriesRepository, IFranchiseRepository franchiseRepository, UserManager<AppUser> userManager,RoleManager<IdentityRole> roleManager)
+        public EmployeeController(IEmployeeRepository employeeRepository, IEmployeesCategoriesRepository employeesCategoriesRepository, IFranchiseRepository franchiseRepository, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             EmployeeRepository = employeeRepository;
             EmployeesCategoriesRepository = employeesCategoriesRepository;
@@ -40,30 +43,30 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         {
             return View("Details", EmployeeRepository.GetEmployeeById(id));
         }
-        
+
         //[Route("CreateEmployee")]
         public ActionResult Create()
         {
             ViewBag.CategoryList = new SelectList(EmployeesCategoriesRepository.GetAllEmployeesCategories(), "EmployeeCategoryId", "CategoryName");
             ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
-            ViewBag.RoleList = new SelectList(RoleManager.Roles.Select(r => r.Name).ToList(),"Name");
+            ViewBag.RoleList = new SelectList(RoleManager.Roles.Select(r => r.Name).ToList(), "Name");
             return View();
         }
 
         [HttpPost]
         //[Route("CreateEmployee")]
         [ValidateAntiForgeryToken]
-        public async  Task<ActionResult> Create(Employee employee)
+        public async Task<ActionResult> Create(Employee employee)
         {
             ViewBag.CategoryList = new SelectList(EmployeesCategoriesRepository.GetAllEmployeesCategories(), "EmployeeCategoryId", "CategoryName");
             ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
-            ViewBag.RoleList = new SelectList(RoleManager.Roles.Select(r=>r.Name).ToList(),"Name");
+            ViewBag.RoleList = new SelectList(RoleManager.Roles.Select(r => r.Name).ToList(), "Name");
 
             if (ModelState.IsValid)
             {
 
                 EmployeeRepository.InsertEmployee(employee);
-                 
+
                 AppUser user = new AppUser();
                 user.FirstName = employee.EmpFirstName;
                 user.LastName = employee.EmpLastName;
@@ -72,7 +75,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
                 user.PhoneNumber = employee.EmpPhone;
                 user.PasswordHash = employee.EmpPassword;
                 user.EmailConfirmed = true;
-                
+
                 IdentityResult result = await UserManager.CreateAsync(user, employee.EmpPassword);
                 await UserManager.AddToRoleAsync(user, employee.RoleName);
                 return RedirectToAction(nameof(Index));
@@ -85,7 +88,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         {
             ViewBag.CategoryList = new SelectList(EmployeesCategoriesRepository.GetAllEmployeesCategories(), "EmployeeCategoryId", "CategoryName");
             ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
-            ViewBag.RoleList = new SelectList(RoleManager.Roles.Select(r=>r.Name).ToList(),"Name");
+            ViewBag.RoleList = new SelectList(RoleManager.Roles.Select(r => r.Name).ToList(), "Name");
 
             return View(EmployeeRepository.GetEmployeeById(id));
         }
@@ -101,8 +104,16 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
 
             if (ModelState.IsValid)
             {
+                var oldPass = EmployeeRepository.GetEmployeeById(employee.EmpID).EmpPassword;
+                if (employee.EmpPassword == null)
+                {
+                    employee.EmpPassword = oldPass;
+                }
                 EmployeeRepository.UpdateEmployee(id, employee);
+
+
                 var user = await UserManager.FindByNameAsync(employee.EmpEmail);
+
                 if (user != null)
                 {
                     user.FirstName = employee.EmpFirstName;
@@ -110,6 +121,12 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
                     user.UserName = employee.EmpEmail;
                     user.Email = employee.EmpEmail;
                     user.PhoneNumber = employee.EmpPhone;
+
+                    if (employee.EmpPassword != null)
+                    {
+                        var newPasswordHash = UserManager.PasswordHasher.HashPassword(user, employee.EmpPassword);
+                        user.PasswordHash = newPasswordHash;
+                    }
 
                     var result = await UserManager.UpdateAsync(user);
                 }
@@ -119,7 +136,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         }
 
         //[Route("DeletEmployee")]
-        public async Task <ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             var emp = EmployeeRepository.GetEmployeeById(id);
             var user = await UserManager.FindByNameAsync(emp.EmpEmail);
