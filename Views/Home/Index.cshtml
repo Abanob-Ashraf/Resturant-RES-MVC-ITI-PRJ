@@ -589,11 +589,13 @@
 <script src="~/assets/js/jquery3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script>
-    console.log(document.querySelector(".card-headers").textContent)
-    document.querySelectorAll(".card-headers").forEach(el=>{
-        el.innerText = el.innerText.toUpperCase()
+    if (document.querySelectorAll(".card-headers").length~!=0) {
+        document.querySelectorAll(".card-headers").forEach(el => {
+            el.innerText = el.innerText.toUpperCase()
+        })
+  }
     document.addEventListener('DOMContentLoaded', function () {
-    })
+    
         const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
 
         addToCartButtons.forEach(button => {
