@@ -33,6 +33,9 @@
 
 </div>
 <div id="kt_app_content" class="app-content container m-auto w-75 m-5 p-5">
+    <div class="alert alert-warning" role="alert">
+        Be aware if you want update order make sure you update order date for today !!
+    </div>
     <div class="">
         <div class="">
             <form asp-action="Edit" class="w-100">
@@ -45,7 +48,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="OrderDate" class="control-label"></label>
-                <input asp-for="OrderDate" class="form-control" />
+                    <input asp-for="OrderDate" class="form-control" />
                 <span asp-validation-for="OrderDate" class="text-danger"></span>
             </div>
             <div class="form-group">
