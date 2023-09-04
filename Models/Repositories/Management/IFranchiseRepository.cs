@@ -4,7 +4,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories
 {
     public interface IFranchiseRepository
     {
-
         public List<Franchise> GetAllFranchises();
 
         public Franchise GetFranchiseById(int id);

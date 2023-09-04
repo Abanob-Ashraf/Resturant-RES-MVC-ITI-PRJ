@@ -11,7 +11,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Analysis
         public Dictionary<string, List<Order>> GetOrderByType();
 
         public List<Order> OrdersPer2Day();
-
     }
 
     /*

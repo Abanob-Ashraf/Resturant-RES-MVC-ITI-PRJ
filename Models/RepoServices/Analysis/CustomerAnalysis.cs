@@ -13,21 +13,18 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis
             Ctx = ctx;
         }
 
-        //done
         public int NoOfRegisteredCustomers()
         {
             var NoOfRegisteredCustomers = Ctx.Customers.Count();
             return NoOfRegisteredCustomers;
         }
 
-        //done
         public List<Customer> LeastCustomersSignUps()
         {
             var LeastCustomers = Ctx.Customers.OrderByDescending(c => c.CustID).Take(10).ToList();
             return LeastCustomers;
         }
 
-        //done
         public int GetNoCustomerOrdered()
         {
             var NoCustomerOrdered = Ctx.Orders.Where(c => c.OrderDate == DateTime.Today).Select(c => c.CustomerId).Distinct().Count();
@@ -35,7 +32,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis
             return NoCustomerOrdered;
         }
 
-        //done
         public List<Customer> GetMostCustomersOrderedMoreOne()
         {
             var MostCustomers = Ctx.Orders.Include(c => c.Customer)

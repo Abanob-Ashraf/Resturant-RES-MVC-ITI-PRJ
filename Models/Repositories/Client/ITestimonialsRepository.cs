@@ -13,6 +13,5 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client
         public void UpdateTestimonials(int id, Testimonials Testimonials);
 
         public void DeleteTestimonials(int id);
-
     }
 }

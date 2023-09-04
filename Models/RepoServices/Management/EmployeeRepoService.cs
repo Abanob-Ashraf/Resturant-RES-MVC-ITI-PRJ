@@ -48,7 +48,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Management
                 {
                     Console.WriteLine(ex.ToString());
                 }
-                
             }
         }
 

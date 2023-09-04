@@ -41,6 +41,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices
             OrderTypesRepository = orderTypesRepository;
             CustomerRepository = customerRepository;
         }
+
         [AllowAnonymous]
         public async Task Initialize_Data()
         {
@@ -51,7 +52,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices
             IdentityRole role3 = new IdentityRole();
             role3.Name = "Employee";
 
-            //Save Role to DB
             await RoleManager.CreateAsync(role1);
             await RoleManager.CreateAsync(role2);
             await RoleManager.CreateAsync(role3);
@@ -83,8 +83,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices
                 PasswordHash = DineINCustPWD
             };
             var DineINEmpUser = await UserManager.CreateAsync(DineINCust, DineINCustPWD);
-
-            //Add default User to Role Admin    
+  
             if (ManagerUser.Succeeded)
             {
                 await UserManager.AddToRoleAsync(Manager, "Admin");

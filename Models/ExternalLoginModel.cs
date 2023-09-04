@@ -5,14 +5,13 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models
 {
     public class ExternalLoginModel
     {
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
 
-            public ClaimsPrincipal Principal { get; set; }
-
-        }
+        public ClaimsPrincipal Principal { get; set; }
     }
+}
 
 
 

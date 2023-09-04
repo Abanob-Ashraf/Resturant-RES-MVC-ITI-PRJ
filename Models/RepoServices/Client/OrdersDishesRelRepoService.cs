@@ -6,7 +6,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
 {
     public class OrdersDishesRelRepoService : IOrdersDishesRelRepository
     {
-
         public ResturantDbContext Ctx { get; }
 
         public OrdersDishesRelRepoService(ResturantDbContext ctx)

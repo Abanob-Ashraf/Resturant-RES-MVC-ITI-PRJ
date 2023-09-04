@@ -12,6 +12,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
         {
             Ctx = ctx;
         }
+
         public List<Customer> GetAllCustomers()
         {
             return Ctx.Customers

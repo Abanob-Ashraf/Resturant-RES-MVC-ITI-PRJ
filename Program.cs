@@ -81,7 +81,7 @@ namespace Resturant_RES_MVC_ITI_PRJ
             builder.Services.AddScoped<IOrderAnalysis, OrderAnalysis>();
             builder.Services.AddScoped<ICustomerAnalysis, CustomerAnalysis>();
 
-
+            // Initialize Default Data
             builder.Services.AddScoped<IInitializeDefaultData, InitializeDefaultData>();
 
 
