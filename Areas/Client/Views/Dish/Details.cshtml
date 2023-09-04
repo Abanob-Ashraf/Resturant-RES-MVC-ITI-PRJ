@@ -5,7 +5,9 @@
 @{
     ViewData["Title"] = "Details";
     var DishIng = DishIngRepository.GetAllDishIngredientRels().Where(rel => rel.DishId == Model.DishId);
-    var IngList = new SelectList(IngredientsRepo.GetAllIngerdients(), "IngerdientId", "IngName");
+    var UnaddedIngred = IngredientsRepo.GetAllIngerdients().Where(i => DishIng.Select(o => o.IngerdientId).ToList().IndexOf(i.IngerdientId) == -1).ToList();
+
+    var IngList = new SelectList(UnaddedIngred, "IngerdientId", "IngName");
 }
 
 <div id="kt_app_toolbar_container" class="app-container container p-3 d-flex flex-stack">
