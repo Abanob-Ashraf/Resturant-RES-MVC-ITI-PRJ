@@ -61,13 +61,15 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(OrderDishesRel orderDishesRel)
         {
+            var routeValues = new RouteValueDictionary(new { id = orderDishesRel.OrderId });
+
             ViewBag.OrderList = new SelectList(OrderRepository.GetAllOrders(), "OrderId", "OrderState");
             ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishName");
 
             if (ModelState.IsValid)
             {
                 OrderDishesRelRepository.InsertOrderDishesRel(orderDishesRel);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Order", routeValues);
             }
             return View();
         }
@@ -94,10 +96,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View();
         }
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id, int OrderId)
         {
+            var routeValues = new RouteValueDictionary(new { id = OrderId });
             OrderDishesRelRepository.DeleteOrderDishesRel(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Order", routeValues);
         }
     }
 }

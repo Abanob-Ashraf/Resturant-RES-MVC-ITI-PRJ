@@ -1,9 +1,17 @@
 ﻿@model Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models.Order
+@inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client.IOrdersDishesRelRepository OrderDishRepository
+@inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client.IDishRepository DishRepository
 
 @{
     ViewData["Title"] = "Details";
 }
 
+@{
+    ViewData["Title"] = "Details";
+    var OrderDishes = OrderDishRepository.GetAllOrderDishesRels().Where(rel => rel.OrderId == Model.OrderId).ToList();
+    var UnaddedDishes = DishRepository.GetAllDishes().Where(d => OrderDishes.Select(o => o.DishId).ToList().IndexOf(d.DishId) == -1).ToList();
+    var DishesList = new SelectList(UnaddedDishes, "DishId", "DishName");
+}
 <div id="kt_app_toolbar_container" class="app-container container p-3 d-flex flex-stack">
     <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
         <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Order Details</h1>
@@ -20,34 +28,33 @@
 </div>
 
 
-
 <div id="kt_app_content" class="app-content container-fluid m-auto flex-column-fluid m-5 p-5">
     <div>
         <table class="table table-info table-striped p-5" id="TableData">
             <thead>
                 <tr>
-                    <th>
+                    <th class="text-center" >
                         @Html.DisplayNameFor(model => model.OrderState)
                     </th>
-                    <th>
+                    <th class="text-center" >
                         @Html.DisplayNameFor(model => model.OrderDate)
                     </th>
-                    <th>
+                    <th class="text-center" >
                         @Html.DisplayNameFor(model => model.PaymentMethod)
                     </th>
-                    <th>
+                    <th class="text-center" >
                         @Html.DisplayNameFor(model => model.IsPaid)
                     </th>
-                    <th>
+                    <th class="text-center" >
                         @Html.DisplayNameFor(model => model.OrderType)
                     </th>
-                    <th>
+                    <th class="text-center" >
                         @Html.DisplayNameFor(model => model.Customer)
                     </th>
-                    <th>
+                    <th class="text-center" >
                         @Html.DisplayNameFor(model => model.Franchise)
                     </th>
-                    <th>Actions</th>
+                    <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -76,7 +83,6 @@
                     <td>
                         <a asp-action="Edit" asp-route-id="@Model.OrderId" class="btn btn-warning">Edit <i class="fa-solid fa-pen-to-square"></i></a> |
                         <a data-bs-target="#OrderModal" data-bs-toggle="modal" data-id="@Model.OrderId" class="btn btn-danger open-AddDeleteDialog">Delete <i class="fas fa-trash-alt"></i></a>
-
                     </td>
                 </tr>
 
@@ -88,6 +94,53 @@
     </div>
 </div>
 
+<hr/>
+
+
+<div id="kt_app_content" class="app-content container-fluid m-auto flex-column-fluid m-5 p-5">
+    <h2>Order Dishes</h2>
+    <p>
+        <a data-bs-target="#AddOrderDishModal" data-bs-toggle="modal" class="btn btn-success">Create New +</a>
+    </p>
+    <table class="table table-warning table-striped" id="TableData01">
+        <thead>
+            <tr>
+                <th class="text-center" scope="col">
+                    Dish Name
+                </th>
+                <th class="text-center"  scope="col">
+                    Dish Price
+                </th>
+                <th class="text-center"  scope="col">
+                    Quantity
+                </th>
+
+                <th class="text-center" scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in OrderDishes)
+            {
+                <tr class="align-middle text-center">
+                    <td scope="row">
+                        @Html.DisplayFor(modelItem => item.Dish.DishName)
+                    </td>
+                    <td scope="row">
+                        @Html.DisplayFor(modelItem => item.Dish.DishPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td scope="row">
+                        <a asp-action="Details" asp-controller="Dish" asp-route-id="@item.DishId" class="btn btn-info">Details <i class="fa-solid fa-circle-info"></i></a> |
+                        <a data-bs-target="#OrderDishModal" data-bs-toggle="modal" data-id="@item.OrderDishesRelId" class="btn btn-danger open-DeleteDishOrder">Delete <i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
 <!-- Order Deletion Modal -->
 <div class="modal fade" id="OrderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -97,7 +150,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are You Sure you want to Delete Dish Order?
+                Are You Sure you want to Delete Order?
             </div>
             <input type="hidden" />
             <div class="modal-footer">
@@ -108,16 +161,71 @@
     </div>
 </div>
 
+<!--  Dish Deletion from modal Modal -->
+<div class="modal fade" id="OrderDishModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Dish form Order Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are You Sure you want to Delete Dish from Order?
+            </div>
+            <input type="hidden" />
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a id="DishOrderId" href="" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add dish to order Modal-->
+<div class="modal fade" id="AddOrderDishModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Dish to Order Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="Create" asp-controller="OrderDishesRel">
+                <div class="modal-body">
+                    <h3>Dishes</h3>
+                    <select name="DishId" class="form-control" asp-items="DishesList"></select>
+                    <input readonly type="hidden" name="OrderId" value="@Model.OrderId" />
+                    <div class="form-group">
+                        <label class="form-label" for="quantity">Qunatity</label>
+                        <input id="quantity" class="form-control" type="number" name="Quantity" min="1" />
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button id="AddDishIngRel" type="submit" class="btn btn-danger">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
     $(document).ready(function () {
         $('#TableData').DataTable();
     });
+        $(document).ready(function () {
+        $('#TableData01').DataTable();
+    });
 
     $(document).on("click", ".open-AddDeleteDialog", function () {
         var myorderId = "/Client/order/Delete/" + $(this).data('id');
         $("#OrderId").attr('href', myorderId);
+    });
+
+    $(document).on("click", ".open-DeleteDishOrder", function () {
+        var myDishOrderId = "/Client/OrderDishesRel/Delete/" + $(this).data('id') + "?OrderId="+ @Model.OrderId;
+        $("#DishOrderId").attr('href', myDishOrderId);
     });
 </script>
 
