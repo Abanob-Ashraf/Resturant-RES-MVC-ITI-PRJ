@@ -2,7 +2,6 @@
 
 namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client
 {
-
     public interface IIngerdientRepository
     {
         public List<Ingerdient> GetAllIngerdients();

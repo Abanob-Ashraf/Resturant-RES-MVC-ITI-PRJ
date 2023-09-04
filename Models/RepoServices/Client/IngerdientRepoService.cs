@@ -6,7 +6,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
 {
     public class IngerdientRepoService : IIngerdientRepository
     {
-
         public ResturantDbContext Ctx { get; }
 
         public IngerdientRepoService(ResturantDbContext ctx)

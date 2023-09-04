@@ -4,7 +4,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories
 {
     public interface IEmployeesCategoriesRepository
     {
-
         public List<EmployeeCategory> GetAllEmployeesCategories();
 
         public EmployeeCategory GetEmployeesCategoryById(int id);

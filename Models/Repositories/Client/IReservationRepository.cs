@@ -13,6 +13,5 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client
         public void UpdateReservation(int id, Reservation Reservation);
 
         public void DeleteReservation(int id);
-
     }
 }
