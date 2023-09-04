@@ -5,37 +5,23 @@
 }
 
 <div id="kt_app_toolbar_container" class="app-container container p-3 d-flex flex-stack">
-    <!--begin::Page title-->
     <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-        <!--begin::Title-->
         <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Order Details</h1>
-        <!--end::Title-->
-        <!--begin::Breadcrumb-->
         <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
-            <!--begin::Item-->
             <li class="breadcrumb-item text-muted">
                 <a asp-action="Index" asp-controller="Home" asp-area="" class="text-muted text-hover-primary">Home</a>
             </li>
-            <!--end::Item-->
-            <!--begin::Item-->
             <li class="breadcrumb-item">
                 <span class="bullet bg-gray-400 w-5px h-2px"></span>
             </li>
-            <!--end::Item-->
-            <!--begin::Item-->
             <li class="breadcrumb-item text-muted">Order Details</li>
-            <!--end::Item-->
         </ul>
-        <!--end::Breadcrumb-->
     </div>
-    <!--end::Page title-->
-
 </div>
 
 
 
 <div id="kt_app_content" class="app-content container-fluid m-auto flex-column-fluid m-5 p-5">
-
     <table class="table table-info table-striped p-5" id="TableData">
         <thead>
             <tr>
@@ -46,27 +32,25 @@
             </tr>
         </thead>
         <tbody>
-         
-                <tr class="align-middle text-center">
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.OrderTypeName)
-                    </td>
-                    <td>
+
+            <tr class="align-middle text-center">
+                <td>
+                    @Html.DisplayFor(modelItem => Model.OrderTypeName)
+                </td>
+                <td>
                     <a asp-action="Edit" asp-route-id="@Model.OrderTypeId" class="btn btn-warning">Edit <i class="fa-solid fa-pen-to-square"></i></a> |
                     <a data-bs-target="#OrderTypeModal" data-bs-toggle="modal" data-id="@Model.OrderTypeId" class="btn btn-danger open-AddDeleteDialog">Delete <i class="fas fa-trash-alt"></i></a>
-                    </td>
-                </tr>
-            
+                </td>
+            </tr>
+
         </tbody>
     </table>
-
-
     <div>
         <a class="btn btn-warning" asp-action="Index" asp-area="Client">Back to List</a>
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Deletion order type Modal -->
 <div class="modal fade" id="OrderTypeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -95,7 +79,7 @@
     });
 
     $(document).on("click", ".open-AddDeleteDialog", function () {
-        var myOrderTypeId = "Client/OrderType/Delete/" + $(this).data('id');
+        var myOrderTypeId = "/Client/OrderType/Delete/" + $(this).data('id');
         $("#OrderTypeId").attr('href', myOrderTypeId);
     });
 </script>
