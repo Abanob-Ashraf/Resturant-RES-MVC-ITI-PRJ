@@ -7,39 +7,23 @@
     var DishIng = DishIngRepository.GetAllDishIngredientRels().Where(rel => rel.DishId == Model.DishId);
     var IngList = new SelectList(IngredientsRepo.GetAllIngerdients(), "IngerdientId", "IngName");
 }
-  
-
 
 <div id="kt_app_toolbar_container" class="app-container container p-3 d-flex flex-stack">
-    <!--begin::Page title-->
     <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-        <!--begin::Title-->
         <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Dish Details</h1>
-        <!--end::Title-->
-        <!--begin::Breadcrumb-->
         <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
-            <!--begin::Item-->
             <li class="breadcrumb-item text-muted">
                 <a asp-action="Index" asp-controller="Home" asp-area="" class="text-muted text-hover-primary">Home</a>
             </li>
-            <!--end::Item-->
-            <!--begin::Item-->
             <li class="breadcrumb-item">
                 <span class="bullet bg-gray-400 w-5px h-2px"></span>
             </li>
-            <!--end::Item-->
-            <!--begin::Item-->
             <li class="breadcrumb-item text-muted">Dish Details</li>
-            <!--end::Item-->
         </ul>
-        <!--end::Breadcrumb-->
     </div>
-    <!--end::Page title-->
-
 </div>
 
 <div id="kt_app_content" class="app-content container m-auto w-75 m-5 p-5">
-
     <div>
         <table class="table table-info table-striped" id="TableData">
             <thead>
@@ -60,7 +44,6 @@
                 </tr>
             </thead>
             <tbody>
-
                 <tr class="align-middle text-center">
                     <td scope="row">
                         @Html.DisplayFor(modelItem => Model.DishName)
@@ -82,7 +65,6 @@
                         <a data-bs-target="#DishModal" data-bs-toggle="modal" data-id="@Model.DishId" class="btn btn-danger open-AddDeleteDialog">Delete <i class="fas fa-trash-alt"></i></a>
                     </td>
                 </tr>
-
             </tbody>
         </table>
         <div>
@@ -90,16 +72,13 @@
         </div>
     </div>
 </div>
-<hr/>
+<hr />
 
 <div id="kt_app_content" class="app-content container-fluid m-auto flex-column-fluid m-5 p-5">
-
     <p>
-
         <a data-bs-target="#AddRelationModal" data-bs-toggle="modal" class="btn btn-success">Add Ingredient</a>
     </p>
- 
-        <table class="table table-light table-striped border " id="TableData2">
+    <table class="table table-light table-striped border " id="TableData2">
         <thead>
             <tr>
                 <th class="align-middle text-center">
@@ -123,11 +102,10 @@
             }
         </tbody>
     </table>
-
 </div>
 
 
-<!-- Modal 1-->
+<!-- Deletion if dish Modal -->
 <div class="modal fade" id="DishModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -147,7 +125,7 @@
     </div>
 </div>
 
-<!-- Modal 2-->
+<!-- Delete Ingredient form dish Modal-->
 <div class="modal fade" id="RelationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -166,7 +144,8 @@
         </div>
     </div>
 </div>
-<!-- Modal 3-->
+
+<!-- Add Ingredient to dish Modal-->
 <div class="modal fade" id="AddRelationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -174,7 +153,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Add ingredient to dish Confirmation</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form asp-action="Create" asp-controller="DishIngredientsRel" >
+            <form asp-action="Create" asp-controller="DishIngredientsRel">
                 <div class="modal-body">
                     <h3>Ingredients </h3>
                     <select name="IngerdientId" class="form-control" asp-items="IngList"></select>
@@ -189,16 +168,14 @@
     </div>
 </div>
 
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 
 <script>
     $(document).ready(function () {
         $('#TableData').DataTable();
     });
 
-      $(document).ready(function () {
+    $(document).ready(function () {
         $('#TableData2').DataTable();
     });
 
@@ -209,6 +186,6 @@
 
     $(document).on("click", ".open-DeleteIngDialog", function () {
         var myDishIngRelId = "/Client/DishIngredientsRel/Delete/" + $(this).data('id'); + + "?DishId=" + @Model.DishId
-        $("#DishIngRel").attr('href', myDishIngRelId);
+            $("#DishIngRel").attr('href', myDishIngRelId);
     });
 </script>

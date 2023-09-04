@@ -20,7 +20,7 @@
         <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Dishes</h1>
         <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
             <li class="breadcrumb-item text-muted">
-                <a asp-action="Index" asp-controller="Home" asp-area=""  class="text-muted text-hover-primary">Home</a>
+                <a asp-action="Index" asp-controller="Home" asp-area="" class="text-muted text-hover-primary">Home</a>
             </li>
             <li class="breadcrumb-item">
                 <span class="bullet bg-gray-400 w-5px h-2px"></span>
@@ -55,7 +55,7 @@
                 </th>
                 <th scope="col">
                     @Html.DisplayNameFor(model => model.DishPrice)
-                </th >
+                </th>
                 <th scope="col">
                     @Html.DisplayNameFor(model => model.DishImageName)
                 </th>
@@ -74,11 +74,11 @@
                     </td>
                     <td scope="row">
                         @Html.DisplayFor(modelItem => item.DishPrice)
-                    </td >
+                    </td>
                     @{
                         var DishImageName = @item.DishImageName + ".png";
                     }
-                    <td >
+                    <td>
                         <i data-bs-toggle="popover" data-bs-placement="right" data-bs-content="<img style='width:50px !important;' src='\assets\images\Sandwitches\@DishImageName' alt='Tooltip Image'>" data-bs-trigger="hover" data-bs-html="true" class="fas fa-image"></i>
                     </td>
                     <td>
