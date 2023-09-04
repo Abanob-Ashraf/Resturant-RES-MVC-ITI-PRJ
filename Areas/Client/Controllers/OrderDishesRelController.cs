@@ -71,7 +71,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
                 OrderDishesRelRepository.InsertOrderDishesRel(orderDishesRel);
                 return RedirectToAction("Details", "Order", routeValues);
             }
-            return View();
+            return RedirectToAction("Details", "Order", routeValues);
         }
 
         public ActionResult Edit(int id)
