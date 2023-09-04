@@ -4,6 +4,7 @@
 
 @{
     ViewData["Title"] = "Details";
+
 }
 
 @{
@@ -11,6 +12,8 @@
     var OrderDishes = OrderDishRepository.GetAllOrderDishesRels().Where(rel => rel.OrderId == Model.OrderId).ToList();
     var UnaddedDishes = DishRepository.GetAllDishes().Where(d => OrderDishes.Select(o => o.DishId).ToList().IndexOf(d.DishId) == -1).ToList();
     var DishesList = new SelectList(UnaddedDishes, "DishId", "DishName");
+    var TotalPrice = OrderDishes.Sum(od => od.Dish.DishPrice);
+
 }
 <div id="kt_app_toolbar_container" class="app-container container p-3 d-flex flex-stack">
     <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
@@ -33,25 +36,25 @@
         <table class="table table-info table-striped p-5" id="TableData">
             <thead>
                 <tr>
-                    <th class="text-center" >
+                    <th class="text-center">
                         @Html.DisplayNameFor(model => model.OrderState)
                     </th>
-                    <th class="text-center" >
+                    <th class="text-center">
                         @Html.DisplayNameFor(model => model.OrderDate)
                     </th>
-                    <th class="text-center" >
+                    <th class="text-center">
                         @Html.DisplayNameFor(model => model.PaymentMethod)
                     </th>
-                    <th class="text-center" >
+                    <th class="text-center">
                         @Html.DisplayNameFor(model => model.IsPaid)
                     </th>
-                    <th class="text-center" >
+                    <th class="text-center">
                         @Html.DisplayNameFor(model => model.OrderType)
                     </th>
-                    <th class="text-center" >
+                    <th class="text-center">
                         @Html.DisplayNameFor(model => model.Customer)
                     </th>
-                    <th class="text-center" >
+                    <th class="text-center">
                         @Html.DisplayNameFor(model => model.Franchise)
                     </th>
                     <th class="text-center">Actions</th>
@@ -94,24 +97,35 @@
     </div>
 </div>
 
-<hr/>
+<hr />
 
 
 <div id="kt_app_content" class="app-content container-fluid m-auto flex-column-fluid m-5 p-5">
     <h2>Order Dishes</h2>
-    <p>
-        <a data-bs-target="#AddOrderDishModal" data-bs-toggle="modal" class="btn btn-success">Create New +</a>
-    </p>
+    <div class="d-flex align-items-center justify-content-between">
+        <p>
+            <a data-bs-target="#AddOrderDishModal" data-bs-toggle="modal" class="btn btn-success">Create New +</a>
+        </p>
+
+        <div class="d-flex align-items-center justify-content-evenly mx-3">
+            <div class="card text-bg-warning mb-3" style="max-width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Total Price:</h5>
+                    <p class="card-text fs-1 text-danger fw-bold">@TotalPrice EGP</p>
+                </div>
+            </div>
+        </div>
+    </div>
     <table class="table table-warning table-striped" id="TableData01">
         <thead>
             <tr>
                 <th class="text-center" scope="col">
                     Dish Name
                 </th>
-                <th class="text-center"  scope="col">
+                <th class="text-center" scope="col">
                     Dish Price
                 </th>
-                <th class="text-center"  scope="col">
+                <th class="text-center" scope="col">
                     Quantity
                 </th>
 
@@ -196,7 +210,7 @@
                     <input readonly type="hidden" name="OrderId" value="@Model.OrderId" />
                     <div class="form-group">
                         <label class="form-label" for="quantity">Qunatity</label>
-                        <input id="quantity" class="form-control" type="number" name="Quantity" min="1" value="1"/>
+                        <input id="quantity" class="form-control" type="number" name="Quantity" min="1" value="1" />
                     </div>
                 </div>
 
@@ -214,7 +228,7 @@
     $(document).ready(function () {
         $('#TableData').DataTable();
     });
-        $(document).ready(function () {
+    $(document).ready(function () {
         $('#TableData01').DataTable();
     });
 
@@ -224,7 +238,7 @@
     });
 
     $(document).on("click", ".open-DeleteDishOrder", function () {
-        var myDishOrderId = "/Client/OrderDishesRel/Delete/" + $(this).data('id') + "?OrderId="+ @Model.OrderId;
+        var myDishOrderId = "/Client/OrderDishesRel/Delete/" + $(this).data('id') + "?OrderId=" + @Model.OrderId;
         $("#DishOrderId").attr('href', myDishOrderId);
     });
 </script>
