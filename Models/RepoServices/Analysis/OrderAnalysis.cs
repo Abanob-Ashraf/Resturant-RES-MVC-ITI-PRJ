@@ -14,7 +14,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis
             Ctx = ctx;
         }
 
-        //done
         public List<Dish> LeastOrderedDishes()
         {
             var data = Ctx.OrderesDishesRels
@@ -26,7 +25,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis
             return data;
         }
 
-        //done
         public Dictionary<Dish, int> GetMostOrderedDishes()
         {
             var MostDishes = Ctx.OrderesDishesRels
@@ -39,7 +37,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis
             return MostDishes;
         }
 
-        //done
         public Dictionary<string, List<Order>> GetOrderByType()
         {
             var OrderByType = Ctx.Orders
@@ -48,13 +45,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis
             return OrderByType;
         }
 
-
-
         public List<Order> OrdersPer2Day()
         {
             var OrdersPer2Day = Ctx.Orders
                .Where(c => c.OrderDate == DateTime.Today).ToList();
-
             return OrdersPer2Day;
         }
     }

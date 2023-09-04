@@ -10,7 +10,6 @@ using System.Diagnostics;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 {
-
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -62,12 +61,12 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             return View();
         }
 
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
         [AllowAnonymous]
         protected async Task Initialize_Data()
         {
@@ -170,8 +169,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                     OrderTypeName = "Dine in"
                 };
                 OrderTypesRepository.InsertOrderType(OrderType03);
-
-
             }
             if (DineINEmpUser.Succeeded)
             {

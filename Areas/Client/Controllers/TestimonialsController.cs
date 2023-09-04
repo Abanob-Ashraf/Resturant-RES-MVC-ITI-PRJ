@@ -25,13 +25,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View("Index", TestimonialsRepository.GetAllTestimonials());
         }
 
-        // GET: TestimonialsController/Details/5
         public ActionResult Details(int id)
         {
             return View("Details", TestimonialsRepository.GetTestimonialsById(id));
         }
 
-        // GET: TestimonialsController/Create
         public ActionResult Create()
         {
             ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
@@ -39,7 +37,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View();
         }
 
-        // POST: TestimonialsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Testimonials testimonial)
@@ -56,7 +53,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return RedirectToAction("Index", "Home", routeValues);
         }
 
-        // GET: TestimonialsController/Edit/5
         public ActionResult Edit(int id)
         {
             ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
@@ -64,7 +60,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View(TestimonialsRepository.GetTestimonialsById(id));
         }
 
-        // POST: TestimonialsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Testimonials testimonial)
@@ -80,12 +75,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 
         }
 
-        // GET: TestimonialsController/Delete/5
         public ActionResult Delete(int id)
         {
             TestimonialsRepository.DeleteTestimonials(id);
             return RedirectToAction(nameof(Index));
         }
-
     }
 }

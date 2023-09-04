@@ -9,7 +9,6 @@ using System.Text.Json;
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
     [Area("Client")]
-    //[Route("Customer")]
     public class DishController : Controller
     {
         public IDishRepository DishRepository { get; }
@@ -30,8 +29,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         }
 
         [HttpPost]
-
-
         public ActionResult Index(IFormCollection collection)
         {
             int DishID = int.Parse(collection["Dish"]);
@@ -39,8 +36,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 
             return View(DishRepository.GetAllDishes().Where(d => d.DishCategoryId == DishID));
         }
-
-
 
         [HttpGet]
         public ActionResult DishApi(int id)
@@ -91,7 +86,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View(DishRepository.GetDishById(id));
         }
 
-        // POST: DishController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Dish dish)
@@ -106,14 +100,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View();
         }
 
-        // GET: DishController/Delete/5
         public ActionResult Delete(int id)
         {
             DishRepository.DeleteDish(id);
             return RedirectToAction(nameof(Index));
         }
-
-
     }
 }
 

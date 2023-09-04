@@ -10,7 +10,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
     [Authorize(Roles = "Admin,Employee")]
 
     [Area("Management")]
-    //[Route("Franchise")]
     public class FranchiseController : Controller
     {
         public IEmployeeRepository EmployeeRepository { get; }
@@ -22,26 +21,22 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
             FranchiseRepository = franchiseRepository;
         }
 
-        //[Route("GetAllFranchise")]
         public ActionResult Index()
         {
             return View("Index", FranchiseRepository.GetAllFranchises());
         }
 
-        //[Route("GetFranchiseById/{id:int}")]
         public ActionResult Details(int id)
         {
             return View("Details", FranchiseRepository.GetFranchiseById(id));
         }
 
-        //[Route("CreateFranchise")]
         public ActionResult Create()
         {
             ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpFirstName");
             return View();
         }
 
-        //[Route("CreateFranchise")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Franchise franchise)
@@ -61,7 +56,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
             return View();
         }
 
-        //[Route("UpdateEmployee")]
         public ActionResult Edit(int id)
         {
             ViewBag.EmployeeList = new SelectList(EmployeeRepository.GetAllEmployees(), "EmpID", "EmpFirstName");
@@ -69,7 +63,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
             return View(FranchiseRepository.GetFranchiseById(id));
         }
 
-        //[Route("UpdateEmployee")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Franchise franchise)
@@ -84,27 +77,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
             return View();
         }
 
-        //[Route("DeletEmployee")]
-
         public ActionResult Delete(int id)
         {
             FranchiseRepository.DeleteFranchise(id);
             return RedirectToAction(nameof(Index));
         }
-
-        //// POST: FranchiseController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
     }
 }

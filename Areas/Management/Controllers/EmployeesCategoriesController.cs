@@ -9,7 +9,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
     [Authorize(Roles = "Admin,Employee")]
 
     [Area("Management")]
-    //[Route("EmployeesCategory")]
     public class EmployeesCategoriesController : Controller
     {
         public IEmployeesCategoriesRepository EmployeesCategoriesRepository { get; }
@@ -19,26 +18,22 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
             EmployeesCategoriesRepository = employeesCategoriesRepository;
         }
 
-        //[Route("GetAllCategories")]
         public ActionResult Index()
         {
             return View("Index", EmployeesCategoriesRepository.GetAllEmployeesCategories());
         }
 
-        //[Route("GetCategoriesById/{id:int}")]
         public ActionResult Details(int id)
         {
             return View("Details", EmployeesCategoriesRepository.GetEmployeesCategoryById(id));
         }
 
-        //[Route("CreateEmployeeCategory")]
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        //[Route("CreateEmployeeCategory")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(EmployeeCategory employeeCategory)
         {
@@ -50,7 +45,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
             return View();
         }
 
-        //[Route("UpdateEmployeeCategory/{id:int}")]
         public ActionResult Edit(int id)
         {
             return View(EmployeesCategoriesRepository.GetEmployeesCategoryById(id));
@@ -58,7 +52,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         }
 
         [HttpPost]
-        //[Route("UpdateEmployeeCategory/{id:int}")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EmployeeCategory employeeCategory)
         {
@@ -70,25 +63,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
             return View();
         }
 
-        //[Route("DeleteEmployeeCategory/{id:int}")]
         public ActionResult Delete(int id)
         {
             EmployeesCategoriesRepository.DeleteEmployeesCategory(id);
             return RedirectToAction(nameof(Index));
         }
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
     }
 }

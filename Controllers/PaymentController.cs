@@ -1,17 +1,12 @@
-﻿using crypto;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Resturant_RES_MVC_ITI_PRJ.Models;
 using Stripe;
 using System.Security.Claims;
-
 using Stripe.Checkout;
-using Resturant_RES_MVC_ITI_PRJ.Models;
-using System.Diagnostics;
 using Resturant_RES_MVC_ITI_PRJ.Services;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
-using System.Security.Claims;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models.ViewModels;
 using Newtonsoft.Json;
 
@@ -19,7 +14,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 {
     public class PaymentController : Controller
     {
-
         private readonly StripeSettings _stripeSettings;
 
         public IEmailSender EmailSender { get; }
@@ -48,7 +42,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             return View();
         }
 
-
         public IActionResult CreateCheckoutSession(string OrderDishes)
         {
             var decodedDishes = Uri.UnescapeDataString(OrderDishes);
@@ -70,9 +63,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                 FranchiseId = 1,
             };
 
-
             OrderRepository.InsertOrder(o, ref id);
-
 
             foreach (var dish in cartVM.cartDishes)
             {
@@ -128,13 +119,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             {
                 o.IsPaid = true;
                 OrderRepository.UpdateOrder(OrderID, o);
-
             }
-
-
             return View("PaymentSuccess");
         }
-
 
         public IActionResult cancel(int OrderID)
         {
@@ -143,7 +130,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             var routeValues = new RouteValueDictionary(new { area = "Client" });
             return RedirectToAction("Cart", "Order", routeValues);
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -11,7 +11,6 @@ using System.Text.Json;
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
     [Area("Client")]
-    //[Route("OrderDishesRel")]
     public class OrderDishesRelController : Controller
     {
 
@@ -25,7 +24,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             OrderRepository = orderRepository;
             DishRepository = dishRepository;
         }
-        //[Route("/GetAllTables")]
+
         public ActionResult Index()
         {
             return View("Index", OrderDishesRelRepository.GetAllOrderDishesRels());
@@ -45,13 +44,12 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
                 ContentType = "application/json"
             };
         }
-        //[Route("GetOrderDishesRelById/{id:int}")]
+
         public ActionResult Details(int id)
         {
             return View("Details", OrderDishesRelRepository.GetOrderDishesRelById(id));
         }
 
-        //[Route("CreateOrderDishesRel")]
         public ActionResult Create()
         {
             ViewBag.OrderList = new SelectList(OrderRepository.GetAllOrders(), "OrderId", "OrderState");
@@ -61,7 +59,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         }
 
         [HttpPost]
-        //[Route("CreateOrderDishesRel")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(OrderDishesRel orderDishesRel)
         {
@@ -76,7 +73,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View();
         }
 
-        //[Route("UpdateOrderDishesRel")]
         public ActionResult Edit(int id)
         {
             ViewBag.OrderList = new SelectList(OrderRepository.GetAllOrders(), "OrderId", "OrderState");
@@ -85,7 +81,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         }
 
         [HttpPost]
-        //[Route("UpdateOrderDishesRel")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, OrderDishesRel orderDishesRel)
         {
@@ -100,13 +95,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View();
         }
 
-        //[Route("DeletOrderDishesRel")]
         public ActionResult Delete(int id)
         {
             OrderDishesRelRepository.DeleteOrderDishesRel(id);
             return RedirectToAction(nameof(Index));
         }
-
-
     }
 }

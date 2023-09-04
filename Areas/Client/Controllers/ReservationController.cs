@@ -28,14 +28,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View("Index", ReservationRepository.GetAllReservations());
         }
     
-    
-        // GET: ReservationController/Details/5
         public ActionResult Details(int id)
         {
             return View(ReservationRepository.GetReservationById(id));
         }
 
-        // GET: ReservationController/Create
         public ActionResult Create()
         {
             ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
@@ -44,7 +41,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View();
         }
 
-        // POST: ReservationController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Reservation reservation)
@@ -61,7 +57,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View();
         }
 
-        // GET: ReservationController/Edit/5
         public ActionResult Edit(int id)
         {
             ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName"); 
@@ -70,7 +65,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View(ReservationRepository.GetReservationById(id));
         }
 
-        // POST: ReservationController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Reservation reservation)
@@ -86,13 +80,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View();
         }
 
-        // GET: ReservationController/Delete/5
         public ActionResult Delete(int id)
         {
             ReservationRepository.DeleteReservation(id);
             return RedirectToAction(nameof(Index));
         }
-
-      
     }
 }

@@ -32,19 +32,16 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
             RoleManager = roleManager;
         }
 
-        //[Route("GetAllEmployees")]
         public ActionResult Index()
         {
             return View("Index", EmployeeRepository.GetAllEmployees());
         }
 
-        //[Route("GetEmployeeById/{id:int}")]
         public ActionResult Details(int id)
         {
             return View("Details", EmployeeRepository.GetEmployeeById(id));
         }
 
-        //[Route("CreateEmployee")]
         public ActionResult Create()
         {
             ViewBag.CategoryList = new SelectList(EmployeesCategoriesRepository.GetAllEmployeesCategories(), "EmployeeCategoryId", "CategoryName");
@@ -54,7 +51,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         }
 
         [HttpPost]
-        //[Route("CreateEmployee")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Employee employee)
         {
@@ -83,7 +79,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
             return View();
         }
 
-        //[Route("UpdateEmployee/{id:int}")]
         public ActionResult Edit(int id)
         {
             ViewBag.CategoryList = new SelectList(EmployeesCategoriesRepository.GetAllEmployeesCategories(), "EmployeeCategoryId", "CategoryName");
@@ -94,7 +89,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
         }
 
         [HttpPost]
-        //[Route("UpdateEmployee/{id:int}")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, Employee employee)
         {
@@ -135,7 +129,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
             return View();
         }
 
-        //[Route("DeletEmployee")]
         public async Task<ActionResult> Delete(int id)
         {
             var emp = EmployeeRepository.GetEmployeeById(id);

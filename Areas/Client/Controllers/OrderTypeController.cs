@@ -10,7 +10,6 @@ using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
     [Area("Client")]
-    //[Route("OrderType")]
     public class OrderTypeController : Controller
     {
         public IOrderTypesRepository OrderTypesRepository { get; }
@@ -20,26 +19,22 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             OrderTypesRepository = orderTypesRepository;
         }
 
-        //[Route("/GetAllTables")]
         public ActionResult Index()
         {
             return View("Index", OrderTypesRepository.GetAllOrderTypes());
         }
 
-        //[Route("GetOrderTypeById/{id:int}")]
         public ActionResult Details(int id)
         {
             return View("Details", OrderTypesRepository.GetOrderTypeById(id));
         }
 
-        //[Route("CreateOrderType")]
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        //[Route("CreateOrderType")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(OrderType orderType)
         {
@@ -51,13 +46,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View();
         }
 
-        //[Route("UpdateOrderType/{id:int}")]
         public ActionResult Edit(int id)
         {
             return View(OrderTypesRepository.GetOrderTypeById(id));
         }
-
-       
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -76,9 +68,5 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             OrderTypesRepository.DeleteOrderType(id);
             return RedirectToAction(nameof(Index));
         }
-
     }
-
-
 }
-

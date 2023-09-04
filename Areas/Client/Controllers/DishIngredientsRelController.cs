@@ -7,7 +7,6 @@ using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
     [Area("Client")]
-    //[Route("Customer")]
     public class DishIngredientsRelController : Controller
     {
         public IDishIngredientRelRepository RelRepository { get; }
@@ -31,7 +30,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View("Details", RelRepository.GetDishIngredientRelById(id));
         }
 
-        // GET: DishIngredientsRelController/Create
         public ActionResult Create()
         {
             ViewBag.DishList = new SelectList(DishRepository.GetAllDishes(), "DishId", "DishName");
@@ -87,7 +85,5 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             RelRepository.DeleteDishIngredientRel(id);
             return RedirectToAction("Details", "Dish", routeValues);
         }
-
-
     }
 }

@@ -1,15 +1,10 @@
 ﻿using Resturant_RES_MVC_ITI_PRJ.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
-using Resturant_RES_MVC_ITI_PRJ.Models;
 using System.Security.Claims;
 using Resturant_RES_MVC_ITI_PRJ.Models.ViewModels;
-using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Resturant_RES_MVC_ITI_PRJ.Services;
 using Message = Resturant_RES_MVC_ITI_PRJ.Services.Message;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -34,7 +29,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             this.signInManager = signInManager;
             this.emailSender = emailSender;
             this.customerRepository = customerRepository;
-            //this.Traineerepo = traineerepo;
         }
 
         [HttpGet]
@@ -105,8 +99,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             return View(registerUserVM);
         }
 
-
-        //ConfirmEmail
         [HttpGet]
         public async Task<IActionResult> ConfirmEmail(string token, string email, string username)
         {
@@ -131,8 +123,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             return View();
         }
 
-
-        //Login
         [HttpGet]
         public IActionResult Login()
         {
@@ -180,7 +170,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             return RedirectToAction("Login");
         }
 
-        //external login
         [HttpGet]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null)
         {
@@ -218,9 +207,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                     LastName = info.Principal.FindFirstValue(ClaimTypes.Surname),
                     CustEmail = info.Principal.FindFirstValue(ClaimTypes.Email),
                 };
-
-
-
                 var createResult = await userManager.CreateAsync(user);
 
                 // Create a new claim to add to the user
@@ -228,8 +214,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 
                 // Use UserManager to add the claim to the user
                 var result2 = await userManager.AddClaimAsync(user, claim);
-
-
 
                 if (createResult.Succeeded && result2.Succeeded)
                 {
@@ -240,17 +224,14 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                     await emailSender.SendEmailAsync(message);
                     customerRepository.InsertCustomer(customer);
 
-
                     return RedirectToLocal(returnUrl);
                 }
-
                 return View("ExternalLogin", new ExternalLoginModel { Email = user.UserName });
             }
         }
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
-
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
@@ -269,8 +250,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return Challenge(properties, provider);
         }
-
-        //---------------------------------------------forget password
 
         [HttpGet]
         public IActionResult ForgotPassword()
@@ -345,6 +324,5 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             }
             return View("EmployeeProfile", UserData);
         }
-
     }
 }

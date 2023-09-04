@@ -18,7 +18,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Services
         public Message(IEnumerable<string> to, string subject, string content, IFormFileCollection attachments)
         {
             To = new List<MailboxAddress>();
-
             To.AddRange(to.Select(x => new MailboxAddress(x,x)));
             Subject = subject;
             Content = content;

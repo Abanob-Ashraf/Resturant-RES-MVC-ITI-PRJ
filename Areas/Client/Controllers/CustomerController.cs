@@ -12,7 +12,6 @@ using Resturant_RES_MVC_ITI_PRJ.Models.ViewModels;
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
     [Area("Client")]
-    //[Route("Customer")]
     public class CustomerController : Controller
     {
         public ICustomerRepository CustomerRepository { get; }
@@ -25,26 +24,22 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             UserManager = userManager;
         }
 
-        //[Route("GetAllCustomers")]
         public ActionResult Index()
         {
             return View("Index", CustomerRepository.GetAllCustomers());
         }
 
-        //[Route("GetCustomerById/{id:int}")]
         public ActionResult Details(int id)
         {
             return View("Details", CustomerRepository.GetCustomerById(id));
         }
 
-        //[Route("CreateCustomer")]
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        //[Route("CreateCustomer")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Customer customer)
         {
@@ -65,7 +60,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View();
         }
 
-        //[Route("EditCustomer")]
         public ActionResult Edit(int id)
         {
             if (User.IsInRole("Customer"))
@@ -91,7 +85,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
                 var oldPass = CustomerRepository.GetCustomerById(customer.CustID).CustPassword;
                 if (customer.CustPassword == null)
                 {
-
                     customer.CustPassword = oldPass;
                 }
                 CustomerRepository.UpdateCustomer(customer);
@@ -103,15 +96,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
                     user.LastName = customer.LastName;
                     user.PhoneNumber = customer.CustPhone;
 
-
                     if (customer.CustPassword != null)
                     {
                         var newPasswordHash = UserManager.PasswordHasher.HashPassword(user, customer.CustPassword);
                         user.PasswordHash = newPasswordHash;
-
                     }
-
-
                     var result = await UserManager.UpdateAsync(user);
                 }
                 var routeValues = new RouteValueDictionary(new { area = "" });
@@ -120,7 +109,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             }
             if (User.IsInRole("Customer"))
             {
-
                 return View("ClientEditCustomer");
             }
             return View();
@@ -134,7 +122,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             {
                 var result = await UserManager.DeleteAsync(user);
             }
-
             CustomerRepository.DeleteCustomer(id);
 
             return RedirectToAction(nameof(Index));

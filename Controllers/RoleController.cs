@@ -31,7 +31,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             if (ModelState.IsValid)
             {
                 //Mapping from roleViewModel to IdentityRole
-
                 IdentityRole roleDbModel = new IdentityRole();
                 roleDbModel.Name = roleViewModel.RoleName;
                 
@@ -46,14 +45,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                 {
                     foreach (var item in result.Errors)
                     {
-                        ModelState.AddModelError("", item.Description);  //Summary
+                        ModelState.AddModelError("", item.Description);
                     }
                 }
             }
             return View(roleViewModel);
         }
-
-      
-
     }
 }
