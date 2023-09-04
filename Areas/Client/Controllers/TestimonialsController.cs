@@ -72,7 +72,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View();
-
         }
 
         public ActionResult Delete(int id)

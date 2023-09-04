@@ -10,8 +10,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
     [Area("Client")]
     public class ReservationController : Controller
     {
-       
-
         public IReservationRepository ReservationRepository { get; }
         public ICustomerRepository CustomerRepository { get; }
         public IFranchiseRepository FranchiseRepository { get; }

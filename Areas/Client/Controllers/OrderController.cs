@@ -10,7 +10,6 @@ using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 {
     [Area("Client")]
-   
     public class OrderController : Controller
     {
         public IOrderRepository OrderRepository { get; }
@@ -33,7 +32,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             DishRepository = dishRepository;
         }
 
-        //[Route("/GetAllTables")]
         public ActionResult Index()
         {
             return View("Index", OrderRepository.GetAllOrders());
@@ -44,13 +42,11 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View(DishRepository.GetAllDishes());
         }
 
-        //[Route("GetOrderById/{id:int}")]
         public ActionResult Details(int id)
         {
             return View("Details", OrderRepository.GetOrderById(id));
         }
 
-        //[Route("CreateOrder")]
         public ActionResult Create()
         {
             ViewBag.OrderTypeList = new SelectList(OrderTypeRepository.GetAllOrderTypes(), "OrderTypeId", "OrderTypeName");
@@ -61,11 +57,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         }
 
         [HttpPost]
-        //[Route("CreateOrder")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Order order)
         {
-
             ViewBag.OrderTypeList = new SelectList(OrderTypeRepository.GetAllOrderTypes(), "OrderTypeId", "OrderTypeName");
             ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
             ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
@@ -78,10 +72,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View();
         }
 
-        //[Route("UpdateOrder")]
         public ActionResult Edit(int id)
         {
-
             ViewBag.OrderTypeList = new SelectList(OrderTypeRepository.GetAllOrderTypes(), "OrderTypeId", "OrderTypeName");
             ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
             ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
@@ -90,11 +82,9 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         }
 
         [HttpPost]
-        //[Route("UpdateOrder")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Order order)
         {
-
             ViewBag.OrderTypeList = new SelectList(OrderTypeRepository.GetAllOrderTypes(), "OrderTypeId", "OrderTypeName");
             ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
             ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
@@ -107,13 +97,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View();
         }
 
-        //[Route("DeletOrder")]
         public ActionResult Delete(int id)
         {
             OrderRepository.DeleteOrder(id);
             return RedirectToAction(nameof(Index));
         }
-
-       
     }
 }

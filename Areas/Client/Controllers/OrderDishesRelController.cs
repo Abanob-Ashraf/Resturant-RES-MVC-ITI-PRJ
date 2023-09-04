@@ -13,7 +13,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
     [Area("Client")]
     public class OrderDishesRelController : Controller
     {
-
         public IOrdersDishesRelRepository OrderDishesRelRepository { get; }
         public IOrderRepository OrderRepository { get; }
         public IDishRepository DishRepository { get; }
