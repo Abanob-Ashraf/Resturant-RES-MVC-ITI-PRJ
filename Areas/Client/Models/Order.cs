@@ -28,10 +28,6 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         [DisplayName("Payment Method")]
         public PaymentMethods PaymentMethod { get; set; }
 
-        //[ForeignKey("PaymentMethod")]
-        //public int PaymentMethodId { get; set; }
-        //public PaymentMethod? PaymentMethod { get; set; }
-
         [Required]
         [DisplayName("Is Paid")]
         public bool IsPaid { get; set; }

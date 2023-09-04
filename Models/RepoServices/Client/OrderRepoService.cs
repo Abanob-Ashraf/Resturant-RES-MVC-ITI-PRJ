@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
-using Resturant_RES_MVC_ITI_PRJ.Areas.Management.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
