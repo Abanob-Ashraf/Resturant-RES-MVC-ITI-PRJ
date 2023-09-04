@@ -5,66 +5,53 @@
 }
 
 <div id="kt_app_toolbar_container" class="app-container container p-3 d-flex flex-stack">
-    <!--begin::Page title-->
     <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-        <!--begin::Title-->
         <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Order Details</h1>
-        <!--end::Title-->
-        <!--begin::Breadcrumb-->
         <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
-            <!--begin::Item-->
             <li class="breadcrumb-item text-muted">
                 <a asp-action="Index" asp-controller="Home" asp-area="" class="text-muted text-hover-primary">Home</a>
             </li>
-            <!--end::Item-->
-            <!--begin::Item-->
             <li class="breadcrumb-item">
                 <span class="bullet bg-gray-400 w-5px h-2px"></span>
             </li>
-            <!--end::Item-->
-            <!--begin::Item-->
             <li class="breadcrumb-item text-muted">Order Details</li>
-            <!--end::Item-->
         </ul>
-        <!--end::Breadcrumb-->
     </div>
-    <!--end::Page title-->
-
 </div>
 
 
 
 <div id="kt_app_content" class="app-content container-fluid m-auto flex-column-fluid m-5 p-5">
-<div>
-    <table class="table table-info table-striped p-5" id="TableData">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.OrderState)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.OrderDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PaymentMethod)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsPaid)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.OrderType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Customer)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Franchise)
-                </th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="align-middle text-center">
+    <div>
+        <table class="table table-info table-striped p-5" id="TableData">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderState)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PaymentMethod)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsPaid)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Customer)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Franchise)
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="align-middle text-center">
                     <td>
                         @Html.DisplayFor(modelItem => Model.OrderState)
                     </td>
@@ -92,15 +79,16 @@
 
                     </td>
                 </tr>
-            
-        </tbody>
-    </table>
+
+            </tbody>
+        </table>
         <div>
             <a class="btn btn-warning" asp-action="Index" asp-area="Client">Back to List</a>
         </div>
+    </div>
 </div>
-</div>
-<!-- Modal -->
+
+<!-- Order Deletion Modal -->
 <div class="modal fade" id="OrderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -122,14 +110,13 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
 <script>
     $(document).ready(function () {
         $('#TableData').DataTable();
     });
 
     $(document).on("click", ".open-AddDeleteDialog", function () {
-        var myorderId = "Client/order/Delete/" + $(this).data('id');
+        var myorderId = "/Client/order/Delete/" + $(this).data('id');
         $("#OrderId").attr('href', myorderId);
     });
 </script>

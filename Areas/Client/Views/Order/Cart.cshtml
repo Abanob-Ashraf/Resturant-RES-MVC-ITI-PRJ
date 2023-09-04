@@ -1,23 +1,17 @@
 ﻿@using System.Security.Claims;
- @model IEnumerable<Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models.Dish>
+@model IEnumerable<Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models.Dish>
 @{
 	Layout = "_ClientLayout";
-
-
+	var curemail = User.FindFirst(ClaimTypes.Name)?.Value;
+	var customer = CustomerRepository.GetAllCustomers().SingleOrDefault(c => c.CustEmail == curemail);
+	var orderNumber =  "1000"+OrderRepository.GetAllOrders().Count + 1;
 }
 
 @inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client.IOrderRepository OrderRepository
 @inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client.ICustomerRepository CustomerRepository
 
-@{
-	var curemail = User.FindFirst(ClaimTypes.Name)?.Value;
-    var customer = CustomerRepository.GetAllCustomers().SingleOrDefault(c => c.CustEmail == curemail);
-}
-@{
-	var orderNumber =  "1000"+OrderRepository.GetAllOrders().Count + 1;
-}
-<link rel="stylesheet" href="~/css/Cart.css">
 
+<link rel="stylesheet" href="~/css/Cart.css">
 
 <div class="container-x d-flex align-items-center justify-content-evenly flex-lg-row flex-sm-column" >
     <table class="shopping-cart">
@@ -46,8 +40,7 @@
         <div class="center">
             <div class="wrapper">
 				<form  target="_blank" class="PayForm" asp-area="" asp-action="CreateCheckoutSession" asp-controller="Payment" method="get">
-
-					<input name="OrderDishes" type="hidden" value="" id="cartVM"  />
+				<input name="OrderDishes" type="hidden" value="" id="cartVM"  />
 					@if (customer.CustAddressCounty == null && customer.CustAddressCity == null && customer.CustAddressStreet == null)
                      {
                      <a class="checkout fs-6" asp-action="Edit" asp-controller="Customer" asp-area="Client" asp-route-id="@customer.CustID"> Add Adresses To Continue</a>
