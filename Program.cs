@@ -9,6 +9,7 @@ using Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Analysis;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Analysis;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Resturant_RES_MVC_ITI_PRJ.Models.RepoServices;
 
 namespace Resturant_RES_MVC_ITI_PRJ
 {
@@ -79,6 +80,9 @@ namespace Resturant_RES_MVC_ITI_PRJ
             // Analysis
             builder.Services.AddScoped<IOrderAnalysis, OrderAnalysis>();
             builder.Services.AddScoped<ICustomerAnalysis, CustomerAnalysis>();
+
+
+            builder.Services.AddScoped<IInitializeDefaultData, InitializeDefaultData>();
 
 
             //Payment stripe
