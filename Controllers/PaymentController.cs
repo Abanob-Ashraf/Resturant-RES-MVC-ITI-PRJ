@@ -120,6 +120,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                 o.IsPaid = true;
                 OrderRepository.UpdateOrder(OrderID, o);
             }
+            var message = new Message(new string[] { User.Identity.Name }, "Thank you for ordering from Zman Resturant", null, null);
+            await EmailSender.SendEmailAsync(message);
             return View("PaymentSuccess");
         }
 
