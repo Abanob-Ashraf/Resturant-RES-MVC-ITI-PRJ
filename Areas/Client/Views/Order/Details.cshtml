@@ -12,7 +12,7 @@
     var OrderDishes = OrderDishRepository.GetAllOrderDishesRels().Where(rel => rel.OrderId == Model.OrderId).ToList();
     var UnaddedDishes = DishRepository.GetAllDishes().Where(d => OrderDishes.Select(o => o.DishId).ToList().IndexOf(d.DishId) == -1).ToList();
     var DishesList = new SelectList(UnaddedDishes, "DishId", "DishName");
-    var TotalPrice = OrderDishes.Sum(od => od.Dish.DishPrice);
+    var TotalPrice = OrderDishes.Sum(od => od.Dish.DishPrice * od.Quantity);
 
 }
 <div id="kt_app_toolbar_container" class="app-container container p-3 d-flex flex-stack">
