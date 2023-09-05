@@ -31,8 +31,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
         [HttpPost]
         public ActionResult Index(IFormCollection collection)
         {
-            int DishID = int.Parse(collection["Dish"]);
-            ViewBag.DishesLst = new SelectList(CategoryRepository.GetAllDishCategories(), "DishCategoryId", "DishCategoryName");
+            int DishID = int.Parse(collection["DishCategoryId"]);
+            ViewBag.DishesLst = new SelectList(CategoryRepository.GetAllDishCategories(), "DishCategoryId", "DishCategoryName", DishID);
 
             return View(DishRepository.GetAllDishes().Where(d => d.DishCategoryId == DishID));
         }
