@@ -67,7 +67,7 @@
                         <div>
                             <span class="text-danger fw-bold">Most Orderd: </span>
                             <span>@mostOrderedDishName</span>
-                            <span class="text-into"> ( @MostOrderedDishID?.OrderCount  )</span>
+                            <span class="text-into"> (@MostOrderedDishID?.OrderCount)</span>
                         </div>
                     </p>
                 </div>
@@ -103,7 +103,7 @@
                                     {
                                         <tr>
                                             <td>1000-@ord.OrderId</td>
-                                            <td>@OrderDishRelRepository.GetAllOrderDishesRels().Where(dc=> dc.OrderId == ord.OrderId).Sum(rel => DishRepository.GetDishById(rel.DishId)?.DishPrice ?? 0)</td>
+                                            <td>@OrderDishRelRepository.GetAllOrderDishesRels().Where(dc=> dc.OrderId == ord.OrderId).Sum(rel => DishRepository.GetDishById(rel.DishId)?.DishPrice* rel.Quantity ?? 0)</td>
                                             <td class="text-danger"><a data-id="@ord.OrderId" class="openDialog btn btn-danger fs-6" data-bs-toggle="modal" data-bs-target="#OrderDetailsModal"><i class="fa-solid fa-circle-info "></i></a></td>
                                         </tr>
                                     }
