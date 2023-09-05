@@ -67,33 +67,10 @@
                         <ul class="nav">
                             <li class="scroll-to-section"><a asp-action="index" asp-controller="Home" asp-area="" class="active">Home</a></li>
                             <li class="scroll-to-section"><a href="#about">About</a></li>
-
-                            <!--
-                                <li class="submenu">
-                                    <a href="javascript:;">Drop Down</a>
-                                    <ul>
-                                        <li><a href="#">Drop Down Page 1</a></li>
-                                        <li><a href="#">Drop Down Page 2</a></li>
-                                        <li><a href="#">Drop Down Page 3</a></li>
-                                    </ul>
-                                </li>
-                            -->
-            
                             <li class="scroll-to-section"><a asp-action="index" asp-controller="Home" asp-area="" asp-fragment="menu">Menu</a></li>
                             <li class="scroll-to-section"><a asp-action="index" asp-controller="Home" asp-area="" asp-fragment="chefs">Chefs</a></li>
-                            <!--
-                            <li class="submenu">
-                                <a href="javascript:;">Features</a>
-                                <ul>
-                                    <li><a href="#">Features Page 1</a></li>
-                                    <li><a href="#">Features Page 2</a></li>
-                                    <li><a href="#">Features Page 3</a></li>
-                                    <li><a href="#">Features Page 4</a></li>
-                                </ul>
-                            </li>
-                                  -->
-                            <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
                             <li class="scroll-to-section"><a asp-action="index" asp-controller="Home" asp-area="" asp-fragment="reservation">Contact Us</a></li>
+
                             @if (!User.Identity.IsAuthenticated)
                             {
                                 <li class="">
@@ -116,7 +93,7 @@
                                 else if (User.IsInRole("Customer"))
                                 {
                                     var curemail = User.FindFirst(ClaimTypes.Name)?.Value;
-                                    var customerId = CustomerRepository.GetAllCustomers().SingleOrDefault(c => c.CustEmail == curemail).CustID  ;
+                                    var customerId = CustomerRepository.GetAllCustomers().SingleOrDefault(c => c.CustEmail == curemail).CustID;
                                     <li class="">
                                         <a asp-action="Profile" asp-route-id="customerId" asp-controller="Account" asp-area="" class=""><i class="fa-solid fa-user"></i></a>
                                     </li>
@@ -124,8 +101,6 @@
                                         <a class="" asp-area="Client" asp-controller="Order" asp-action="Cart"> <i class="fa-solid fa-cart-shopping"></i></a>
                                     </li>
                                 }
-
-                       
                                 <li class="">
                                     <a class="" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
                                 </li>
@@ -173,19 +148,16 @@
     <!-- Bootstrap -->
     <script src="~/js/popper.js"></script>
 
-
-    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-
     <!-- Plugins -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/jquery.counterup.min.js"></script>
+    <script src="~/js/lightbox.js"></script>
     <script src="~/js/owl-carousel.js"></script>
-    <script src="~/js/accordions.js"></script>
+   <script src="~/js/accordions.js"></script>
     <script src="~/js/datepicker.js"></script>
     <script src="~/js/scrollreveal.min.js"></script>
-    <script src="~/js/waypoints.min.js"></script>
-    <script src="~/js/jquery.counterup.min.js"></script>
     <script src="~/js/imgfix.min.js"></script>
     <script src="~/js/slick.js"></script>
-    <script src="~/js/lightbox.js"></script>
     <script src="~/js/isotope.js"></script>
 
     <!-- Global Init -->
