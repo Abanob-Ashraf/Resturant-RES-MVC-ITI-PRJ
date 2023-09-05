@@ -122,7 +122,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                 o.IsPaid = true;
                 OrderRepository.UpdateOrder(OrderID, o);
             }
-            var message = new Message(new string[] { User.Identity.Name }, "ZMAN Order Confiramtion Mail", $"Thank you for ordering from Zman Resturant Your Order Cost: {TotalPrice}$", null);
+            var message = new Message(new string[] { User.Identity.Name }, "ZMAN Order Confiramtion Mail", $"<h3>Thank you for ordering from Zman Resturant Your Order Cost: {TotalPrice}$ </h3>", null);
 
             await EmailSender.SendEmailAsync(message);
             return View("PaymentSuccess");
