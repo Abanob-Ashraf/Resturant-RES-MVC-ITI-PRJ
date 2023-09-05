@@ -115,12 +115,15 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
         public async Task<IActionResult> success(int OrderID)
         {
             var o = OrderRepository.GetOrderById(OrderID);
+            var TotalPrice = OrdersDishesRelRepository.GetAllOrderDishesRels()
+                .Where(odr => odr.OrderId == OrderID).Sum(o => o.Dish.DishPrice * o.Quantity);
             if (o.PaymentMethod == Order.PaymentMethods.Visa)
             {
                 o.IsPaid = true;
                 OrderRepository.UpdateOrder(OrderID, o);
             }
-            var message = new Message(new string[] { User.Identity.Name }, "Thank you for ordering from Zman Resturant", null, null);
+            var message = new Message(new string[] { User.Identity.Name }, "ZMAN Order Confiramtion Mail", $"Thank you for ordering from Zman Resturant Your Order Cost: {TotalPrice}$", null);
+
             await EmailSender.SendEmailAsync(message);
             return View("PaymentSuccess");
         }

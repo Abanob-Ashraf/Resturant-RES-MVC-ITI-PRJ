@@ -83,7 +83,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
                     await userManager.AddToRoleAsync(user, "Customer");
                     var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
                     var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email, username = user.UserName }, Request.Scheme);
-                    var message = new Message(new string[] { user.Email }, "Confirmation email link", confirmationLink, null);
+                    var message = new Message(new string[] { user.Email }, "Confirmation email link", $"<a style='background-color:  #FFBC32;\r\n  border-color: #FFBC32;\r\nborder-radius: 3px;\r\nborder-style: solid;\r\ntext-decoration: none; \r\ntext-decoration-line: none;\r\n display: inline-block;\r\n  font-weight: 400;\r\n  line-height: 1.5;\r\n  color: #212529;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  vertical-align: middle;\r\n  cursor: pointer;\r\n  user-select: none;\r\n  padding: 10px;\r\n  font-size: 16px;\r\n  border-radius: 0.25rem;'  href='{confirmationLink}'>Click Here</a> ", null);
                     await emailSender.SendEmailAsync(message);
                     customerRepository.InsertCustomer(customer);
                     return RedirectToAction(nameof(SuccessRegistration));
@@ -269,8 +269,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
 
             var callback = Url.Action(nameof(ResetPassword), "Account", new { token, email = user.Email }, Request.Scheme);
-
-            var message = new Message(new string[] { user.Email }, "Reset your password at ZMAN Restaurants", callback, null);
+            var content = $"<a style='background-color:  #FFBC32;\r\n  border-color: #FFBC32;\r\nborder-radius: 3px;\r\nborder-style: solid;\r\ntext-decoration: none; \r\ntext-decoration-line: none;\r\n display: inline-block;\r\n  font-weight: 400;\r\n  line-height: 1.5;\r\n  color: #212529;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  vertical-align: middle;\r\n  cursor: pointer;\r\n  user-select: none;\r\n  padding: 10px;\r\n  font-size: 16px;\r\n  border-radius: 0.25rem;'  href='{callback}'>Click Here</a> ";
+            var message = new Message(new string[] { user.Email }, "Reset your password at ZMAN Restaurants", content, null);
             await emailSender.SendEmailAsync(message);
             return RedirectToAction(nameof(ForgotPasswordConfirmation));
         }
