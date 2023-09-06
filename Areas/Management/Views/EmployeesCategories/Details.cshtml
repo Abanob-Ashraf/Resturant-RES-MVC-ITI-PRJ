@@ -5,32 +5,20 @@
 }
 
 <div id="kt_app_toolbar_container" class="app-container container p-3 d-flex flex-stack">
-    <!--begin::Page title-->
     <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-        <!--begin::Title-->
         <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0"> Employee Category Details </h1>
-        <!--end::Title-->
-        <!--begin::Breadcrumb-->
         <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
-            <!--begin::Item-->
             <li class="breadcrumb-item text-muted">
                 <a asp-action="Index" asp-controller="Home" asp-area="" class="text-muted text-hover-primary">Home</a>
             </li>
-            <!--end::Item-->
-            <!--begin::Item-->
             <li class="breadcrumb-item">
                 <span class="bullet bg-gray-400 w-5px h-2px"></span>
             </li>
-            <!--end::Item-->
-            <!--begin::Item-->
             <li class="breadcrumb-item text-muted">Create Employee Category Details </li>
-            <!--end::Item-->
         </ul>
-        <!--end::Breadcrumb-->
     </div>
-    <!--end::Page title-->
-
 </div>
+
 <div id="kt_app_content" class="app-content container m-auto w-75 m-5 p-5">
     <table class="table table-info table-striped" id="TableData">
         <thead>
@@ -42,7 +30,6 @@
             </tr>
         </thead>
         <tbody>
-
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => Model.CategoryName)
@@ -52,7 +39,6 @@
                     <a data-bs-target="#EmpCateModal" data-bs-toggle="modal" data-id="@Model.EmployeeCategoryId" class="btn btn-danger open-AddDeleteDialog">Delete <i class="fas fa-trash-alt"></i></a>
                 </td>
             </tr>
-            
         </tbody>
     </table>
     <div>
@@ -61,7 +47,7 @@
 </div>
 
 
-<!-- Modal -->
+<!--Employee Category Deletion Modal -->
 <div class="modal fade" id="EmpCateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
