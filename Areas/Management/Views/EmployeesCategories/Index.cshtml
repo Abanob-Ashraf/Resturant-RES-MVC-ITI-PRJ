@@ -39,16 +39,16 @@
     <table class="table table-info table-striped" id="TableData">
         <thead>
             <tr class="align-middle text-center">
-                <th>
+                <th class="text-center">
                     @Html.DisplayNameFor(model => model.CategoryName)
                 </th>
-                <th></th>
+                <th class="text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr class="align-middle text-center">
                     <td>
                         @Html.DisplayFor(modelItem => item.CategoryName)
                     </td>
