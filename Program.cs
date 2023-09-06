@@ -10,6 +10,7 @@ using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Analysis;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Resturant_RES_MVC_ITI_PRJ.Models.RepoServices;
+using Stripe;
 
 namespace Resturant_RES_MVC_ITI_PRJ
 {
@@ -32,6 +33,13 @@ namespace Resturant_RES_MVC_ITI_PRJ
                  opt.ClientSecret = googleAuth["ClientSecret"];
                  opt.SignInScheme = IdentityConstants.ExternalScheme;
              });
+
+            var configuration = builder.Configuration;
+            builder.Services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = configuration["Authentication:Facebook:AppSecret"];
+            });
 
             // Identity
             builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>

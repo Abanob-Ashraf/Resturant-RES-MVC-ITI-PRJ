@@ -8,6 +8,8 @@ using Message = Resturant_RES_MVC_ITI_PRJ.Services.Message;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client;
 using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 {
@@ -170,6 +172,22 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             return RedirectToAction("Login");
         }
 
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
+
+        public IActionResult ExternalLogin(string provider, string returnUrl = null)
+        {
+            var act = provider == "google" ? nameof(ExternalLoginCallback) : nameof(FacebookCallback);
+            var redirectUrl = Url.Action(act, "Account", new { returnUrl });
+            var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            return Challenge(properties, provider);
+        }
+
+        //GoogleExternal
+
         [HttpGet]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null)
         {
@@ -242,14 +260,73 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             }
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult ExternalLogin(string provider, string returnUrl = null)
+
+        //FacebookExternal
+
+        [HttpGet]
+
+        public async Task<IActionResult> FacebookCallback(string returnUrl = null)
         {
-            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { returnUrl });
-            var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
-            return Challenge(properties, provider);
+           
+
+            var info = await signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                return RedirectToAction("Login");
+            }
+            var signInResult = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+            if (signInResult.Succeeded)
+            {
+                return RedirectToLocal(returnUrl);
+            }
+            if (signInResult.IsLockedOut)
+            {
+                return RedirectToAction("login");
+            }
+            else
+            {
+                ViewData["ReturnUrl"] = returnUrl;
+                ViewData["Provider"] = info.LoginProvider;
+
+                var user = new AppUser
+                {
+            
+                Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                    UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
+                    FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
+                    LastName = info.Principal.FindFirstValue(ClaimTypes.Surname),
+                    EmailConfirmed = true
+                };
+
+                Customer customer = new Customer()
+                {
+                    FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
+                    LastName = info.Principal.FindFirstValue(ClaimTypes.Surname),
+                    CustEmail = info.Principal.FindFirstValue(ClaimTypes.Email),
+                };
+                var createResult = await userManager.CreateAsync(user);
+
+                // Create a new claim to add to the user
+                var claim = new Claim(ClaimTypes.Name, user.Email); // Replace with your own claim type and value
+
+                // Use UserManager to add the claim to the user
+                var result2 = await userManager.AddClaimAsync(user, claim);
+
+                if (createResult.Succeeded && result2.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(user, "Customer");
+                    await userManager.AddLoginAsync(user, info);
+                    await signInManager.SignInAsync(user, isPersistent: false);
+                    var message = new Message(new string[] { user.Email }, "Welcome to ZMAN Resturant", null, null);
+                    await emailSender.SendEmailAsync(message);
+                    customerRepository.InsertCustomer(customer);
+
+                    return RedirectToLocal(returnUrl);
+                }
+                return View("ExternalloginFacebook");
+            }
         }
+
 
         [HttpGet]
         public IActionResult ForgotPassword()

@@ -17,15 +17,12 @@
             {
                 <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
                     <div class="w-100">
-
-                            @foreach (var provider in providers)
-                            {
-                                <label for="provider" class="bg-transparent rememberMe m-auto">
-                                    <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" alt="Google Login">
-                                </label>
-                                <input id="provider" value="@provider.Name" name="provider" type="submit" class="d-none">
-                            }
-
+                        <br />
+                        @foreach (var provider in providers)
+                        {
+                            <input id="provider_@provider.Name" title="Login Using @provider.Name" value="@provider.Name" name="provider" type="submit" class="btn btn-primary">
+                        <br/><br />
+                        }
                     </div>
                 </form>
             }
