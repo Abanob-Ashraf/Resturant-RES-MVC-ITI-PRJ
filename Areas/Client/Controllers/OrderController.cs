@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MailKit.Search;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -34,8 +35,19 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.OrdersLst = new SelectList(OrderTypeRepository.GetAllOrderTypes(), "OrderTypeId", "OrderTypeName");
             return View("Index", OrderRepository.GetAllOrders());
         }
+
+        [HttpPost]
+        public ActionResult Index(IFormCollection collection)
+        {
+            int OrderID = int.Parse(collection["OrderTypeId"]);
+            ViewBag.OrdersLst = new SelectList(OrderTypeRepository.GetAllOrderTypes(), "OrderTypeId", "OrderTypeName", OrderID);
+
+            return View(OrderRepository.GetAllOrders().Where(d => d.OrderTypeId == OrderID));
+        }
+
 
         public ActionResult Cart()
         {
