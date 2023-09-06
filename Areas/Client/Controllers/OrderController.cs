@@ -59,9 +59,14 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Controllers
             return View("Details", OrderRepository.GetOrderById(id));
         }
 
-        public ActionResult Create()
+        public ActionResult Create(int TypeId)
         {
             ViewBag.OrderTypeList = new SelectList(OrderTypeRepository.GetAllOrderTypes(), "OrderTypeId", "OrderTypeName");
+
+            if (TypeId != null)
+            {
+                ViewBag.OrderTypeList = new SelectList(OrderTypeRepository.GetAllOrderTypes(), "OrderTypeId", "OrderTypeName", TypeId);
+            }
             ViewBag.CustomerList = new SelectList(CustomerRepository.GetAllCustomers(), "CustID", "FirstName");
             ViewBag.FranchiseList = new SelectList(FranchiseRepository.GetAllFranchises(), "FranchiseId", "City");
 

@@ -1,7 +1,9 @@
 ﻿@model Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models.OrderType
-
+@using Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
 @{
     ViewData["Title"] = "Details";
+    @inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client.IOrderRepository OrdersRepo;
+    List<Order> ordersOfCate = OrdersRepo.GetAllOrders().Where(o=>o.OrderTypeId == Model.OrderTypeId).ToList();
 }
 
 <div id="kt_app_toolbar_container" class="app-container container p-3 d-flex flex-stack">
@@ -18,8 +20,6 @@
         </ul>
     </div>
 </div>
-
-
 
 <div id="kt_app_content" class="app-content container-fluid m-auto flex-column-fluid m-5 p-5">
     <table class="table table-info table-striped p-5" id="TableData">
@@ -48,7 +48,72 @@
     <div>
         <a class="btn btn-warning" asp-action="Index" asp-area="Client">Back to List</a>
     </div>
+
+    <hr/>
+
+    <div>
+        <p class="fw-bold">Orders Form That Category:</p>
+        <p>
+            <a asp-action="Create" asp-route-TypeId="@Model.OrderTypeId" asp-controller="Order" class="btn btn-success">Create New +</a>
+        </p>
+        <table class="table table-info table-striped p-5" id="TableData01">
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        Order Date
+                    </th>
+                    <th  class="text-center">
+                        Order State
+                    </th>
+                    <th  class="text-center">
+                        Payment Method
+                    </th>
+                    <th  class="text-center">
+                        IsPaid
+                    </th>
+                    <th  class="text-center">
+                        Customer Name
+                    </th>
+                    <th  class="text-center">
+                        Franchise City
+                    </th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ordersOfCate)
+                {
+                    <tr class="align-middle text-center">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderState)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PaymentMethod)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsPaid)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customer.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Franchise.City)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-controller="Order" asp-route-id="@item.OrderId" class="btn btn-warning">Edit <i class="fa-solid fa-pen-to-square"></i></a> |
+                            <a asp-action="Details" asp-controller="Order" asp-route-id="@item.OrderId" class="btn btn-info">Details <i class="fa-solid fa-circle-info"></i></a> |
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
+
+
 
 <!-- Deletion order type Modal -->
 <div class="modal fade" id="OrderTypeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -76,6 +141,9 @@
 <script>
     $(document).ready(function () {
         $('#TableData').DataTable();
+    });
+    $(document).ready(function () {
+        $('#TableData01').DataTable();
     });
 
     $(document).on("click", ".open-AddDeleteDialog", function () {
