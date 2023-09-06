@@ -3,6 +3,9 @@
     background: #ddd;
 }
 
+
+
+
 .exlogin {
     bottom: 100px;
 }
@@ -363,4 +366,22 @@ footer {
     h2 {
         font-size: 50px !important;
     }
+}
+
+#provider_google {
+    background-image: url("/assets/Images/GoogleLogo.png") !important;
+    width: 50px !important;
+    height: 50px !important;
+    background-size: cover !important;
+    padding: 15px;
+    border: solid 5px white;
+}
+
+#provider_Facebook {
+    background-image: url("/assets/Images/FacebookLogo.png") !important;
+    width: 50px !important;
+    height: 50px !important;
+    background-size: cover !important;
+    padding: 15px;
+    border: solid 5px white;
 }

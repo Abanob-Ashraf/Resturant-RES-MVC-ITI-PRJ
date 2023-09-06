@@ -16,12 +16,15 @@
             else
             {
                 <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-                    <div class="w-100">
+                    <div class="w-100 d-flex align-items-center justify-content-evenly">
+
                         <br />
                         @foreach (var provider in providers)
                         {
-                            <input id="provider_@provider.Name" title="Login Using @provider.Name" value="@provider.Name" name="provider" type="submit" class="btn btn-primary">
-                        <br/><br />
+                            <button id="provider_@provider.Name" title="Login Using @provider.Name" name="provider" type="submit" class="rounded-circle" value="@provider.Name"></button>
+                            <br />
+
+                            <br />
                         }
                     </div>
                 </form>
