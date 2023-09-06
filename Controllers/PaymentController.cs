@@ -54,7 +54,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             Order o = new Order()
             {
                 OrderDate = DateTime.Today,
-                OrderState = "Preparing",
+                OrderState = (Order.OrderStates)1,
 
                 PaymentMethod = (Order.PaymentMethods)cartVM.PaymentMethodID,
                 IsPaid = false,
