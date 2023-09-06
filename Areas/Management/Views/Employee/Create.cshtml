@@ -5,118 +5,96 @@
 }
 
 <div id="kt_app_toolbar_container" class="app-container container p-3 d-flex flex-stack">
-    <!--begin::Page title-->
     <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-        <!--begin::Title-->
         <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Create Employee</h1>
-        <!--end::Title-->
-        <!--begin::Breadcrumb-->
         <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
-            <!--begin::Item-->
             <li class="breadcrumb-item text-muted">
                 <a asp-action="Index" asp-controller="Home" asp-area="" class="text-muted text-hover-primary">Home</a>
             </li>
-            <!--end::Item-->
-            <!--begin::Item-->
             <li class="breadcrumb-item">
                 <span class="bullet bg-gray-400 w-5px h-2px"></span>
             </li>
-            <!--end::Item-->
-            <!--begin::Item-->
             <li class="breadcrumb-item text-muted">Create Employee</li>
-            <!--end::Item-->
         </ul>
-        <!--end::Breadcrumb-->
     </div>
-    <!--end::Page title-->
-
 </div>
 
 
 <div id="kt_app_content" class="app-content container m-auto w-75 m-5 p-5">
-
     <div class="">
-        <div class="">
-            <form asp-action="Create" class="w-100">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="EmpFirstName" class="control-label"></label>
-                    <input asp-for="EmpFirstName" class="form-control" />
-                    <span asp-validation-for="EmpFirstName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="EmpLastName" class="control-label"></label>
-                    <input asp-for="EmpLastName" class="form-control" />
-                    <span asp-validation-for="EmpLastName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="EmpEmail" class="control-label"></label>
-                    <input asp-for="EmpEmail" class="form-control" />
-                    <span asp-validation-for="EmpEmail" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="EmpPassword" class="control-label"></label>
-                    <input asp-for="EmpPassword" class="form-control" />
-                    <span asp-validation-for="EmpPassword" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="EmpPhone" class="control-label"></label>
-                    <input asp-for="EmpPhone" class="form-control" />
-                    <span asp-validation-for="EmpPhone" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="EmpNationalId" class="control-label"></label>
-                    <input asp-for="EmpNationalId" class="form-control" />
-                    <span asp-validation-for="EmpNationalId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="City" class="control-label"></label>
-                    <input asp-for="City" class="form-control" />
-                    <span asp-validation-for="City" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Country" class="control-label"></label>
-                    <input asp-for="Country" class="form-control" />
-                    <span asp-validation-for="Country" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="EmpHiringDate" class="control-label"></label>
-                    <input asp-for="EmpHiringDate" class="form-control" />
-                    <span asp-validation-for="EmpHiringDate" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="EmpSalary" class="control-label"></label>
-                    <input asp-for="EmpSalary" class="form-control" />
-                    <span asp-validation-for="EmpSalary" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="EmpCategoryId" class="control-label"></label>
-                    <select asp-for="EmpCategoryId" class="form-control" asp-items="ViewBag.CategoryList"></select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="FranchiseId" class="control-label"></label>
-                    <select asp-for="FranchiseId" class="form-control" asp-items="ViewBag.FranchiseList"></select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="RoleName" class="control-label"></label>
-                    <select asp-for="RoleName" class="form-control" asp-items="ViewBag.Rolelist"></select>
-                </div>
-                <div class="form-group my-5">
-                 
-                    <input type="submit" value="Create" class="btn btn-primary" /> |
-                    <a class="btn btn-warning" asp-action="Index" asp-area="Management">Back to List</a>
-                </div>
-            </form>
-        </div>
+        <form asp-action="Create" class="w-100">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EmpFirstName" class="control-label"></label>
+                <input asp-for="EmpFirstName" class="form-control" />
+                <span asp-validation-for="EmpFirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmpLastName" class="control-label"></label>
+                <input asp-for="EmpLastName" class="form-control" />
+                <span asp-validation-for="EmpLastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmpEmail" class="control-label"></label>
+                <input asp-for="EmpEmail" class="form-control" />
+                <span asp-validation-for="EmpEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmpPassword" class="control-label"></label>
+                <input asp-for="EmpPassword" class="form-control" />
+                <span asp-validation-for="EmpPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmpPhone" class="control-label"></label>
+                <input asp-for="EmpPhone" class="form-control" />
+                <span asp-validation-for="EmpPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmpNationalId" class="control-label"></label>
+                <input asp-for="EmpNationalId" class="form-control" />
+                <span asp-validation-for="EmpNationalId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Country" class="control-label"></label>
+                <input asp-for="Country" class="form-control" />
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmpHiringDate" class="control-label"></label>
+                <input asp-for="EmpHiringDate" class="form-control" />
+                <span asp-validation-for="EmpHiringDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmpSalary" class="control-label"></label>
+                <input asp-for="EmpSalary" class="form-control" />
+                <span asp-validation-for="EmpSalary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmpCategoryId" class="control-label"></label>
+                <select asp-for="EmpCategoryId" class="form-control" asp-items="ViewBag.CategoryList"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="FranchiseId" class="control-label"></label>
+                <select asp-for="FranchiseId" class="form-control" asp-items="ViewBag.FranchiseList"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoleName" class="control-label"></label>
+                <select asp-for="RoleName" class="form-control" asp-items="ViewBag.Rolelist"></select>
+            </div>
+            <div class="form-group my-5">
+                <input type="submit" value="Create" class="btn btn-primary" /> |
+                <a class="btn btn-warning" asp-action="Index" asp-area="Management">Back to List</a>
+            </div>
+        </form>
     </div>
-
 </div>
 
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
- <script>
+<script>
     let select = document.getElementById("RoleName")
 
     for (var i = 0; i < select.options.length; i++) {
@@ -124,4 +102,10 @@
             select.options[i].style.display = "none"
         }
     }
- </script>
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
