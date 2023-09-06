@@ -34,8 +34,19 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Management.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.EmployeesLst = new SelectList(EmployeesCategoriesRepository.GetAllEmployeesCategories(), "EmployeeCategoryId", "CategoryName");
             return View("Index", EmployeeRepository.GetAllEmployees());
         }
+
+        [HttpPost]
+        public ActionResult Index(IFormCollection collection)
+        {
+            int EmpCateID = int.Parse(collection["EmpCategoryId"]);
+            ViewBag.EmployeesLst = new SelectList(EmployeesCategoriesRepository.GetAllEmployeesCategories(), "EmployeeCategoryId", "CategoryName", EmpCateID);
+
+            return View(EmployeeRepository.GetAllEmployees().Where(e => e.EmpCategoryId == EmpCateID));
+        }
+
 
         public ActionResult Details(int id)
         {

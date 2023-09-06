@@ -1,7 +1,10 @@
 ﻿@model Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models.DishCategory
+@inject Resturant_RES_MVC_ITI_PRJ.Models.Repositories.Client.IDishRepository DishesRepo;
 
 @{
     ViewData["Title"] = "Details";
+    var dishesOfCate = DishesRepo.GetAllDishes().Where(d => d.DishCategoryId == Model.DishCategoryId);
+
 }
 
 <div id="kt_app_toolbar_container" class="app-container container p-3 d-flex flex-stack">
@@ -45,6 +48,51 @@
     <div>
         <a class="btn btn-warning" asp-action="Index" asp-area="Client">Back to List</a>
     </div>
+
+    <hr />
+    <div>
+        <table class="table table-danger table-striped" id="TableData2">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        Dish Name
+                    </th>
+                    <th scope="col">
+                        Dish Price
+                    </th>
+                    <th scope="col">
+                        Dish Image
+                    </th>
+
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in dishesOfCate)
+                {
+                    <tr class="align-middle text-center">
+                        <td scope="row">
+                            @Html.DisplayFor(modelItem => item.DishName)
+                        </td>
+                        <td scope="row">
+                            @Html.DisplayFor(modelItem => item.DishPrice)
+                        </td>
+                        @{
+                            var DishImageName = @item.DishImageName + ".png";
+                        }
+                        <td>
+                            <i data-bs-toggle="popover" data-bs-placement="right" data-bs-content="<img style='width:50px !important;' src='\assets\images\Sandwitches\@DishImageName' alt='Tooltip Image'>" data-bs-trigger="hover" data-bs-html="true" class="fas fa-image"></i>
+                        </td>
+
+                        <td scope="row">
+                            <a asp-action="Edit" asp-controller="Dish" asp-route-id="@item.DishId" class="btn btn-warning">Edit <i class="fa-solid fa-pen-to-square"></i> </a> |
+                            <a asp-action="Details" asp-controller="Dish" asp-route-id="@item.DishId" class="btn btn-info">Details <i class="fa-solid fa-circle-info"></i></a> |
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
 
@@ -74,6 +122,8 @@
 <script>
     $(document).ready(function () {
         $('#TableData').DataTable();
+    });    $(document).ready(function () {
+        $('#TableData2').DataTable();
     });
 
     $(document).on("click", ".open-AddDeleteDialog", function () {

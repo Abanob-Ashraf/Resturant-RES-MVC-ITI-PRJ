@@ -16,34 +16,35 @@
 </style>
 
 <div id="kt_app_toolbar_container" class="app-container container p-3 d-flex flex-stack">
-    <!--begin::Page title-->
     <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-        <!--begin::Title-->
         <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Employees</h1>
-        <!--end::Title-->
-        <!--begin::Breadcrumb-->
         <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
-            <!--begin::Item-->
             <li class="breadcrumb-item text-muted">
                 <a asp-action="Index" asp-controller="Home" asp-area="" class="text-muted text-hover-primary">Home</a>
             </li>
-            <!--end::Item-->
-            <!--begin::Item-->
             <li class="breadcrumb-item">
                 <span class="bullet bg-gray-400 w-5px h-2px"></span>
             </li>
-            <!--end::Item-->
-            <!--begin::Item-->
             <li class="breadcrumb-item text-muted">Employees</li>
-            <!--end::Item-->
         </ul>
-        <!--end::Breadcrumb-->
     </div>
-    <!--end::Page title-->
-
 </div>
-<div id="kt_app_content" class="app-content container-fluid m-auto flex-column-fluid m-5 p-5">
 
+
+<div class="d-flex align-items-center justify-content-center my-5 ">
+    @using (Html.BeginForm("Index", "Employee", FormMethod.Post, new { @class = "d-flex align-items-center justify-content-around w-50 " }))
+    {
+        <label for="Dish" class="control-label fw-bold w-25">Filter By Category: </label>
+        @Html.DropDownList("EmpCategoryId", (SelectList) ViewBag.EmployeesLst,null,new {@class = "me-3 form-select"})
+        <a asp-action="Create" asp-controller="EmployeesCategories"><i class="fs-2 text-success fa fa-circle-plus"></i></a>
+
+        <div class="vr mx-5"></div>
+        <input type="submit" value="Filter" class="btn btn-info" />
+    }
+    <a asp-controller="Dish" asp-action="index" asp-area="Client" class="btn btn-secondary mx-2">Reset</a>
+</div>
+
+<div id="kt_app_content" class="app-content container-fluid m-auto flex-column-fluid m-5 p-5">
     <p>
         <a asp-action="Create" class="btn btn-success">Create New +</a>
     </p>
@@ -135,7 +136,7 @@
     </table>
 </div>
 
-<!-- Modal -->
+<!--Employee Deletion Modal -->
 <div class="modal fade" id="EmpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

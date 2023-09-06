@@ -32,7 +32,18 @@
     </div>
 </div>
 
+<div class="d-flex align-items-center justify-content-center my-5 ">
+    @using (Html.BeginForm("Index", "Order", FormMethod.Post, new { @class = "d-flex align-items-center justify-content-around w-50 " }))
+    {
+        <label for="Dish" class="control-label fw-bold w-25">Filter By Type: </label>
+        @Html.DropDownList("OrderTypeId", (SelectList) ViewBag.OrdersLst,null,new {@class = "me-3 form-select"})
+        <a asp-action="Create" asp-controller="OrderType"><i class="fs-2 text-success fa fa-circle-plus"></i></a>
 
+        <div class="vr mx-5"></div>
+        <input type="submit" value="Filter" class="btn btn-info" />
+    }
+    <a asp-controller="Dish" asp-action="index" asp-area="Client" class="btn btn-secondary mx-2">Reset</a>
+</div>
 
 <div id="kt_app_content" class="app-content container-fluid m-auto flex-column-fluid m-5 p-5">
     <p>

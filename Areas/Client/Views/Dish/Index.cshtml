@@ -33,7 +33,7 @@
 <div class="d-flex align-items-center justify-content-center my-5 ">
     @using (Html.BeginForm("index", "Dish", FormMethod.Post, new { @class = "d-flex align-items-center justify-content-around w-50 " }))
     {
-        <label for="Dish" class="control-label fw-bold w-25">Filter By Track: </label>
+        <label for="Dish" class="control-label fw-bold w-25">Filter By Category: </label>
         @Html.DropDownList("DishCategoryId", (SelectList) ViewBag.DishesLst,null,new {@class = "me-3 form-select"})
         <a asp-action="Create" asp-controller="DishCategory"><i class="fs-2 text-success fa fa-circle-plus"></i></a>
 
