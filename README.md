@@ -9,6 +9,9 @@ This simple MVC Core web app allows users to order meals online. The user can al
 Admin User Name = zmanrest@gmail.com
 Admin Password = Admin$123
 
+## Working Tools
+- [Trello](https://trello.com/b/f43IXbrs/mvc-project)
+- [Figma](https://www.figma.com/file/LSOk5cPNJiQ4A5Bha7u86z/Pixel-True---Food-Delivery-UI-Kit?type=design&node-id=401%3A934&mode=design&t=oxIffowBXvMLl6B7-1)
 ## How to build and start the application
 
 - Make sure from the configuration in the **AppSettings.json** file that meets the application features (**Google** for External Login, **Stripe** for online payment & **Email** Configuration Service)
