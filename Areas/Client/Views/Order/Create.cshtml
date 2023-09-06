@@ -26,7 +26,7 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="OrderState" class="control-label"></label>
-                    <input asp-for="OrderState" class="form-control" />
+                    <select asp-for="OrderState" asp-items="@Html.GetEnumSelectList<OrderStates>()" class="form-control"></select>
                     <span asp-validation-for="OrderState" class="text-danger"></span>
                 </div>
                 <div class="form-group">

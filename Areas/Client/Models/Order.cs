@@ -12,10 +12,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         [Key]
         public int OrderId { get; set; }
 
-        //[Required(ErrorMessage = "You Must Enter Order")]
-        [StringLength(50)]
-        [DisplayName("State")]
-        public string? OrderState { get; set; }
+        [Required]
+        [EnumDataType(typeof(OrderStates))]
+        [DisplayName("Order State")]
+        public OrderStates OrderState { get; set; }
 
         [Required, DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
@@ -53,6 +53,13 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         {
             Cash = 1,
             Visa = 2
+        }
+        
+        public enum OrderStates
+        {
+            Prepering = 1,
+            Moved = 2,
+            Delevered = 3
         }
     }
 }
