@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Resturant_RES_MVC_ITI_PRJ.Models;
 using Resturant_RES_MVC_ITI_PRJ.Models.Repositories;
@@ -9,10 +10,12 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
     public class HomeController : Controller
     {
         public IInitializeDefaultData InitializeDefaultData { get; }
+        public UserManager<AppUser> UserManager { get; }
 
-        public HomeController(IInitializeDefaultData initializeDefaultData)
+        public HomeController(IInitializeDefaultData initializeDefaultData, UserManager<AppUser> userManager)
         {
             InitializeDefaultData = initializeDefaultData;
+            UserManager = userManager;
         }
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> AdminIndex()
@@ -27,6 +30,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
+            if (UserManager.Users.Any())
+            {
+                return View();
+            }
             await InitializeDefaultData.Initialize_Data();
 
             return View();

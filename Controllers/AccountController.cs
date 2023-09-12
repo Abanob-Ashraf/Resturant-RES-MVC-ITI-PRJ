@@ -267,14 +267,31 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 
         public async Task<IActionResult> FacebookCallback(string returnUrl = null)
         {
-           
 
+            Microsoft.AspNetCore.Identity.SignInResult signInResult;
             var info = await signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
                 return RedirectToAction("Login");
             }
-            var signInResult = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+            if (info.Principal.FindFirstValue(ClaimTypes.Email) == null)
+            {
+                return View("ExternalloginFacebook");
+            }
+            var userEmail = info.Principal.FindFirstValue(ClaimTypes.Email);
+
+            if (userManager.Users.Select(u => u.Email).Contains(userEmail))
+            {
+
+                var Logins = await userManager.GetLoginsAsync(await userManager.FindByEmailAsync(userEmail));
+                var UserExternalLoginData = Logins.Select(e => new { LoginProviderName = e.LoginProvider, LoginProviderKey = e.ProviderKey }).FirstOrDefault();
+                info.LoginProvider = UserExternalLoginData.LoginProviderName;
+                info.ProviderKey = UserExternalLoginData.LoginProviderKey;
+
+            }
+
+            signInResult = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+
             if (signInResult.Succeeded)
             {
                 return RedirectToLocal(returnUrl);
@@ -290,8 +307,8 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 
                 var user = new AppUser
                 {
-            
-                Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+
+                    Email = info.Principal.FindFirstValue(ClaimTypes.Email),
                     UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
                     FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
                     LastName = info.Principal.FindFirstValue(ClaimTypes.Surname),
@@ -323,6 +340,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
 
                     return RedirectToLocal(returnUrl);
                 }
+
                 return View("ExternalloginFacebook");
             }
         }
