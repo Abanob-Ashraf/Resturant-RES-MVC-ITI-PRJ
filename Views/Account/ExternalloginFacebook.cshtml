@@ -1,21 +1,34 @@
 ﻿@{
     Layout = "_ClientLayout";
 }
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<div><h1>Error While Loging in with Facebook </h1></div>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+<style>
+    main {
+        min-height: 90vh ;
+    }
+
+
+    #Container {
+        width: 100%;
+        height: 100%;
+        position:relative;
+        top:250px
+    }
+    .card{
+        height:500px
+    }
+    .ErrorIcon{
+        font-size:100px;
+    }
+</style>
+
+<div id="Container" class="container">
+    <div class="d-flex align-items-center flex-column justify-content-evenly bg-light card">
+        <i class="fa-sharp fa-solid fa-circle-exclamation text-danger ErrorIcon"></i>
+        <h1>Error While Logging in with Facebook </h1>
+        <div>
+            <h5>- Check if there is an email assoiated to this account </h5>
+            <h5>- Check the visibility in mail privacy in your facebook account isn't hidden  </h5>
+        </div>
+    </div>
+</div>
+
