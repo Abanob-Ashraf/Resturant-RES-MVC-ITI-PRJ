@@ -196,6 +196,15 @@ namespace Resturant_RES_MVC_ITI_PRJ.Controllers
             {
                 return RedirectToAction("Login");
             }
+            var userEmail = info.Principal.FindFirstValue(ClaimTypes.Email);
+
+            if (userManager.Users.Select(u => u.Email).Contains(userEmail))
+            {
+                var Logins = await userManager.GetLoginsAsync(await userManager.FindByEmailAsync(userEmail));
+                var UserExternalLoginData = Logins.Select(e => new { LoginProviderName = e.LoginProvider, LoginProviderKey = e.ProviderKey }).FirstOrDefault();
+                info.LoginProvider = UserExternalLoginData.LoginProviderName;
+                info.ProviderKey = UserExternalLoginData.LoginProviderKey;
+            }
             var signInResult = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
             if (signInResult.Succeeded)
             {
