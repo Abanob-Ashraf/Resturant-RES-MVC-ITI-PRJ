@@ -1,22 +1,31 @@
 ﻿@{
     Layout = "_ClientLayout";
 }
+<style>
+    main {
+        min-height: 90vh;
+    }
 
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<div><h1>Error While Loging in with Google </h1></div>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+
+    #Container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        top: 250px
+    }
+
+    .card {
+        height: 500px
+    }
+
+    .ErrorIcon {
+        font-size: 100px;
+    }
+</style>
+
+<div id="Container" class="container">
+    <div class="d-flex align-items-center flex-column justify-content-evenly bg-light card">
+        <i class="fa-sharp fa-solid fa-circle-exclamation text-danger ErrorIcon"></i>
+        <h1>Error While Logging in with Google </h1>
+    </div>
+</div>
