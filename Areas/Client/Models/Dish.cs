@@ -23,6 +23,10 @@ namespace Resturant_RES_MVC_ITI_PRJ.Areas.Client.Models
         [DisplayName("Image")]
         public string DishImageName { get; set; }
 
+        [Required]
+        [DisplayName("Shown in Website")]
+        public bool IsShowinWebsite { get; set; } = false;
+
         [ForeignKey("DishCategory")]
         [Required]
         [DisplayName("Category")]
