@@ -101,9 +101,12 @@
                     <h2>Our selection of dishes with quality taste</h2>
                 </div>
             </div>
-            <div>
-                <a class="btn btn-warning p-3" asp-area="Client" asp-controller="Order" asp-action="Cart"> Cart <i class="fa-solid fa-cart-shopping"></i></a>
-            </div>
+            @if (User.IsInRole("Customer"))
+            {
+                <div>
+                    <a class="btn btn-warning p-3" asp-area="Client" asp-controller="Order" asp-action="Cart"> Cart <i class="fa-solid fa-cart-shopping"></i></a>
+                </div>
+            }
         </div>
     </div>
     <div class="menu-item-carousel">
