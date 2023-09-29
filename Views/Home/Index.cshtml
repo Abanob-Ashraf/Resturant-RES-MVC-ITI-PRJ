@@ -112,7 +112,7 @@
     <div class="menu-item-carousel">
         <div class="col-lg-12">
             <div class="owl-menu-item owl-carousel">
-                @foreach (var dish in DishRepository.GetAllDishes())
+                @foreach (var dish in DishRepository.GetAllDishes().Where(d=>d.IsShowinWebsite == true && d.DishIngredientRels.Count >= 1))
                 {
                     var dishImgname = dish.DishImageName + ".png";
                     <div class="item">
@@ -129,7 +129,6 @@
                                 </p>
                                 <div class="main-text-button">
                                     <div class="scroll-to-section">
-                    
                                         <a class="btn btn-warning add-to-cart-btn" data-dish-id="@dish.DishId">Add To Cart <i class="fa-solid fa-cart-shopping"></i></a>
                                     </div>
                                 </div>
