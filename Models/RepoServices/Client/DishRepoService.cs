@@ -60,6 +60,7 @@ namespace Resturant_RES_MVC_ITI_PRJ.Models.RepoServices.Client
                     updatedDish.DishPrice = dish.DishPrice;
                     updatedDish.DishImageName = dish.DishImageName;
                     updatedDish.DishCategoryId = dish.DishCategoryId;
+                    updatedDish.IsShowinWebsite = dish.IsShowinWebsite;
                     Ctx.SaveChanges();
                 }
                 catch (Exception ex)
