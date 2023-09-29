@@ -14,6 +14,11 @@
 @{
     IEnumerable<Testimonials> Testmonials = TestimonialsRepository.GetAllTestimonials().Where(t => t.ShownInWebsite == true);
 }
+<style>
+    .fa-quote-left, .fa-quote-right{
+        font-size:50px;
+    }
+</style>
 
 <!-- ***** Main Banner Area Start ***** -->
 <div id="top">
@@ -302,14 +307,18 @@
     {
           <div>
                     <div class="card text-center d-flex align-items-center justify-content-center bg-dark">
-                        <div class="card-bodys">
-                            <h5 class="card-headers">
-                                @item.Customer.FirstName @item.Customer.LastName
-                            </h5>
-                            <p class="card-text text-danger fw-bold">
-                                “ @item.TestimonialsText ”
-                            </p>
+                        <i class="fa-solid fa-quote-left text-danger align-self-start  ms-5"></i>
+                        <div>
+                            <div class="card-bodys">
+                                <h5 class="card-headers">
+                                    @item.Customer.FirstName @item.Customer.LastName
+                                </h5>
+                                <p class="card-text text-danger fw-bold">
+                                    “ @item.TestimonialsText ”
+                                </p>
+                            </div>
                         </div>
+                        <i class="fa-solid fa-quote-right text-danger align-self-end  me-5"></i>
                     </div>
                 </div>
 
