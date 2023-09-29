@@ -40,6 +40,11 @@
                     <input asp-for="DishImageName" class="form-control" />
                     <span asp-validation-for="DishImageName" class="text-danger"></span>
                 </div>
+                <div class="form-check my-3">
+                    <label asp-for="IsShowinWebsite" class="form-check-label"></label>
+                    <input asp-for="IsShowinWebsite" class="form-check-input" />
+                    <span asp-validation-for="IsShowinWebsite" class="text-danger"></span>
+                </div>
                 <div class="form-group">
                     <label asp-for="DishCategoryId" class="control-label"></label>
                     <select asp-for="DishCategoryId" class="form-control" asp-items="ViewBag.CategoryList"></select>

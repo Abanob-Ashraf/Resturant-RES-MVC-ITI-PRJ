@@ -42,6 +42,9 @@
                     <th scope="col">
                         @Html.DisplayNameFor(model => model.DishCategory)
                     </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.IsShowinWebsite)
+                    </th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -61,6 +64,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => Model.DishCategory.DishCategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.IsShowinWebsite)
                     </td>
                     <td scope="row">
                         <a asp-action="Edit" asp-route-id="@Model.DishId" class="btn btn-warning">Edit <i class="fa-solid fa-pen-to-square"></i> </a> |
